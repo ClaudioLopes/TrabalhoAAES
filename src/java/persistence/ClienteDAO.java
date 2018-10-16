@@ -5,12 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.servlet.jsp.jstl.sql.Result;
+import model.Cliente;
 
 /**
  *
  * @author claudio
  */
-public class ClienteDAO {
+public class ClienteDAO { // Classe do Padrão DAO
+    //Padrão Singleton
     private static ClienteDAO instance = new ClienteDAO();
     private ClienteDAO(){}
     public static ClienteDAO getInstance(){
@@ -21,7 +23,7 @@ public class ClienteDAO {
         Connection conn = null;
         Statement st = null;
         try{
-            conn = DatacaseLocator.getInstance().getConnection();
+            conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
             st.execute("insert into cliente () values ( '" + cliente.getNome() + "', '" + cliente.getEmail() + "')");
         }catch(SQLException e){
@@ -36,7 +38,7 @@ public class ClienteDAO {
         Connection conn = null;
         Statement st = null;
         try{
-            conn = DatabeseLocator.getInstance().getConnection();
+            conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
             st.execute("delete from cliente where nome = '" + nome + "'");
         }catch(SQLException e){
@@ -65,6 +67,7 @@ public class ClienteDAO {
         }finally{
             closeResources(conn, st);
         }
+        return cliente;
     }
     
     public void closeResources(Connection conn, Statement st){
