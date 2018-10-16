@@ -4,28 +4,28 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import javax.servlet.jsp.jstl.sql.Result;
 import model.Cliente;
+import model.Empresa;
 
 /**
  *
  * @author claudio
  */
-public class ClienteDAO { // Classe do Padrão DAO
+public class EmpresaDAO {// Classe do Padrão DAO
     //Padrão Singleton
-    private static ClienteDAO instance = new ClienteDAO();
-    private ClienteDAO(){}
-    public static ClienteDAO getInstance(){
+    private static EmpresaDAO instance = new EmpresaDAO();
+    private EmpresaDAO(){}
+    public static EmpresaDAO getInstance(){
         return instance;
     }
     
-    public void save(Cliente cliente) throws SQLException, ClassNotFoundException{
+    public void save(Empresa empresa) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into cliente () values ( '" + cliente.getNome() + "', '" + cliente.getEmail() + "')");
+            st.execute("insert into empresa () values ( '" + empresa.getNome() + "', '" + empresa.getId()+ "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;
@@ -40,26 +40,27 @@ public class ClienteDAO { // Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("delete from cliente where nome = '" + nome + "'");
+            st.execute("delete from empresa where nome = '" + nome + "'");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
+            throw e;
         }finally{
             closeResources(conn, st);
         }
     }
     
-    public Cliente find (String nome) throws SQLException, ClassNotFoundException{
+    public Empresa find (String nome) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        Cliente cliente = new Cliente();
+        Empresa empresa = new Empresa();
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
             rs = st.executeQuery("select nome, email from cliente where nome = '" + nome + "'");
             while(rs.next()){
-                cliente.setEmail(rs.getString("emial"));
-                cliente.setNome(rs.getString("nome"));
+                empresa.setId(Integer.valueOf(rs.getString("id")));
+                empresa.setNome(rs.getString("nome"));
             }
         }catch(SQLException e){
             System.out.println("Erro no SQL");
@@ -67,16 +68,16 @@ public class ClienteDAO { // Classe do Padrão DAO
         }finally{
             closeResources(conn, st);
         }
-        return cliente;
+        return empresa;
     }
     
-    public void update (Cliente cliente) throws SQLException, ClassNotFoundException{
+    public void update (Empresa empresa) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update cliente set nome = '" + cliente.getNome() + "' where id = '" + cliente.getId() + "'");
+            st.execute("update empresa set nome = '" + empresa.getNome() + "' where id = '" + empresa.getId() + "'");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;
@@ -97,4 +98,5 @@ public class ClienteDAO { // Classe do Padrão DAO
             System.out.println("Erro no SQL");
         }
     }
+    
 }
