@@ -1,30 +1,35 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package persistence;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import model.Empresa;
+import model.Funcionario;
 
 /**
  *
  * @author claudio
  */
-public class EmpresaDAO {// Classe do Padrão DAO
+public class FuncionarioDAO {// Classe do Padrão DAO
     //Padrão Singleton
-    private static EmpresaDAO instance = new EmpresaDAO();
-    private EmpresaDAO(){}
-    public static EmpresaDAO getInstance(){
+    private static FuncionarioDAO instance = new FuncionarioDAO();
+    private FuncionarioDAO(){}
+    public static FuncionarioDAO getInstance(){
         return instance;
     }
     
-    public void save(Empresa empresa) throws SQLException, ClassNotFoundException{
+    public void save(Funcionario funcionario) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into empresa () values ( '" + empresa.getNome() + "', '" + empresa.getId()+ "')");
+            st.execute("insert into funcionario () values ( '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;
@@ -39,27 +44,26 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("delete from empresa where nome = '" + nome + "'");
+            st.execute("delete from funcionario where nome = '" + nome + "'");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
-            throw e;
         }finally{
             closeResources(conn, st);
         }
     }
     
-    public Empresa find (String nome) throws SQLException, ClassNotFoundException{
+    public Funcionario find (String nome) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        Empresa empresa = new Empresa();
+        Funcionario funcionario = new Funcionario();
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select nome, email from cliente where nome = '" + nome + "'");
+            rs = st.executeQuery("select nome, email from funcionario where nome = '" + nome + "'");
             while(rs.next()){
-                empresa.setId(Integer.valueOf(rs.getString("id")));
-                empresa.setNome(rs.getString("nome"));
+                funcionario.setEmail(rs.getString("emial"));
+                funcionario.setNome(rs.getString("nome"));
             }
         }catch(SQLException e){
             System.out.println("Erro no SQL");
@@ -67,16 +71,16 @@ public class EmpresaDAO {// Classe do Padrão DAO
         }finally{
             closeResources(conn, st);
         }
-        return empresa;
+        return funcionario;
     }
     
-    public void update (Empresa empresa) throws SQLException, ClassNotFoundException{
+    public void update (Funcionario funcionario) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update empresa set nome = '" + empresa.getNome() + "' where id = '" + empresa.getId() + "'");
+            st.execute("update funcionario set nome = '" + funcionario.getNome() + "' where id = '" + funcionario.getId() + "'");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;
