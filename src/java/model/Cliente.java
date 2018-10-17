@@ -1,10 +1,14 @@
 package model;
 
+import State.Pedido;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
  * @author claudio
  */
-public class Cliente {
+public class Cliente implements Observer{
     private String nome;
     private String email;
     private String telefone;
@@ -21,7 +25,12 @@ public class Cliente {
         this.id = ++cont;
     }
     
-    public Cliente() {
+    public Cliente(Observable pedido) {
+        pedido.addObserver(this);
+    }
+    
+    public Cliente(){
+        
     }
 
     public String getNome() {
@@ -62,6 +71,16 @@ public class Cliente {
 
     public void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+    
+
+    public void update(Observable pedido, Object arg) {
+        if(pedido instanceof Pedido){
+            Pedido p = (Pedido) pedido;
+            System.out.println("Atenção " + nome + "o pedido ja está em" + p.getPedidoEstado().getEstado());
+        }else{
+            System.out.println("Deu algum erro");
+        }
     }
     
     

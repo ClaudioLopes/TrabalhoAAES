@@ -5,11 +5,13 @@
  */
 package State;
 
+import java.util.Observable;
+
 /**
  *
  * @author claudio
  */
-public class Pedido {
+public class Pedido  extends Observable{
     private PedidoEstado estado;
 
     public Pedido() {
@@ -21,6 +23,8 @@ public class Pedido {
 
     public void setPedidoEstado(PedidoEstado estado) {
         this.estado = estado;
+        setChanged();
+        notifyObservers();
     }
     
     public void confirmar(){
