@@ -23,7 +23,7 @@ public class FrontController extends HttpServlet{
         if(usuario == null || usuario.equals("")){
             response.sendRedirect("index.jsp");
         }
-        actionObject = ActionFactory.create(usuario);
+        actionObject = Factory.create(usuario);
         if(actionObject != null){
             actionObject.execute(request, response);
         }
