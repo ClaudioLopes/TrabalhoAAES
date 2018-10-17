@@ -31,7 +31,7 @@ public class Empresa {
     }
 
     public void setProduto(String produto) {
-        this.produto = Factory.createProduto(produto);;
+        this.produto = Factory.createProduto(produto);
     }
 
     public void setPromocao(Promocao promocao) {

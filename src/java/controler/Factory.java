@@ -5,6 +5,7 @@
  */
 package controler;
 
+import model.Funcionario;
 import strategy.Produto;
 
 /**
@@ -45,6 +46,24 @@ public class Factory { // Padrao Factory Method
             return null;
         }
         actionObject = (Produto) objeto;
+        return actionObject;
+    }
+    
+    public static Funcionario createFuncionario(String funcao) {
+        Funcionario actionObject = null;
+        String nomeClass = "funcionario." + funcao;
+        Class classe = null;
+        Object objeto = null;
+        try{
+           classe = Class.forName(nomeClass);
+           objeto = classe.newInstance();
+        }catch(Exception ex){
+            return null;
+        }
+        if(!(objeto instanceof Funcionario)){
+            return null;
+        }
+        actionObject = (Funcionario) objeto;
         return actionObject;
     }
 }

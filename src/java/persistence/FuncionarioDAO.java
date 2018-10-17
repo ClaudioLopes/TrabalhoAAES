@@ -5,6 +5,7 @@
  */
 package persistence;
 
+import controler.Factory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,12 +57,13 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        Funcionario funcionario = new Funcionario();
+        Funcionario funcionario = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
             rs = st.executeQuery("select nome, email from funcionario where nome = '" + nome + "'");
             while(rs.next()){
+                funcionario = Factory.createFuncionario(rs.getString("funcao"));
                 funcionario.setEmail(rs.getString("emial"));
                 funcionario.setNome(rs.getString("nome"));
             }

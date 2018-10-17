@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package State;
 
+import funcionario.Administrador;
 import java.util.Observable;
+import model.Funcionario;
 
 /**
  *
@@ -13,8 +10,10 @@ import java.util.Observable;
  */
 public class Pedido  extends Observable{
     private PedidoEstado estado;
+    private Funcionario funcionarioResponsavel;
 
     public Pedido() {
+        funcionarioResponsavel = new Administrador("Cozinheiro");
     }
 
     public PedidoEstado getPedidoEstado() {
@@ -23,6 +22,7 @@ public class Pedido  extends Observable{
 
     public void setPedidoEstado(PedidoEstado estado) {
         this.estado = estado;
+        funcionarioResponsavel.responsavelPedido(estado);
         setChanged();
         notifyObservers();
     }

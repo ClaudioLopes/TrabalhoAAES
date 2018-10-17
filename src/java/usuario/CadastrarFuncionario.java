@@ -5,6 +5,7 @@
  */
 package usuario;
 
+import controler.Factory;
 import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,11 +22,16 @@ public class CadastrarFuncionario implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
         String email = request.getParameter("textEmail");
+        String funcao = request.getParameter("textFuncao");
+        String superior = request.getParameter("textSuperior");
         
         if(nome.equals("") || email.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
-            Funcionario funcionario = new Funcionario(nome, email, null);
+            Funcionario funcionario = Factory.createFuncionario(superior);
+            funcionario.serFuncao(funcao);
+            funcionario.setEmail(email);
+            funcionario.setNome(nome);
             try{
                 FuncionarioDAO.getInstance().save(funcionario);
                 response.sendRedirect("contatoSucesso.jsp");
