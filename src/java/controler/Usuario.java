@@ -13,6 +13,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author claudio
  */
-public interface Usuario {
+public interface Usuario { // Padrão Command(Action)
     public void execute(HttpServletRequest request, HttpServletResponse response)throws IOException;
 }

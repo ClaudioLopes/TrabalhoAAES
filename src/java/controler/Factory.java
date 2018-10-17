@@ -9,7 +9,7 @@ package controler;
  *
  * @author claudio
  */
-public class Factory {
+public class Factory { // Padrao Factory Method
     public static Usuario create(String usuario) {
         Usuario actionObject = null;
         String nomeClass = "usuario." + usuario;
