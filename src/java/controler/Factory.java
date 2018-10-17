@@ -5,6 +5,8 @@
  */
 package controler;
 
+import strategy.Produto;
+
 /**
  *
  * @author claudio
@@ -25,6 +27,24 @@ public class Factory { // Padrao Factory Method
             return null;
         }
         actionObject = (Usuario) objeto;
+        return actionObject;
+    }
+    
+    public static Produto createProduto(String produto) {
+        Produto actionObject = null;
+        String nomeClass = "strategy." + produto;
+        Class classe = null;
+        Object objeto = null;
+        try{
+           classe = Class.forName(nomeClass);
+           objeto = classe.newInstance();
+        }catch(Exception ex){
+            return null;
+        }
+        if(!(objeto instanceof Produto)){
+            return null;
+        }
+        actionObject = (Produto) objeto;
         return actionObject;
     }
 }

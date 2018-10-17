@@ -1,19 +1,22 @@
 package model;
 
+import controler.Factory;
+import strategy.Produto;
+import strategy.Promocao;
+
 /**
  *
  * @author claudio
  */
 public class Empresa {
     private String nome;
-    private String modalidade;
     private int id;
-    private String produto; //Vai ser do tipo Produto
-    private String promocao; // Vai ser do tipo promoção
+    private Produto produto; //Vai ser do tipo Produto
 
-    public Empresa(String nome, String modalidade) {
+    public Empresa(String nome, String produto) {
         this.nome = nome;
-        this.modalidade = modalidade;
+        this.produto = Factory.createProduto(produto);
+        
     }
 
     public Empresa() {
@@ -22,41 +25,33 @@ public class Empresa {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    
-    public void setModalidade(String modalidade){
-        this.modalidade = modalidade;
-    }
 
     public void setId(int id) {
         this.id = id;
     }
 
     public void setProduto(String produto) {
-        this.produto = produto;
+        this.produto = Factory.createProduto(produto);;
     }
 
-    public void setPromocao(String promocao) {
-        this.promocao = promocao;
+    public void setPromocao(Promocao promocao) {
+        produto.setPromocao(promocao);
     }
 
     public String getNome() {
         return nome;
     }
     
-    public String getModalidade(){
-        return modalidade;
-    }
-
     public int getId() {
         return id;
     }
 
-    public String getProduto() {
+    public Produto getProduto() {
         return produto;
     }
 
     public String getPromocao() {
-        return promocao;
+        return produto.getPromocao();
     }
     
     
