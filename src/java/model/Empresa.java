@@ -6,12 +6,14 @@ package model;
  */
 public class Empresa {
     private String nome;
+    private String modalidade;
     private int id;
     private String produto; //Vai ser do tipo Produto
     private String promocao; // Vai ser do tipo promoção
 
-    public Empresa(String nome) {
+    public Empresa(String nome, String modalidade) {
         this.nome = nome;
+        this.modalidade = modalidade;
     }
 
     public Empresa() {
@@ -19,6 +21,10 @@ public class Empresa {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+    
+    public void setModalidade(String modalidade){
+        this.modalidade = modalidade;
     }
 
     public void setId(int id) {
@@ -35,6 +41,10 @@ public class Empresa {
 
     public String getNome() {
         return nome;
+    }
+    
+    public String getModalidade(){
+        return modalidade;
     }
 
     public int getId() {

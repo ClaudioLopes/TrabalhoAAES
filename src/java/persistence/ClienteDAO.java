@@ -70,13 +70,13 @@ public class ClienteDAO { // Classe do Padrão DAO
         return cliente;
     }
     
-    public void update (Cliente cliente) throws SQLException, ClassNotFoundException{
+    public void update (String nome, String telefone) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update cliente set nome = '" + cliente.getNome() + "' where id = '" + cliente.getId() + "'");
+            st.execute("update cliente set telefone = '" + telefone + "' where nome = '" + nome + "'");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;

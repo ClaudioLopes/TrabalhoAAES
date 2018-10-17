@@ -70,13 +70,13 @@ public class EmpresaDAO {// Classe do Padrão DAO
         return empresa;
     }
     
-    public void update (Empresa empresa) throws SQLException, ClassNotFoundException{
+    public void update (String nome, String modalidade) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update empresa set nome = '" + empresa.getNome() + "' where id = '" + empresa.getId() + "'");
+            st.execute("update empresa set modalidade = '" + modalidade + "' where nome = '" + nome + "'");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;

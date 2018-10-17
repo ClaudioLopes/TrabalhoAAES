@@ -1,6 +1,6 @@
 <%-- 
-    Document   : index
-    Created on : Oct 15, 2018, 1:58:59 PM
+    Document   : Login
+    Created on : Oct 16, 2018, 8:32:07 AM
     Author     : claudio
 --%>
 
@@ -12,12 +12,11 @@
         <title>IFood</title>
     </head>
     <body>
-        <h1>Index</h1>
+        <h1>Login</h1>
         <ul style="list-style: nome">
-        <li><a href="Login.jsp">Login</a></li>
-        <li><a href="Cadastro.jsp">Cadastrar</a></li>
-        <li><a href="Update.jsp">Atualizar Cadastro</a></li>
-        <li><a href="Delete.jsp">Deletar Cadastro</a></li>
+        <li><a href="LoginCliente.jsp">Cliente</a></li>
+        <li><a href="LoginEmpresa.jsp">Empresa</a></li>
+        <li><a href="LoginFuncionario.jsp">Funcionario</a></li>
     </ul>
     </body>
 </html>
