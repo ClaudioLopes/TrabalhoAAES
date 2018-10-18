@@ -1,6 +1,8 @@
 package State;
 
+import controler.Memento;
 import funcionario.Administrador;
+import java.util.ArrayList;
 import java.util.Observable;
 import model.Funcionario;
 
@@ -11,6 +13,7 @@ import model.Funcionario;
 public class Pedido  extends Observable{
     private PedidoEstado estado;
     private Funcionario funcionarioResponsavel;
+    private ArrayList<Memento> estadoSalvo = new ArrayList();
 
     public Pedido() {
         funcionarioResponsavel = new Administrador("Cozinheiro");
@@ -23,6 +26,7 @@ public class Pedido  extends Observable{
     public void setPedidoEstado(PedidoEstado estado) {
         this.estado = estado;
         funcionarioResponsavel.responsavelPedido(estado);
+        estadoSalvo.add(saveToMemento(estado));
         setChanged();
         notifyObservers();
     }
@@ -47,5 +51,11 @@ public class Pedido  extends Observable{
         estado.entrege(this);
     }
     
+    public Memento saveToMemento(PedidoEstado estado){
+        return new Memento(estado);
+    }
     
+    public void restoreFromMemento(Memento memento){
+        estado = memento.getEstadoSalvo();
+    }
 }
