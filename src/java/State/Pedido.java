@@ -3,6 +3,7 @@ package State;
 import controler.Memento;
 import funcionario.Administrador;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import model.Funcionario;
 
@@ -57,5 +58,11 @@ public class Pedido  extends Observable{
     
     public void restoreFromMemento(Memento memento){
         estado = memento.getEstadoSalvo();
+    }
+    
+    public void imprimiMemento(){
+        for(Iterator i = estadoSalvo.iterator();i.hasNext();){
+            System.out.println(i.next());
+        }
     }
 }
