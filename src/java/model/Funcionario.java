@@ -5,8 +5,8 @@
  */
 package model;
 
-import State.Pedido;
-import State.PedidoEstado;
+import state.Pedido;
+import state.PedidoEstado;
 import controler.Factory;
 
 /**
@@ -59,7 +59,7 @@ public abstract class Funcionario {
         return funcao;
     }
     
-    public void serFuncao(String funcao){
+    public void setFuncao(String funcao){
         this.funcao = funcao;
     }
 

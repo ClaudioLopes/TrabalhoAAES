@@ -29,7 +29,7 @@ public class CadastrarFuncionario implements Usuario{
            response.sendRedirect("index.jsp");
         } else {
             Funcionario funcionario = Factory.createFuncionario(superior);
-            funcionario.serFuncao(funcao);
+            funcionario.setFuncao(funcao);
             funcionario.setEmail(email);
             funcionario.setNome(nome);
             try{

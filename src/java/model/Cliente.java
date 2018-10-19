@@ -1,6 +1,6 @@
 package model;
 
-import State.Pedido;
+import state.Pedido;
 import java.util.Observable;
 import java.util.Observer;
 

@@ -3,28 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package State;
+package state;
 
 /**
  *
  * @author claudio
  */
-public class PedidoEstadoConfirmado implements PedidoEstado{
+public class PedidoEstadoEmEntrega implements PedidoEstado{
 
     public void confirmar(Pedido p) {
-        System.out.println("Pedido já confirmado");
+        p.setPedidoEstado(new PedidoEstadoConfirmado());
     }
 
     public void emProducao(Pedido p) {
-        p.setPedidoEstado(new PedidoEstadoEmProdução());
+        System.out.println("Pedido em entrega");
     }
 
     public void pronto(Pedido p) {
-        p.setPedidoEstado(new PedidoEstadoPronto());
+        System.out.println("Pedido em entrega");
     }
 
     public void emEntrega(Pedido p) {
-        System.out.println("Pedido ainda não está pronto");
+        System.out.println("Pedido em entrega");
     }
 
     public void entrege(Pedido p) {
@@ -32,7 +32,7 @@ public class PedidoEstadoConfirmado implements PedidoEstado{
     }
 
     public String getEstado() {
-        return "Confirmado";
+        return "Em entrega";
     }
     
 }

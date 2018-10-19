@@ -1,7 +1,7 @@
 package funcionario;
 
-import State.PedidoEstadoConfirmado;
-import State.PedidoEstadoEmEntrega;
+import state.PedidoEstadoConfirmado;
+import state.PedidoEstadoEmEntrega;
 import model.Funcionario;
 
 /**

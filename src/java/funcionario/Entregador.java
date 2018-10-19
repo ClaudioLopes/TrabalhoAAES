@@ -5,7 +5,7 @@
  */
 package funcionario;
 
-import State.PedidoEstadoEmEntrega;
+import state.PedidoEstadoEmEntrega;
 import model.Funcionario;
 
 /**
