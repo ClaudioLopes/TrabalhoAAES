@@ -26,7 +26,7 @@ public class CadastarCliente implements Usuario{
         if(nome.equals("") || email.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
-            Cliente cliente = new Cliente(nome, email, telefone, null);
+            Cliente cliente = new Cliente(nome, email, telefone);
             try{
                 ClienteDAO.getInstance().save(cliente);
                 response.sendRedirect("contatoSucesso.jsp");
