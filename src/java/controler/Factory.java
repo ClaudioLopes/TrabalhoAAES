@@ -6,6 +6,7 @@
 package controler;
 
 import model.Funcionario;
+import pagamento.FormaPagamento;
 import strategy.Produto;
 
 /**
@@ -64,6 +65,24 @@ public class Factory { // Padrao Factory Method
             return null;
         }
         actionObject = (Funcionario) objeto;
+        return actionObject;
+    }
+    
+    public static FormaPagamento createFormaPagamento(String funcao) {
+        FormaPagamento actionObject = null;
+        String nomeClass = "pagamento." + funcao;
+        Class classe = null;
+        Object objeto = null;
+        try{
+           classe = Class.forName(nomeClass);
+           objeto = classe.newInstance();
+        }catch(Exception ex){
+            return null;
+        }
+        if(!(objeto instanceof FormaPagamento)){
+            return null;
+        }
+        actionObject = (FormaPagamento) objeto;
         return actionObject;
     }
 }

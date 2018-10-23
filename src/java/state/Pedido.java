@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import model.Funcionario;
+import pagamento.FormaPagamento;
 
 /**
  *
@@ -14,6 +15,15 @@ import model.Funcionario;
 public class Pedido  extends Observable{
     private PedidoEstado estado;
     private Funcionario funcionarioResponsavel;
+    private String formaPagamento;
+
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(FormaPagamento formaPagamento) {
+        this.formaPagamento = formaPagamento.getFormaPagamento();
+    }
     private ArrayList<Memento> estadoSalvo = new ArrayList();
 
     public Pedido() {

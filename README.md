@@ -15,4 +15,5 @@ Neste trabalho desenvolveremos uma pequena aplicação semelhante ao aplicativo 
     • Builder;
     • Chain Of responsability;
     • Memento;
-    • Template Method.
+    • Template Method;
+    • Composite;
