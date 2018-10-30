@@ -24,7 +24,7 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into empresa () values ( '" + empresa.getNome() + "', '" + empresa.getId()+ "')");
+            st.execute("insert into empresa (nome) values ( '" + empresa.getNome() + "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;

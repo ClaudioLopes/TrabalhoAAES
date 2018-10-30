@@ -25,7 +25,7 @@ public class ClienteDAO { // Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into cliente () values ( '" + cliente.getNome() + "', '" + cliente.getEmail() + "')");
+            st.execute("insert into cliente (nome, email, telefone) values ( '" + cliente.getNome() + "', '" + cliente.getEmail() + "', '" + cliente.getTelefone() + "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;

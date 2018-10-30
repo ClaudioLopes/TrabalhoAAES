@@ -30,7 +30,7 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into funcionario () values ( '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "')");
+            st.execute("insert into funcionario (nome, email, funcao) values ( '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "', '" + funcionario.getFuncao() + "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;
