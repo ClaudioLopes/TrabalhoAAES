@@ -3,11 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/state/Pedido.java</file>
-            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/pagamento/Dinheiro.java</file>
-            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/controler/Factory.java</file>
-            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/pagamento/FormaPagamento.java</file>
-            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/pagamento/Cartao.java</file>
+            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/strategy/Combo.java</file>
+            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/controller/Factory.java</file>
+            <file>file:/home/claudio/Documents/TrabalhoAAES/src/java/controller/FrontController.java</file>
         </group>
     </open-files>
 </project-private>

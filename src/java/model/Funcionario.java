@@ -7,7 +7,7 @@ package model;
 
 import state.Pedido;
 import state.PedidoEstado;
-import controler.Factory;
+import controller.Factory;
 
 /**
  *

@@ -6,8 +6,8 @@ package pagamento;
  */
 public class Dinheiro extends FormaPagamento{
     
-    public String getFormaPagamento() {
-        return "Dinherio";
+    public int getDesconto() {
+        return 10;
     }
     
 }

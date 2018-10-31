@@ -1,6 +1,6 @@
 package model;
 
-import controler.Factory;
+import controller.Factory;
 import strategy.Produto;
 import strategy.Promocao;
 

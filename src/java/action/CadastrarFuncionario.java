@@ -3,39 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Factory;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cliente;
-import persistence.ClienteDAO;
+import model.Funcionario;
+import persistence.FuncionarioDAO;
 
 /**
  *
  * @author claudio
  */
-public class LoginCliente implements Usuario{
+public class CadastrarFuncionario implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String senha = request.getParameter("textSenha");
+        String email = request.getParameter("textEmail");
+        String funcao = request.getParameter("textFuncao");
+        String superior = request.getParameter("textSuperior");
         
-        if(nome.equals("")) {
+        if(nome.equals("") || email.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
+            Funcionario funcionario = Factory.createFuncionario(superior);
+            funcionario.setFuncao(funcao);
+            funcionario.setEmail(email);
+            funcionario.setNome(nome);
             try{
-                String cliente = null;
-                request.setAttribute(cliente, ClienteDAO.getInstance().find(nome));
-                /*if(cliente.getSenha() == senha){
-                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
-                    view.forward(request, response);
-                }*/ // Cria um jeito de autenticar o usuario
+                FuncionarioDAO.getInstance().save(funcionario);
+                response.sendRedirect("contatoSucesso.jsp");
             }catch(SQLException ex){
-                response.sendRedirect("Erro.jsp");
+                response.sendRedirect("contatoErro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

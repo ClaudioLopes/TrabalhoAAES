@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler;
+package controller;
 
 import model.Funcionario;
 import pagamento.FormaPagamento;
@@ -16,7 +16,7 @@ import strategy.Produto;
 public class Factory { // Padrao Factory Method
     public static Usuario create(String usuario) {
         Usuario actionObject = null;
-        String nomeClass = "usuario." + usuario;
+        String nomeClass = "action." + usuario;
         Class classe = null;
         Object objeto = null;
         try{

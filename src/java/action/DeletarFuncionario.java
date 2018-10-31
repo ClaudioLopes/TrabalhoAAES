@@ -3,31 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.FuncionarioDAO;
+
 /**
  *
  * @author claudio
  */
-public class UpdateFuncionario implements Usuario{
+public class DeletarFuncionario implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String telefone = request.getParameter("textTelefone");
         
-        if(nome.equals("") || telefone.equals("")) {
+        if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
+            //Contato contato = new Contato(nome, null);
             try{
-                FuncionarioDAO.getInstance().update(nome, telefone);
-                response.sendRedirect("contatoSucesso.jsp");
+                FuncionarioDAO.getInstance().delete(nome);
+                response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
+                response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

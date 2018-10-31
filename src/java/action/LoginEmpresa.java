@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
@@ -16,19 +16,23 @@ import persistence.EmpresaDAO;
  *
  * @author claudio
  */
-public class UpdateEmpresa implements Usuario{
+public class LoginEmpresa implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String modalidade = request.getParameter("textModalidade");
+        String senha = request.getParameter("textSenha");
         
-        if(nome.equals("") || modalidade.equals("")) {
+        if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                EmpresaDAO.getInstance().update(nome, modalidade);
-                response.sendRedirect("contatoSucesso.jsp");
+                String empresa = null;
+                request.setAttribute(empresa, EmpresaDAO.getInstance().find(nome));
+                /*if(cliente.getSenha() == senha){
+                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
+                    view.forward(request, response);
+                }*/ // Cria um jeito de autenticar o usuario
             }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
+                response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

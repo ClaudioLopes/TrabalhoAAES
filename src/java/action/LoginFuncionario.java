@@ -3,20 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistence.EmpresaDAO;
-
+import persistence.FuncionarioDAO;
 /**
  *
  * @author claudio
  */
-public class LoginEmpresa implements Usuario{
+public class LoginFuncionario implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
         String senha = request.getParameter("textSenha");
@@ -25,8 +24,8 @@ public class LoginEmpresa implements Usuario{
            response.sendRedirect("index.jsp");
         } else {
             try{
-                String empresa = null;
-                request.setAttribute(empresa, EmpresaDAO.getInstance().find(nome));
+                String fundionario = null;
+                request.setAttribute(fundionario, FuncionarioDAO.getInstance().find(nome));
                 /*if(cliente.getSenha() == senha){
                     RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
                     view.forward(request, response);

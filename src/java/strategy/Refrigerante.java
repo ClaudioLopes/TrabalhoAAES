@@ -3,18 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package endereco;
+package strategy;
 
 /**
  *
  * @author claudio
  */
-public class Numero extends Conteudo{
-    public Numero(String endereco) {
-        super(endereco);
-    }
-
-    public String getEndereco() {
-        return endereco + "\n";
+public class Refrigerante extends Produto{
+    public Refrigerante(int valor){
+        this.setNome("Pizza");
+        this.setValor(valor);
     }
 }

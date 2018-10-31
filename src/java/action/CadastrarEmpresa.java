@@ -3,35 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistence.FuncionarioDAO;
+import model.Empresa;
+import persistence.EmpresaDAO;
+
 /**
  *
  * @author claudio
  */
-public class LoginFuncionario implements Usuario{
+public class CadastrarEmpresa implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String senha = request.getParameter("textSenha");
+        String modalidade = request.getParameter("textModalidade");
         
-        if(nome.equals("")) {
+        if(nome.equals("") || modalidade.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
+            Empresa empresa = new Empresa(nome, modalidade);
             try{
-                String fundionario = null;
-                request.setAttribute(fundionario, FuncionarioDAO.getInstance().find(nome));
-                /*if(cliente.getSenha() == senha){
-                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
-                    view.forward(request, response);
-                }*/ // Cria um jeito de autenticar o usuario
+                EmpresaDAO.getInstance().save(empresa);
+                response.sendRedirect("contatoSucesso.jsp");
             }catch(SQLException ex){
-                response.sendRedirect("Erro.jsp");
+                response.sendRedirect("contatoErro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

@@ -1,12 +1,13 @@
 package state;
 
-import controler.Memento;
+import controller.Memento;
 import funcionario.Administrador;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
 import model.Funcionario;
 import pagamento.FormaPagamento;
+import strategy.Produto;
 
 /**
  *
@@ -14,15 +15,24 @@ import pagamento.FormaPagamento;
  */
 public class Pedido  extends Observable{
     private PedidoEstado estado;
-    private Funcionario funcionarioResponsavel;
-    private String formaPagamento;
+    private Produto produto;
 
-    public String getFormaPagamento() {
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
+    }
+    private Funcionario funcionarioResponsavel;
+    private int formaPagamento;
+
+    public int getFormaPagamento() {
         return formaPagamento;
     }
 
-    public void setFormaPagamento(FormaPagamento formaPagamento) {
-        this.formaPagamento = formaPagamento.getFormaPagamento();
+    public void setFormaPagamento(int formaPagamento) {
+        this.formaPagamento = formaPagamento;
     }
     private ArrayList<Memento> estadoSalvo = new ArrayList();
 

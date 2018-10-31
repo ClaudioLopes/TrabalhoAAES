@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +17,7 @@ import persistence.ClienteDAO;
  *
  * @author claudio
  */
-public class CadastarCliente implements Usuario{
+public class CadastrarCliente implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
         String email = request.getParameter("textEmail");

@@ -3,37 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Factory;
-import controler.Usuario;
+import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Funcionario;
 import persistence.FuncionarioDAO;
-
 /**
  *
  * @author claudio
  */
-public class CadastrarFuncionario implements Usuario{
+public class UpdateFuncionario implements Usuario{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String email = request.getParameter("textEmail");
-        String funcao = request.getParameter("textFuncao");
-        String superior = request.getParameter("textSuperior");
+        String telefone = request.getParameter("textTelefone");
         
-        if(nome.equals("") || email.equals("")) {
+        if(nome.equals("") || telefone.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
-            Funcionario funcionario = Factory.createFuncionario(superior);
-            funcionario.setFuncao(funcao);
-            funcionario.setEmail(email);
-            funcionario.setNome(nome);
             try{
-                FuncionarioDAO.getInstance().save(funcionario);
+                FuncionarioDAO.getInstance().update(nome, telefone);
                 response.sendRedirect("contatoSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("contatoErro.jsp");

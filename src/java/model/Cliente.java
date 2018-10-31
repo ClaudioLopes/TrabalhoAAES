@@ -1,9 +1,5 @@
 package model;
 
-import endereco.Bairro;
-import endereco.Endereco;
-import endereco.Numero;
-import endereco.Rua;
 import state.Pedido;
 import java.util.Observable;
 import java.util.Observer;
@@ -17,7 +13,7 @@ public class Cliente implements Observer{
     private String email;
     private String telefone;
     private int id;
-    private Endereco endereco;//Vai virar um tipo com um padrao de projeto
+    private String endereco;
     
     private static int cont = -1;
 
@@ -68,17 +64,12 @@ public class Cliente implements Observer{
         this.id = id;
     }
 
-    public Endereco getEndereco() {
+    public String getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String bairro, String rua, String numero) {
-        Bairro b = new Bairro(bairro);
-        Rua r = new Rua(rua);
-        Numero n = new Numero(numero);
-        r.addConteudo(n);
-        b.addConteudo(r);
-        endereco.addConteudo(b);
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
     
 
