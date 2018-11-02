@@ -3,40 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Factory;
-import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Funcionario;
-import persistence.FuncionarioDAO;
+import persistence.EmpresaDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class CadastrarFuncionario implements Usuario{
+public class DeletarEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String email = request.getParameter("textEmail");
-        String funcao = request.getParameter("textFuncao");
-        String superior = request.getParameter("textSuperior");
         
-        if(nome.equals("") || email.equals("")) {
+        if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
-            Funcionario funcionario = Factory.createFuncionario(superior);
-            funcionario.setFuncao(funcao);
-            funcionario.setEmail(email);
-            funcionario.setNome(nome);
             try{
-                FuncionarioDAO.getInstance().save(funcionario);
-                response.sendRedirect("contatoSucesso.jsp");
+                EmpresaDAO.getInstance().delete(nome);
+                response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
+                response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

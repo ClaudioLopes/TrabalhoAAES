@@ -3,29 +3,32 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistence.EmpresaDAO;
+import model.Cliente;
+import persistence.ClienteDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class UpdateEmpresa implements Usuario{
+public class UpdateCliente implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String modalidade = request.getParameter("textModalidade");
+        String telefone = request.getParameter("textTelefone");
+        String email = request.getParameter("textEmail");
+        String senha = request.getParameter("textSenha");
         
-        if(nome.equals("") || modalidade.equals("")) {
+        if(nome.equals("") || telefone.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                EmpresaDAO.getInstance().update(nome, modalidade);
+                ClienteDAO.getInstance().update(nome, telefone, email, senha);
                 response.sendRedirect("contatoSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("contatoErro.jsp");

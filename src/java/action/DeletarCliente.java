@@ -1,35 +1,28 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package usuario;
+package action;
 
-import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cliente;
 import persistence.ClienteDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class UpdateCliente implements Usuario{
+public class DeletarCliente implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String telefone = request.getParameter("textTelefone");
         
-        if(nome.equals("") || telefone.equals("")) {
+        if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                ClienteDAO.getInstance().update(nome, telefone);
-                response.sendRedirect("contatoSucesso.jsp");
+                ClienteDAO.getInstance().delete(nome);
+                response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
+                response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

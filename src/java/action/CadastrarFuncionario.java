@@ -3,30 +3,40 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
+import controller.Factory;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Funcionario;
 import persistence.FuncionarioDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class DeletarFuncionario implements Usuario{
+public class CadastrarFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
+        String email = request.getParameter("textEmail");
+        String funcao = request.getParameter("textFuncao");
+        String senha = request.getParameter("textSenha");
+        String superior = request.getParameter("textSuperior");
         
-        if(nome.equals("")) {
+        if(nome.equals("") || email.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
-            //Contato contato = new Contato(nome, null);
+            Funcionario funcionario = Factory.createFuncionario(superior);
+            funcionario
+                    .setFuncao(funcao)
+                    .setEmail(email)
+                    .setNome(nome);
             try{
-                FuncionarioDAO.getInstance().delete(nome);
-                response.sendRedirect("apagarSucesso.jsp");
+                FuncionarioDAO.getInstance().save(funcionario);
+                response.sendRedirect("CadastroSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

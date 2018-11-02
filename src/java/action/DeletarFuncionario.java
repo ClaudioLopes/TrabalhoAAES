@@ -3,37 +3,30 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cliente;
-import persistence.ClienteDAO;
+import persistence.FuncionarioDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class LoginCliente implements Usuario{
+public class DeletarFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String senha = request.getParameter("textSenha");
         
         if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
+            //Contato contato = new Contato(nome, null);
             try{
-                String cliente = null;
-                request.setAttribute(cliente, ClienteDAO.getInstance().find(nome));
-                /*if(cliente.getSenha() == senha){
-                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
-                    view.forward(request, response);
-                }*/ // Cria um jeito de autenticar o usuario
+                FuncionarioDAO.getInstance().delete(nome);
+                response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

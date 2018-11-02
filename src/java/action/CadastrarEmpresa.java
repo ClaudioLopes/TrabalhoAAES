@@ -3,34 +3,37 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Empresa;
 import persistence.EmpresaDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class LoginEmpresa implements Usuario{
+public class CadastrarEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
         String senha = request.getParameter("textSenha");
+        String email = request.getParameter("textEmail");
         
-        if(nome.equals("")) {
+        if(nome.equals("") || senha.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
+            Empresa empresa = new Empresa();
+            empresa
+                    .setNome(nome)
+                    .setSenha(senha)
+                    .setEmail(email);
             try{
-                String empresa = null;
-                request.setAttribute(empresa, EmpresaDAO.getInstance().find(nome));
-                /*if(cliente.getSenha() == senha){
-                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
-                    view.forward(request, response);
-                }*/ // Cria um jeito de autenticar o usuario
+                EmpresaDAO.getInstance().save(empresa);
+                response.sendRedirect("CadastrarSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

@@ -1,21 +1,11 @@
-<%-- 
-    Document   : Cadastro
-    Created on : Oct 16, 2018, 8:36:21 AM
-    Author     : claudio
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>IFood</title>
-    </head>
-    <body>
-        <h1>Cadastro</h1>
-        <ul style="list-style: nome">
+<%@include file="jspf/header.jspf" %>
+<div class="container">
+    <h1>Cadastro</h1>
+    <ul style="list-style: none">
         <li><a href="CadastrarCliente.jsp">Cliente</a></li>
-        <li><a href="FrontController?usuario=CadastrarEmpresa">Empresa</a></li>
-        <li><a href="FrontController?usuario=CadastrarFuncionario">Funcionario</a></li>
-    </body>
-</html>
+        <li><a href="FrontController?action=CadastrarEmpresa">Empresa</a></li>
+        <li><a href="FrontController?action=CadastrarFuncionario">Funcionario</a></li>
+        <a href="index.jsp" class="btn btn-secondary">Voltar</a>
+    </ul>
+</div>
+<%@include file="jspf/footer.jspf" %>

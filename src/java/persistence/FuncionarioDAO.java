@@ -5,7 +5,7 @@
  */
 package persistence;
 
-import controler.Factory;
+import controller.Factory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,7 +30,7 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into funcionario (nome, email, funcao) values ( '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "', '" + funcionario.getFuncao() + "')");
+            st.execute("insert into funcionario (nome, email, funcao, senha) values ( '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "', '" + funcionario.getFuncao() + "', '" + funcionario.getSenha() + "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;

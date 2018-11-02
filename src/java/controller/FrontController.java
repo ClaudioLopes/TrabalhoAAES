@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler;
+package controller;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -20,8 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 public class FrontController extends HttpServlet{
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
-        String usuario = request.getParameter("usuario");
-        Usuario actionObject = null;
+        String usuario = request.getParameter("action");
+        Action actionObject = null;
         if(usuario == null || usuario.equals("")){
             response.sendRedirect("index.jsp");
         }

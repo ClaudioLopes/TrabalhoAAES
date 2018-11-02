@@ -8,6 +8,7 @@ public abstract class Produto {
     private Promocao promocao;
     private String nome;
     private int valor;
+    private int id;
 
     public Produto() {
     }
@@ -21,16 +22,18 @@ public abstract class Produto {
         return promocao.obterPromocao();
     }
 
-    public void setPromocao(Promocao promocao) {
+    public Produto setPromocao(Promocao promocao) {
         this.promocao = promocao;
+        return this;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public Produto setNome(String nome) {
         this.nome = nome;
+        return this;
     }
     
     public int desconto(){
@@ -41,7 +44,17 @@ public abstract class Produto {
         return valor;
     }
 
-    public void setValor(int valor) {
+    public Produto setValor(int valor) {
         this.valor = valor;
+        return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Produto setId(int id) {
+        this.id = id;
+        return this;
     }
 }

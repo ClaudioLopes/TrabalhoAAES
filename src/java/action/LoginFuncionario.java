@@ -3,31 +3,35 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package usuario;
+package action;
 
-import controler.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.FuncionarioDAO;
+import controller.Action;
 /**
  *
  * @author claudio
  */
-public class UpdateFuncionario implements Usuario{
+public class LoginFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
-        String telefone = request.getParameter("textTelefone");
+        String senha = request.getParameter("textSenha");
         
-        if(nome.equals("") || telefone.equals("")) {
+        if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                FuncionarioDAO.getInstance().update(nome, telefone);
-                response.sendRedirect("contatoSucesso.jsp");
+                String fundionario = null;
+                request.setAttribute(fundionario, FuncionarioDAO.getInstance().find(nome));
+                /*if(cliente.getSenha() == senha){
+                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
+                    view.forward(request, response);
+                }*/ // Cria um jeito de autenticar o usuario
             }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
+                response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
             }catch(ClassNotFoundException ex){
                 ex.printStackTrace();

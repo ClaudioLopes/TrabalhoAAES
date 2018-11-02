@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controler;
+package controller;
 
 import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +14,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author claudio
  */
-public interface Usuario { // Padrão Command(Action)
-    public void execute(HttpServletRequest request, HttpServletResponse response)throws IOException;
+public interface Action { // Padrão Command(Action)
+    public void execute(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException, ClassNotFoundException;
 }

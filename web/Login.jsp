@@ -1,22 +1,16 @@
-<%-- 
-    Document   : Login
-    Created on : Oct 16, 2018, 8:32:07 AM
-    Author     : claudio
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>IFood</title>
-    </head>
-    <body>
-        <h1>Login</h1>
-        <ul style="list-style: nome">
-        <li><a href="LoginCliente.jsp">Cliente</a></li>
-        <li><a href="LoginEmpresa.jsp">Empresa</a></li>
-        <li><a href="LoginFuncionario.jsp">Funcionario</a></li>
-    </ul>
-    </body>
-</html>
+<%@include file="jspf/header.jspf" %>
+<div class="container">
+    <h1>Login</h1>
+    <div class="row">
+        <div class="col-sm">
+            <a href="LoginCliente.jsp">Cliente</a>
+        </div>
+        <div class="col-sm">
+            <a href="LoginEmpresa.jsp">Empresa</a>
+        </div>
+        <div class="col-sm">
+            <a href="LoginFuncionario.jsp">Funcionario</a>
+        </div>
+    </div>
+</div>
+<%@include file="jspf/footer.jspf" %>
