@@ -1,26 +1,29 @@
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@include file="jspf/header_empresa.jspf" %>
 <div class="container">
-    <h1>Index</h1>
+    <h1>Lista de produtos</h1>
+        <div class="d-iline p-2">
+            <form method="post" action="FrontController?action=ProdutoNovo">
+                <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                <button type="submit" class="btn btn-success">Novo produto<span class="sr-only">(current)</span></button>
+            </form>
+        </div>
+        <div class="d-iline p-2">
+            <form method="post" action="FrontController?action=EmpresaIndex">
+                <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                <button type="submit" class="btn btn-secondary">Voltar<span class="sr-only">(current)</span></button>
+            </form>
+        </div>
     <ul style="list-style: none">
-        <li>
-            <form method="post" action="FrontController?action=UpdateClienteForm">
-                <input type="hidden" name="id_cliente" value="${id_cliente}"/>
-                <button type="submit" class="btn btn-link">Atualizar cadastro</button>
-            </form>
-        </li>
-        <li><a href="ClientePedidos.jsp">Seus pedidos</a>
-        <form method="post" action="FrontController?action=EmpresaPedidosAtivos">
-                <input type="hidden" name="id_cliente" value="${id_cliente}"/>
-                <button type="submit" class="btn btn-link">Pedidos ativos</button>
-            </form>
-        </li>
-        <li><a href="NovoPedido.jsp">Novo pedido</a>
-        <form method="post" action="FrontController?action=EmpresaProdutos">
-                <input type="hidden" name="id_cliente" value="${id_cliente}"/>
-                <button type="submit" class="btn btn-link">Seus produtos</button>
-            </form>
-        </li>
-        <li><a href="index.jsp">Logout</a></li>
+        <c:forEach var="produto" items="${produtos}">
+            <li>
+                <form method="post" action="FrontController?action=UpdateClienteForm">
+                    <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                    <input type="hidden" name="id_produto" value="${produto.getId()}"/>
+                    <button type="submit" class="btn btn-link">${produto.getNome()}</button>
+                </form>
+            </li>
+        </c:forEach>
     </ul>
 </div>
 <%@include file="jspf/footer.jspf" %>

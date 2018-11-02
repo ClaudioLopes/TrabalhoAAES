@@ -9,20 +9,32 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="ClienteIndex.jsp">iFood</a>
+            <form method="post" action="FrontController?action=EmpresaIndex">
+                <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                <button type="submit" class="btn btn-link navbar-brand">iFood<span class="sr-only">(current)</span></button>
+            </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="UpdateCliente.jsp">Atualizar dados<span class="sr-only">(current)</span></a>
+                        <form method="post" action="FrontController?action=UpdateEmpresaForm">
+                            <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                            <button type="submit" class="btn btn-link nav-link">Atualizar cadastro<span class="sr-only">(current)</span></button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Pedidos ativos<span class="sr-only">(current)</span></a>
+                        <form method="post" action="FrontController?action=EmpresaPedidosAtivos">
+                            <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                            <button type="submit" class="btn btn-link nav-link">Pedidos ativos<span class="sr-only">(current)</span></button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Seus produtos<span class="sr-only">(current)</span></a>
+                        <form method="post" action="FrontController?action=EmpresaPedidos">
+                            <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                            <button type="submit" class="btn btn-link nav-link">Seus produtos<span class="sr-only">(current)</span></button>
+                        </form>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Logout<span class="sr-only">(current)</span></a>
