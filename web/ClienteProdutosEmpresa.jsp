@@ -9,10 +9,23 @@
         </form>
     </div>
     <form method="post" action="FrontController?action=ClienteConfirmarPedido">
-        <button type="submit" class="btn btn-success">Fechar pedido</button>
-        <button type="reset" class="btn btn-secondary">Desmarcar todos</button>
+        <div class="container" style="margin-bottom: 1em;">
+            <button type="submit" class="btn btn-success">Fechar pedido</button>
+            <button type="reset" class="btn btn-secondary">Desmarcar todos</button>
+        </div>
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
         <input type="hidden" name="id_cliente" value="${id_cliente}"/>
+        <label>Selecione a forma de pagamento</label>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="${dinheiro}" name="pagamento" class="custom-control-input" value="Dinheiro" checked>
+            <label class="custom-control-label" for="${dinheiro}">Dinheiro - (${dinheiro.getDesconto()}% de desconto)</label>
+        </div>
+        <div class="custom-control custom-radio">
+            <input type="radio" id="${cartao}" name="pagamento" class="custom-control-input" value="Cartao">
+            <label class="custom-control-label" for="${cartao}">Cartão - (${cartao.getDesconto()}% de desconto)</label>
+        </div>
+        <div class="container">
+        </div>
         <table class="table table-striped justify-content-center text-center">
             <thead class="thead-dark">
                 <tr>

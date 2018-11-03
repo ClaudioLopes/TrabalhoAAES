@@ -7,7 +7,7 @@ package strategy;
 public abstract class Produto {
     private Promocao promocao;
     private String nome;
-    private int valor;
+    private float valor;
     private int id;
 
     public Produto() {
@@ -40,11 +40,11 @@ public abstract class Produto {
         return promocao.obterDesconto();
     }
     
-    public int getValor() {
+    public float getValor() {
         return valor;
     }
 
-    public Produto setValor(int valor) {
+    public Produto setValor(float valor) {
         this.valor = valor;
         return this;
     }

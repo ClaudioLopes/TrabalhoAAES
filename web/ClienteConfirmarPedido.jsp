@@ -9,7 +9,7 @@
             <button type="submit" class="btn btn-primary">Voltar</button>
         </form>
     </div>
-    <form method="post" action="FrontController?action=ClienteConfirmarPedido">
+    <form method="post" action="FrontController?action=ClientePedidoConcluido">
         <input type="hidden" name="id_cliente" value="${id_cliente}"/>
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
         <table class="table table-striped justify-content-center text-center">
@@ -22,27 +22,31 @@
             </thead>
             <tbody>
                 <c:forEach var="item" items="${itens}">
-                    <tr>
-                        <td>${item.getNome()}</td>
-                        <td>R$ ${item.getValor()}</td>
-                        <td></td>
-                    </tr>
-                </c:forEach>
+                <input type="hidden" name="item" value="${item.getId()}"/>
+                <tr>
+                    <td>${item.getNome()}</td>
+                    <td>R$ ${item.getValor()}</td>
+                    <td></td>
+                </tr>
+            </c:forEach>
             </tbody>
             <tfoot>
                 <tr>
-                    <td>Total:</td>
-                    <td>R$ ${total}</td>
+                    <td>Forma de pagamento:</td>
+                    <td>${pagamento.getNome()}</td>
                 </tr>
+                <tr>
+                    <td>Desconto:</td>
+                    <td>${pagamento.getDesconto()}%</td>
+                </tr>
+                <tr>
+            <input type="hidden" name="total" value="${total}"/>
+            <td>Total:</td>
+            <td>R$ ${total}</td>
+            </tr>
             </tfoot>
         </table>
-            <label>Selecione a forma de pagamento</label>
-            <select class="custom-select" required>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-            </select>
-            <button type="submit" class="btn btn-success" style="margin-top: 1em;">Confirmar pedido</button>
+        <button type="submit" class="btn btn-success" style="margin-top: 1em;">Confirmar pedido</button>
         <div class="container">
         </div>
     </form>

@@ -12,7 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import model.Cliente;
 import persistence.ClienteDAO;
 import controller.Action;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import model.Empresa;
@@ -21,19 +24,20 @@ import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
 import persistence.EmpresaDAO;
 import persistence.ProdutoDAO;
+import strategy.Item;
 import strategy.Produto;
 
 /**
  *
  * @author claudio
  */
-public class ClienteProdutosEmpresa implements Action {
+public class ClientePedidoStatus implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
         int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
-        List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteProdutosEmpresa.jsp");
+        String[] produtos = request.getParameterValues("item");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteFormaPagamento.jsp");
         FormaPagamento dinheiro = new Dinheiro();
         FormaPagamento cartao = new Cartao();
         request.setAttribute("dinheiro", dinheiro);

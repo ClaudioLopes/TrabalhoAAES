@@ -31,21 +31,19 @@ import strategy.Produto;
  *
  * @author claudio
  */
-public class ClienteConfirmarPedido implements Action {
+public class ClientePedidoConcluido implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
         int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         String[] items = request.getParameterValues("item");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteConfirmarPedido.jsp");
+        float total = Float.parseFloat(request.getParameter("total"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
         try {
-            Class classe = Class.forName("pagamento." + request.getParameter("pagamento"));
-            Object objeto = classe.newInstance();
-            FormaPagamento fp = (FormaPagamento) objeto;
             List<Produto> itens = new ArrayList<Produto>();
-            float total = 0;
+            int total = 0;
             if (items != null) {
                 for (String item : items) {
                     int id_produto = Integer.parseInt(item);
@@ -69,11 +67,11 @@ public class ClienteConfirmarPedido implements Action {
                 dispatcher.forward(request, response);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteConfirmarPedido.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            Logger.getLogger(ClienteConfirmarPedido.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            Logger.getLogger(ClienteConfirmarPedido.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

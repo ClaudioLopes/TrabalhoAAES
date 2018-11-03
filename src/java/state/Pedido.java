@@ -4,6 +4,7 @@ import controller.Memento;
 import funcionario.Administrador;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Observable;
 import model.Funcionario;
 import pagamento.FormaPagamento;
@@ -15,15 +16,17 @@ import strategy.Produto;
  */
 public class Pedido  extends Observable{
     private PedidoEstado estado;
-    private Produto produto;
+    private List<Produto> produto;
 
-    public Produto getProduto() {
+    public List<Produto> getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public Pedido setProduto(List<Produto> produto) {
         this.produto = produto;
+        return this;
     }
+    
     private Funcionario funcionarioResponsavel;
     private int formaPagamento;
 
@@ -44,12 +47,13 @@ public class Pedido  extends Observable{
         return estado;
     }
 
-    public void setPedidoEstado(PedidoEstado estado) {
+    public Pedido setPedidoEstado(PedidoEstado estado) {
         this.estado = estado;
         funcionarioResponsavel.responsavelPedido(estado);
         estadoSalvo.add(saveToMemento(estado));
         setChanged();
         notifyObservers();
+        return this;
     }
     
     public void confirmar(){

@@ -1,6 +1,7 @@
 package pagamento;
 
 import state.Pedido;
+import strategy.Produto;
 
 /**
  *
@@ -9,9 +10,13 @@ import state.Pedido;
 public abstract class FormaPagamento {
     
     public abstract int getDesconto();
+    public abstract String getNome();
     
     public void gerarBoleto(Pedido pedido){
-        int valorPedido = pedido.getProduto().getValor() - getDesconto();
+        float valorPedido = 0;
+        for (Produto produto : pedido.getProduto()) {
+            valorPedido = produto.getValor() - getDesconto();
+        }
         System.out.println("Valor: " + valorPedido);
     }
 }
