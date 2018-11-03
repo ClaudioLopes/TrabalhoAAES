@@ -14,7 +14,7 @@
             <button type="submit" class="btn btn-secondary">Voltar</button>
         </form>
     </div>
-    <form method="post" action="FrontController?action=UpdateClienteForm">
+    <form method="post" action="FrontController?action=ProdutoUpdateForm">
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
         <input type="hidden" name="id_produto" value="${produto.getId()}"/>
     </form>

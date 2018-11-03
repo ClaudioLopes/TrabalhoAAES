@@ -8,13 +8,13 @@
                 <button type="submit" class="btn btn-link">Atualizar cadastro</button>
             </form>
         </li>
-        <li><a href="ClientePedidos.jsp">Seus pedidos</a>
+        <li>
         <form method="post" action="FrontController?action=ClientePedidos">
                 <input type="hidden" name="id_cliente" value="${id_cliente}"/>
                 <button type="submit" class="btn btn-link">Seus pedidos</button>
             </form>
         </li>
-        <li><a href="NovoPedido.jsp">Novo pedido</a>
+        <li>
         <form method="post" action="FrontController?action=ClienteNovoPedido">
                 <input type="hidden" name="id_cliente" value="${id_cliente}"/>
                 <button type="submit" class="btn btn-link">Novo pedido</button>
