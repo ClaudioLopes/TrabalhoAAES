@@ -17,6 +17,7 @@ public abstract class Funcionario {
     private String nome;
     private String email;
     private String funcao;
+    private String senha;
     private int id;
     private Funcionario funcionarioSuperior;
     private String responsavel;
@@ -31,48 +32,63 @@ public abstract class Funcionario {
     public Funcionario() {
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public Funcionario setSenha(String senha) {
+        this.senha = senha;
+        return this;
+    }
+
     public String getNome() {
         return nome;
     }
 
-    public void setNome(String nome) {
+    public Funcionario setNome(String nome) {
         this.nome = nome;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public Funcionario setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Funcionario setId(int id) {
         this.id = id;
+        return  this;
     }
     
     public String getFuncao(){
         return funcao;
     }
     
-    public void setFuncao(String funcao){
+    public Funcionario setFuncao(String funcao){
         this.funcao = funcao;
+        return this;
     }
 
     public Funcionario getFuncionarioSuperior() {
         return funcionarioSuperior;
     }
 
-    public void setFuncaoSuperior(String funcionarioSuperior) {
+    public Funcionario setFuncaoSuperior(String funcionarioSuperior) {
         this.funcionarioSuperior = Factory.createFuncionario(funcionarioSuperior);
+        return this;
     }
     
-    public void setResponsavel(PedidoEstado pedido){
+    public Funcionario setResponsavel(PedidoEstado pedido){
         responsavel = pedido.getEstado();
+        return this;
     }
     
     public abstract String responsavel();

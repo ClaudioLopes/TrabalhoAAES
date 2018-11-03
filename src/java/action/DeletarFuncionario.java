@@ -5,18 +5,18 @@
  */
 package action;
 
-import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.FuncionarioDAO;
+import controller.Action;
 
 /**
  *
  * @author claudio
  */
-public class DeletarFuncionario implements Usuario{
+public class DeletarFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String nome = request.getParameter("textNome");
         

@@ -5,32 +5,37 @@
  */
 package action;
 
-import controller.Usuario;
 import java.io.IOException;
 import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.EmpresaDAO;
+import controller.Action;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import model.Empresa;
 
 /**
  *
  * @author claudio
  */
-public class LoginEmpresa implements Usuario{
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        String senha = request.getParameter("textSenha");
+public class LoginEmpresa implements Action{
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String email = request.getParameter("email");
+        String senha = request.getParameter("senha");
         
-        if(nome.equals("")) {
-           response.sendRedirect("index.jsp");
+        if(email.equals("") || senha.equals("")) {
+           response.sendRedirect("LoginEmpresa.jsp");
         } else {
             try{
-                String empresa = null;
-                request.setAttribute(empresa, EmpresaDAO.getInstance().find(nome));
-                /*if(cliente.getSenha() == senha){
-                    RequestDispatcher view = request.getRequestDispatcher("/ExibirContato.jsp");
-                    view.forward(request, response);
-                }*/ // Cria um jeito de autenticar o usuario
+                Empresa empresa = EmpresaDAO.getInstance().login(email, senha);
+                if(empresa.getNome() != null) {
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
+                    request.setAttribute("id_empresa", empresa.getId());
+                    dispatcher.forward(request, response);
+                } else {
+                    response.sendRedirect("LoginEmpresa.jsp");
+                }
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

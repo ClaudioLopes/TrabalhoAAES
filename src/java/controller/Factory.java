@@ -14,9 +14,9 @@ import strategy.Produto;
  * @author claudio
  */
 public class Factory { // Padrao Factory Method
-    public static Usuario create(String usuario) {
-        Usuario actionObject = null;
-        String nomeClass = "action." + usuario;
+    public static Action create(String action) {
+        Action actionObject = null;
+        String nomeClass = "action." + action;
         Class classe = null;
         Object objeto = null;
         try{
@@ -25,10 +25,10 @@ public class Factory { // Padrao Factory Method
         }catch(Exception ex){
             return null;
         }
-        if(!(objeto instanceof Usuario)){
+        if(!(objeto instanceof Action)){
             return null;
         }
-        actionObject = (Usuario) objeto;
+        actionObject = (Action) objeto;
         return actionObject;
     }
     

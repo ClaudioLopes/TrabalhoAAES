@@ -22,7 +22,7 @@ public class DatabaseLocator {
     }
     
     Connection getConnection() throws SQLException, ClassNotFoundException{
-        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/designpattern", "root", "root");// Falta criar o banco de dados
+        Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/ifood", "root", "root");// Falta criar o banco de dados
         return conn;
     }
 }

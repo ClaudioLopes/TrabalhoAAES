@@ -1,17 +1,5 @@
-<%-- 
-    Document   : apagarSucesso
-    Created on : Oct 17, 2018, 8:24:08 AM
-    Author     : claudio
---%>
+<%@include file="jspf/header.jspf" %>
+<h1>Dados apagados com sucesso</h1>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>IFood</title>
-    </head>
-    <body>
-        <h1>Dados apagados com sucesso</h1>
-    </body>
-</html>
+<a href="index.jsp"><input type="button" value="Voltar"/></a>
+<%@include file="jspf/footer.jspf" %>

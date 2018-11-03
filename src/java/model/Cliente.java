@@ -12,15 +12,17 @@ public class Cliente implements Observer{
     private String nome;
     private String email;
     private String telefone;
+    private String senha;
     private int id;
     private String endereco;
     
     private static int cont = -1;
 
-    public Cliente(String nome, String email, String telefone) {
+    public Cliente(String nome, String email, String telefone, String senha) {
         this.nome = nome;
         this.email = email;
         this.telefone = telefone;
+        this.senha = senha;
         this.id = ++cont;
     }
     
@@ -36,38 +38,50 @@ public class Cliente implements Observer{
         return nome;
     }
 
-    public void setNome(String nome) {
+    public Cliente setNome(String nome) {
         this.nome = nome;
+        return this;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String emial) {
+    public Cliente setEmail(String emial) {
         this.email = emial;
+        return this;
     }
 
     public String getTelefone() {
         return telefone;
     }
 
-    public void setTelefone(String telefone) {
+    public Cliente setTelefone(String telefone) {
         this.telefone = telefone;
+        return this;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public Cliente setId(int id) {
         this.id = id;
+        return this;
     }
 
     public String getEndereco() {
         return endereco;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public Cliente setSenha(String senha) {
+        this.senha = senha;
+        return this;
+    }
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }

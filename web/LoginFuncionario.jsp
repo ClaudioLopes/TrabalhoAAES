@@ -1,24 +1,21 @@
-<%-- 
-    Document   : LoginFuncionario
-    Created on : Oct 17, 2018, 7:52:56 AM
-    Author     : claudio
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>IFood</title>
-    </head>
-    <body>
-        <h1>Entrar</h1>
-        <form action="FrontController?usuario=LoginFuncionario" method="post">
-          Entre com o nome
-          <input type="text" name="textNome"/><br/>
-          Entre com a senha
-          <input type="password" name="textSenha"/><br/>
-          <input type="submit"/>
-        </form>
-    </body>
-</html>
+<%@include file="jspf/header.jspf" %>
+<div class="container">
+<h1>Login de funcionário</h1>
+    <div class="row justify-content-md-center">
+        <div class="col col-md-auto">
+            <form method="post" action="FrontController?action=LoginFuncionario">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="senha" placeholder="senha" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Sign in</button>
+            </form>
+            <a href="Login.jsp">Voltar</a>
+        </div>
+    </div>
+</div>
+<%@include file="jspf/footer.jspf" %>

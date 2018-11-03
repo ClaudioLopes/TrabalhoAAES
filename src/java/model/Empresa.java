@@ -10,6 +10,8 @@ import strategy.Promocao;
  */
 public class Empresa {
     private String nome;
+    private String senha;
+    private String email;
     private int id;
     private Produto produto; //Vai ser do tipo Produto
 
@@ -22,20 +24,33 @@ public class Empresa {
     public Empresa() {
     }
 
-    public void setNome(String nome) {
+    public String getEmail() {
+        return email;
+    }
+
+    public Empresa setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public Empresa setNome(String nome) {
         this.nome = nome;
+        return this;
     }
 
-    public void setId(int id) {
+    public Empresa setId(int id) {
         this.id = id;
+        return this;
     }
 
-    public void setProduto(String produto) {
+    public Empresa setProduto(String produto) {
         this.produto = Factory.createProduto(produto);
+        return this;
     }
 
-    public void setPromocao(Promocao promocao) {
+    public Empresa setPromocao(Promocao promocao) {
         produto.setPromocao(promocao);
+        return this;
     }
 
     public String getNome() {
@@ -53,6 +68,16 @@ public class Empresa {
     public String getPromocao() {
         return produto.getPromocao();
     }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public Empresa setSenha(String senha) {
+        this.senha = senha;
+        return this;
+    }
+    
     
     
 }
