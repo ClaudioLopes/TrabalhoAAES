@@ -16,15 +16,15 @@ import strategy.Produto;
  *
  * @author claudio
  */
-public class EmpresaDAO {// Classe do Padrão DAO
+public class ProdutoEmpresaDAO {// Classe do Padrão DAO
     //Padrão Singleton
 
-    private static EmpresaDAO instance = new EmpresaDAO();
+    private static ProdutoEmpresaDAO instance = new ProdutoEmpresaDAO();
 
-    private EmpresaDAO() {
+    private ProdutoEmpresaDAO() {
     }
 
-    public static EmpresaDAO getInstance() {
+    public static ProdutoEmpresaDAO getInstance() {
         return instance;
     }
 
@@ -32,13 +32,13 @@ public class EmpresaDAO {// Classe do Padrão DAO
     Statement st = null;
     ResultSet rs = null;
 
-    public void save(Empresa empresa) throws SQLException, ClassNotFoundException {
+    public void save(int id_produto, int id_empresa) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into empresa (nome, senha, email) values ( '" + empresa.getNome() + "', '" + empresa.getSenha() + "', '" + empresa.getEmail() + "')");
+            st.execute("insert into produto_empresa (id_produto, id_empresa) values ( " + id_produto + ", " + id_empresa + ")");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -62,21 +62,19 @@ public class EmpresaDAO {// Classe do Padrão DAO
         }
     }
 
-    public Empresa find(int id) throws SQLException, ClassNotFoundException {
+    public Produto find(int id) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        Empresa empresa = new Empresa();
+        Produto produto = new Item();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select * from empresa where id_empresa = " + id + "");
+            rs = st.executeQuery("select * from produto where id_produto = " + id + "");
             while (rs.next()) {
-                empresa
+                produto
                         .setId(rs.getInt("id_empresa"))
-                        .setNome(rs.getString("nome"))
-                        .setEmail(rs.getString("email"))
-                        .setSenha(rs.getString("senha"));
+                        .setNome(rs.getString("nome"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
@@ -84,7 +82,7 @@ public class EmpresaDAO {// Classe do Padrão DAO
         } finally {
             closeResources(conn, st);
         }
-        return empresa;
+        return produto;
     }
 
     public void update(int id, String nome, String email) throws SQLException, ClassNotFoundException {
@@ -93,7 +91,7 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update empresa set email = '" + email + "', nome = '" + nome + "' where id_empresa = " + id + "");
+            st.execute("update produto set email = '" + email + "', nome = '" + nome + "' where id_produto = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -108,7 +106,7 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update empresa set email = '" + email + "', nome = '" + nome + "', senha = '" + senha + "' where id_empresa = " + id + "");
+            st.execute("update produto set email = '" + email + "', nome = '" + nome + "', senha = '" + senha + "' where id_produto = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -146,70 +144,27 @@ public class EmpresaDAO {// Classe do Padrão DAO
         }
     }
 
-    public List<Empresa> listAll() {
-        List<Empresa> empresas = new ArrayList<Empresa>();
+    public List<Produto> listAll() {
+        List<Produto> produtos = new ArrayList<Produto>();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
             rs = st.executeQuery("select id_empresa, nome from empresa");
             while (rs.next()) {
-                Empresa empresa = new Empresa();
-                empresa
-                        .setId(rs.getInt("id_empresa"))
-                        .setNome(rs.getString("nome"));
-                empresas.add(empresa);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeResources(conn, st, rs);
-            return empresas;
-        }
-    }
-
-    public Empresa login(String email, String senha) throws SQLException, ClassNotFoundException {
-        Empresa empresa = new Empresa();
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select * from empresa where email = '" + email + "' and senha = '" + senha + "'");
-            while (rs.next()) {
-                empresa
-                        .setId(rs.getInt("id_empresa"))
-                        .setNome(rs.getString("nome"))
-                        .setEmail(rs.getString("email"))
-                        .setSenha(rs.getString("senha"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeResources(conn, st, rs);
-            return empresa;
-        }
-
-    }
-
-    public List<Produto> listProdutos(int id_empresa) {
-        List<Produto> produtos = new ArrayList<Produto>();
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select p.* from produto as p join produto_empresa as pe on pe.id_produto = p.id_produto where pe.id_empresa = " + id_empresa + "");
-            while(rs.next()) {
                 Produto produto = new Item();
                 produto
+                        .setId(rs.getInt("id_produto"))
                         .setNome(rs.getString("nome"))
-                        .setValor(rs.getInt("valor"))
-                        .setId(rs.getInt("id_produto"));
+                        .setValor(rs.getInt("valor"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProdutoEmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProdutoEmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources(conn, st, rs);
+            return produtos;
         }
-        return produtos;
     }
 }
