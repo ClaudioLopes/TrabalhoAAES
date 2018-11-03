@@ -87,13 +87,28 @@ public class EmpresaDAO {// Classe do Padrão DAO
         return empresa;
     }
 
-    public void update(String nome, String modalidade) throws SQLException, ClassNotFoundException {
+    public void update(int id, String nome, String email) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update empresa set modalidade = '" + modalidade + "' where nome = '" + nome + "'");
+            st.execute("update empresa set email = '" + email + "', nome = '" + nome + "' where id_empresa = " + id + "");
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL");
+            throw e;
+        } finally {
+            closeResources(conn, st);
+        }
+    }
+
+    public void update(int id, String nome, String email, String senha) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        Statement st = null;
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            st.execute("update empresa set email = '" + email + "', nome = '" + nome + "', senha = '" + senha + "' where id_empresa = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;

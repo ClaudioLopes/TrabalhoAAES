@@ -16,8 +16,8 @@
                     <input type="text" class="form-control" id="email" placeholder="email@empresa.com" name="textEmail" value="${empresa.getEmail()}" required>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="senha">Senha<small class="text-danger"><strong>*</strong></small></label>
-                    <input type="password" class="form-control" id="senha" name="textSenha" required>
+                    <label for="senha">Senha</label>
+                    <input type="password" class="form-control" id="senha" name="textSenha">
                 </div>
             </div>
             <div class="form-group row">

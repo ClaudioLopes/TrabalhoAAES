@@ -11,26 +11,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.EmpresaDAO;
 import controller.Action;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 
 /**
  *
  * @author claudio
  */
-public class UpdateEmpresa implements Action{
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+public class UpdateEmpresa implements Action {
+
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String nome = request.getParameter("textNome");
-        String modalidade = request.getParameter("textModalidade");
-        
-        if(nome.equals("") || modalidade.equals("")) {
-           response.sendRedirect("index.jsp");
+        String email = request.getParameter("textEmail");
+        String senha = request.getParameter("textSenha");
+        int id = Integer.parseInt(request.getParameter("id_empresa"));
+
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
+        request.setAttribute("id_empresa", id);
+
+        if (nome.equals("") || email.equals("")) {
+            dispatcher.forward(request, response);
         } else {
-            try{
-                EmpresaDAO.getInstance().update(nome, modalidade);
-                response.sendRedirect("contatoSucesso.jsp");
-            }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
+            try {
+                if (senha.equals("")) {
+                    EmpresaDAO.getInstance().update(id, nome, email);
+                } else {
+                    EmpresaDAO.getInstance().update(id, nome, email, senha);
+                }
+                dispatcher.forward(request, response);
+            } catch (SQLException ex) {
+                response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
-            }catch(ClassNotFoundException ex){
+            } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }
