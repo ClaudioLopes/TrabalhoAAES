@@ -2,6 +2,7 @@
 <div class="container">
 <h1>Atualizar dados</h1>
     <form method="POST" action="FrontController?action=UpdateCliente">
+        <input type="hidden" name="id_empresa" value="${cliente.getId()}"
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="nomeCompleto">Nome completo<small class="text-danger"><strong>*</strong></small></label>

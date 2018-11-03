@@ -62,7 +62,7 @@ public class EmpresaDAO {// Classe do Padrão DAO
         }
     }
 
-    public Empresa find(String nome) throws SQLException, ClassNotFoundException {
+    public Empresa find(int id) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
@@ -70,10 +70,13 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select nome, email from cliente where nome = '" + nome + "'");
+            rs = st.executeQuery("select * from empresa where id_empresa = " + id + "");
             while (rs.next()) {
-                empresa.setId(Integer.valueOf(rs.getString("id")));
-                empresa.setNome(rs.getString("nome"));
+                empresa
+                        .setId(rs.getInt("id_empresa"))
+                        .setNome(rs.getString("nome"))
+                        .setEmail(rs.getString("email"))
+                        .setSenha(rs.getString("senha"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
