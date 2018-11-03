@@ -75,8 +75,9 @@ public class ProdutoDAO {// Classe do Padrão DAO
             rs = st.executeQuery("select * from produto where id_produto = " + id + "");
             while (rs.next()) {
                 produto
-                        .setId(rs.getInt("id_empresa"))
-                        .setNome(rs.getString("nome"));
+                        .setId(rs.getInt("id_produto"))
+                        .setNome(rs.getString("nome"))
+                        .setValor(rs.getInt("valor"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");

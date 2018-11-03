@@ -12,7 +12,7 @@
         <button type="submit" class="btn btn-success">Fechar pedido</button>
         <button type="reset" class="btn btn-secondary">Desmarcar todos</button>
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
-        <input type="hidden" name="id_produto" value="${produto.getId()}"/>
+        <input type="hidden" name="id_cliente" value="${id_cliente}"/>
         <table class="table table-striped justify-content-center text-center">
             <thead class="thead-dark">
                 <tr>
