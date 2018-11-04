@@ -24,6 +24,8 @@ import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
 import persistence.EmpresaDAO;
 import persistence.ProdutoDAO;
+import state.Pedido;
+import state.PedidoEstadoEmProdução;
 import strategy.Item;
 import strategy.Produto;
 
@@ -43,34 +45,25 @@ public class ClientePedidoConcluido implements Action {
         request.setAttribute("id_empresa", id_empresa);
         try {
             List<Produto> itens = new ArrayList<Produto>();
-            int total = 0;
-            if (items != null) {
-                for (String item : items) {
-                    int id_produto = Integer.parseInt(item);
-                    Produto p = ProdutoDAO.getInstance().find(id_produto);
-                    total = total + p.getValor();
-                    itens.add(p);
-                }
-                total = total - (total * fp.getDesconto() / 100);
-                request.setAttribute("pagamento", fp);
-                request.setAttribute("total", total);
-                request.setAttribute("itens", itens);
-                dispatcher.forward(request, response);
-            } else {
-                List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
-                dispatcher = request.getRequestDispatcher("ClienteProdutosEmpresa.jsp");
-                FormaPagamento dinheiro = new Dinheiro();
-                FormaPagamento cartao = new Cartao();
-                request.setAttribute("dinheiro", dinheiro);
-                request.setAttribute("cartao", cartao);
-                request.setAttribute("produtos", produtos);
-                dispatcher.forward(request, response);
+            for (String item : items) {
+                int id_produto = Integer.parseInt(item);
+                Produto p = ProdutoDAO.getInstance().find(id_produto);
+                itens.add(p);
             }
+            Pedido pedido = new Pedido();
+            pedido.setProduto(itens);
+            pedido.setPedidoEstado(new PedidoEstadoEmProdução());
+            request.setAttribute("itens", itens);
+            dispatcher.forward(request, response);
+            List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
+            dispatcher = request.getRequestDispatcher("ClienteProdutosEmpresa.jsp");
+            FormaPagamento dinheiro = new Dinheiro();
+            FormaPagamento cartao = new Cartao();
+            request.setAttribute("dinheiro", dinheiro);
+            request.setAttribute("cartao", cartao);
+            request.setAttribute("produtos", produtos);
+            dispatcher.forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
             Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
         }
 

@@ -69,7 +69,7 @@ CREATE TABLE superior (
 CREATE TABLE pedido (
     id_pedido INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     estado VARCHAR(50) NOT NULL,
-    id_funcionario_responsavel INTEGER NOT NULL,
+    id_funcionario_responsavel INTEGER,
     id_cliente INTEGER NOT NULL,
     id_empresa INTEGER NOT NULL,
     FOREIGN KEY (id_funcionario_responsavel) REFERENCES funcionario(id_funcionario) ON DELETE CASCADE,

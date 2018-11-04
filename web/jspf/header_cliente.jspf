@@ -25,24 +25,20 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Seus pedidos<span class="sr-only">(current)</span></a>
+                        <form method="post" action="FrontController?action=ClientePedidos">
+                            <input type="hidden" name="id_cliente" value="${id_cliente}"/>
+                            <button type="submit" class="btn btn-link nav-link">Seus pedidos<span class="sr-only">(current)</span></button>
+                        </form>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Novo pedido<span class="sr-only">(current)</span></a>
+                        <form method="post" action="FrontController?action=ClienteNovoPedido">
+                            <input type="hidden" name="id_cliente" value="${id_cliente}"/>
+                            <button type="submit" class="btn btn-link nav-link">Novo pedido<span class="sr-only">(current)</span></button>
+                        </form>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="index.jsp">Logout<span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
             </div>
-            <div class="navbar-brand">
-                <ul class="navbar-nav">
-                    <li class="nav-item">${mensagem} <small><small><a href="${link}">${logout}</a></small></small></li>
-                </ul>
-            </div>
         </nav>
-        <!--        <div class="container">
-                    <div class="row justify-content-md-center">
-                        <h1><%=request.getAttribute("titulo")%></h1>
-                    </div>-->
-

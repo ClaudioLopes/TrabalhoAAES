@@ -1,15 +1,20 @@
-<%@include file="jspf/header.jspf" %>
+<%@include file="jspf/header_empresa.jspf" %>
 <div class="container">
     <h1>Cadastrar funcionário</h1>
-    <form method="POST" action="FrontController?action=CadastrarCliente">
+    <form method="POST" action="FrontController?action=CadastrarFuncionario">
+        <input type="hidden" name="id_empresa" value="${id_empresa}"/>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="nome">Nome completo<small class="text-danger"><strong>*</strong></small></label>
-                <input type="text" class="form-control" id="nome" placeholder="Nome completo" name="textNome" required>
+                <input type="text" class="form-control" id="nome" placeholder="Nome completo" name="nome" required>
             </div>
             <div class="form-group col-md-6">
                 <label for="funcao">Função<small class="text-danger"><strong>*</strong></small></label>
-                <input type="text" class="form-control" id="funcao" placeholder="Função" name="textFuncao" required>
+                <select class="custom-select" name="funcao" id="funcao" required>
+                    <option value="Administrador" selected>Administrador</option>
+                    <option value="Cozinheiro">Cozinheiro</option>
+                    <option value="Entregador">Entregador</option>
+                </select>
             </div> 
         </div>
         <div class="form-row">

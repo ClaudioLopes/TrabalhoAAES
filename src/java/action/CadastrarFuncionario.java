@@ -13,30 +13,34 @@ import javax.servlet.http.HttpServletResponse;
 import model.Funcionario;
 import persistence.FuncionarioDAO;
 import controller.Action;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 
 /**
  *
  * @author claudio
  */
 public class CadastrarFuncionario implements Action{
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        String email = request.getParameter("textEmail");
-        String funcao = request.getParameter("textFuncao");
-        String senha = request.getParameter("textSenha");
-        String superior = request.getParameter("textSuperior");
-        
-        if(nome.equals("") || email.equals("")) {
-           response.sendRedirect("index.jsp");
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+        String funcao = request.getParameter("funcao");
+        String senha = request.getParameter("senha");
+        int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
+        request.setAttribute("id_empresa", id_empresa);
+        if(nome.equals("") || email.equals("") || senha.equals("")) {
+           dispatcher = request.getRequestDispatcher("CadastrarFuncionario.jsp");
+           dispatcher.forward(request, response);
         } else {
-            Funcionario funcionario = Factory.createFuncionario(superior);
+            Funcionario funcionario = Factory.createFuncionario(funcao);
             funcionario
-                    .setFuncao(funcao)
                     .setEmail(email)
-                    .setNome(nome);
+                    .setNome(nome)
+                    .setSenha(senha);
             try{
                 FuncionarioDAO.getInstance().save(funcionario);
-                response.sendRedirect("CadastroSucesso.jsp");
+                dispatcher.forward(request, response);
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

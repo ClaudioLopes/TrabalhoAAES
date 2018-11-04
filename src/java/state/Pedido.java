@@ -17,6 +17,8 @@ import strategy.Produto;
 public class Pedido  extends Observable{
     private PedidoEstado estado;
     private List<Produto> produto;
+    private Funcionario funcionarioResponsavel;
+    private int formaPagamento;
 
     public List<Produto> getProduto() {
         return produto;
@@ -27,8 +29,6 @@ public class Pedido  extends Observable{
         return this;
     }
     
-    private Funcionario funcionarioResponsavel;
-    private int formaPagamento;
 
     public int getFormaPagamento() {
         return formaPagamento;

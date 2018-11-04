@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class Combo { // Padrão composite
     private String nome;
-    private int valor;
+    private float valor;
     private ArrayList produtos = new ArrayList();
     
     public Combo(Produto produto1, Produto produto2, String nome){
@@ -31,7 +31,7 @@ public class Combo { // Padrão composite
         this.nome = nome;
     }
 
-    public int getValor() {
+    public float getValor() {
         return valor;
     }
 
