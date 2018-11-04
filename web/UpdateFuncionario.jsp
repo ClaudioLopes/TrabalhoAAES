@@ -1,7 +1,7 @@
 <%@include file="jspf/header_funcionario.jspf" %>
 <div class="container">
     <h1>Atualizar funcionário</h1>
-    <form method="POST" action="FrontController?action=CadastrarFuncionario">
+    <form method="POST" action="FrontController?action=UpdateFuncionario">
         <input type="hidden" name="id_funcionario" value="${id_funcionario}"/>
         <div class="form-row">
             <div class="form-group col-md-6">
