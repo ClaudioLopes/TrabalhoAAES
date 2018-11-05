@@ -3,6 +3,9 @@ package funcionario;
 import state.PedidoEstadoConfirmado;
 import state.PedidoEstadoEmEntrega;
 import model.Funcionario;
+import persistence.PedidoDAO;
+import state.Pedido;
+import state.PedidoEstadoEmProdução;
 
 /**
  *
@@ -17,5 +20,9 @@ public class Administrador extends Funcionario{
     public Administrador(String superior) {
         setResponsavel(new PedidoEstadoConfirmado());
         setFuncaoSuperior(superior);
+    }
+    
+    public void atualizarPedido(Pedido pedido){
+        pedido.setPedidoEstado(new PedidoEstadoEmProdução());
     }
 }

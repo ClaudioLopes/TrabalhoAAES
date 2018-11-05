@@ -13,6 +13,8 @@ import model.Cliente;
 import persistence.ClienteDAO;
 import controller.Action;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import model.Empresa;
@@ -20,7 +22,9 @@ import pagamento.Cartao;
 import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
 import persistence.EmpresaDAO;
+import persistence.PedidoDAO;
 import persistence.ProdutoDAO;
+import state.Pedido;
 import strategy.Produto;
 
 /**
@@ -42,6 +46,16 @@ public class ClienteProdutosEmpresa implements Action {
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
         dispatcher.forward(request, response);
+        Pedido pedido = new Pedido();
+        try{
+            pedido.setProduto(produtos);
+            PedidoDAO.getInstance().save(id_empresa, id_cliente,produtos);
+            response.sendRedirect("CadastrarSucesso.jsp");
+        }catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteProdutosEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 }

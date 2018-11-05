@@ -8,6 +8,8 @@ package funcionario;
 import state.PedidoEstadoEmEntrega;
 import state.PedidoEstadoEmProdução;
 import model.Funcionario;
+import state.Pedido;
+import state.PedidoEstadoConfirmado;
 
 /**
  *
@@ -22,5 +24,9 @@ public class Cozinheiro extends Funcionario{
     public Cozinheiro (String superior) {
         setResponsavel(new PedidoEstadoEmProdução());
         setFuncaoSuperior(superior);
+    }
+    
+    public void atualizarPedido(Pedido pedido){
+        pedido.setPedidoEstado(new PedidoEstadoEmEntrega());
     }
 }

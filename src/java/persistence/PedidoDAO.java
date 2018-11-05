@@ -32,15 +32,17 @@ public class PedidoDAO {// Classe do Padrão DAO
     Statement st = null;
     ResultSet rs = null;
 
-    public void save(int id_empresa, int id_cliente, Produto produto) throws SQLException, ClassNotFoundException {
+    public void save(int id_empresa, int id_cliente, List<Produto> produto) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into pedido (nome, valor) values ( '" + produto.getNome() + "', " + produto.getValor() + ")");
-            Produto p = find(produto.getNome());
-            ProdutoEmpresaDAO.getInstance().save(p.getId(), id_empresa);
+            for(int i = 0; i < produto.size(); i++){
+                st.execute("insert into pedido (nome, valor) values ( '" + produto.get(i).getNome() + "', " + produto.get(i).getValor() + ")");
+                Produto p = find(produto.get(i).getNome());
+                ProdutoEmpresaDAO.getInstance().save(p.getId(), id_empresa);
+            }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
