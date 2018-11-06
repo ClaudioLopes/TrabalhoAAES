@@ -21,7 +21,7 @@
                 <td>Status do pedido:</td>
                 <td>${pedido.getPedidoEstado()}</td>
                 <td>
-                    <form method="post" action="FrontController?action=MementoVoltarEstado">
+                    <form method="post" action="FrontController?action=AtualizarPedido">
                         <input  type="hidden" name="id_pedido" value="${pedido.getId()}"/>
                         <button class="btn btn-link" type="submit">Atualizar estado do pedido</button>
                     </form>

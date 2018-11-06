@@ -18,6 +18,36 @@ public class Pedido  extends Observable{
     private PedidoEstado estado;
     private List<Produto> produto;
     private Funcionario funcionarioResponsavel;
+    private int id;
+    private String nome;
+    private int valor;
+
+    public int getValor() {
+        return valor;
+    }
+
+    public Pedido setValor(int valor) {
+        this.valor = valor;
+        return this;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Pedido setNome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Pedido setId(int id) {
+        this.id = id;
+        return this;
+    }
     private int formaPagamento;
 
     public List<Produto> getProduto() {

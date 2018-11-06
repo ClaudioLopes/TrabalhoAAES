@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Empresa;
+import state.Pedido;
 import strategy.Item;
 import strategy.Produto;
 
@@ -40,7 +41,7 @@ public class PedidoDAO {// Classe do Padrão DAO
             st = conn.createStatement();
             for(int i = 0; i < produto.size(); i++){
                 st.execute("insert into pedido (nome, valor) values ( '" + produto.get(i).getNome() + "', " + produto.get(i).getValor() + ")");
-                Produto p = find(produto.get(i).getNome());
+                Pedido p = find(produto.get(i).getNome());
                 ProdutoEmpresaDAO.getInstance().save(p.getId(), id_empresa);
             }
         } catch (SQLException e) {
@@ -66,17 +67,17 @@ public class PedidoDAO {// Classe do Padrão DAO
         }
     }
 
-    public Produto find(int id) throws SQLException, ClassNotFoundException {
+    public Pedido find(int id) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        Produto produto = new Item();
+        Pedido pedido = new Pedido();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select * from produto where id_produto = " + id + "");
+            rs = st.executeQuery("select * from pedido where id_pedido = " + id + "");
             while (rs.next()) {
-                produto
+                pedido
                         .setId(rs.getInt("id_produto"))
                         .setNome(rs.getString("nome"))
                         .setValor(rs.getInt("valor"));
@@ -87,21 +88,21 @@ public class PedidoDAO {// Classe do Padrão DAO
         } finally {
             closeResources(conn, st);
         }
-        return produto;
+        return pedido;
     }
     
-    public Produto find(String nome) throws SQLException, ClassNotFoundException {
+    public Pedido find(String nome) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
-        Produto produto = new Item();
+        Pedido pedido = new Pedido();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select * from produto where nome = '" + nome + "'");
+            rs = st.executeQuery("select * from pedido where nome = '" + nome + "'");
             while (rs.next()) {
-                produto
-                        .setId(rs.getInt("id_produto"))
+                pedido
+                        .setId(rs.getInt("id_pedido"))
                         .setNome(rs.getString("nome"))
                         .setValor(rs.getInt("valor"));
             }
@@ -111,7 +112,7 @@ public class PedidoDAO {// Classe do Padrão DAO
         } finally {
             closeResources(conn, st);
         }
-        return produto;
+        return pedido;
     }
 
     public void update(int id, String nome, String email) throws SQLException, ClassNotFoundException {

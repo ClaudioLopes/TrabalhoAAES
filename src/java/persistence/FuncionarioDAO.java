@@ -76,6 +76,29 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         return funcionario;
     }
     
+    public String find (int id) throws SQLException, ClassNotFoundException{
+        Connection conn = null;
+        Statement st = null;
+        ResultSet rs = null;
+        Funcionario funcionario = null;
+        try{
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select nome, email from funcionario where id = '" + id + "'");
+            while(rs.next()){
+                funcionario = Factory.createFuncionario(rs.getString("funcao"));
+                funcionario.setEmail(rs.getString("emial"));
+                funcionario.setNome(rs.getString("nome"));
+            }
+        }catch(SQLException e){
+            System.out.println("Erro no SQL");
+            throw e;
+        }finally{
+            closeResources(conn, st);
+        }
+        return funcionario.getFuncao();
+    }
+    
     public void update (String nome, String telefone) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;

@@ -92,6 +92,7 @@ public abstract class Funcionario {
     }
     
     public abstract String responsavel();
+    public abstract void atualizarPedido(Pedido pedido);
     
     public Funcionario responsavelPedido(PedidoEstado pedido){
         if(pedido.getEstado().equals(responsavel)){
