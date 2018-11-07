@@ -23,22 +23,22 @@ import state.Pedido;
  * @author claudio
  */
 public class AtualizarPedido implements Action {
-    
+
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id_funcionario"));
         int id_pedido = Integer.parseInt(request.getParameter("id_pedido"));
         RequestDispatcher dispatcher = request.getRequestDispatcher("FuncionarioPedidoStatus.jsp");
-        dispatcher.forward(request, response);
-        try{
+        try {
             Funcionario funcionario = Factory.createFuncionario(FuncionarioDAO.getInstance().find(id));
             Pedido pedido = PedidoDAO.getInstance().find(id_pedido);
             funcionario.atualizarPedido(PedidoDAO.getInstance().find(id_pedido));
             response.sendRedirect("contatoSucesso.jsp");
-        }catch(SQLException ex){
-                response.sendRedirect("contatoErro.jsp");
-                ex.printStackTrace();
-            }catch(ClassNotFoundException ex){
-                ex.printStackTrace();
-            }
+            dispatcher.forward(request, response);
+        } catch (SQLException ex) {
+            response.sendRedirect("contatoErro.jsp");
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 }

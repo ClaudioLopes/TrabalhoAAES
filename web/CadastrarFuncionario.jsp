@@ -1,4 +1,4 @@
-<%@include file="jspf/header_empresa.jspf" %>
+<%@include file="jspf/header.jspf" %>
 <div class="container">
     <h1>Cadastrar funcionário</h1>
     <form method="POST" action="FrontController?action=CadastrarFuncionario">

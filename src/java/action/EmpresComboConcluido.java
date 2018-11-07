@@ -26,6 +26,7 @@ import persistence.EmpresaDAO;
 import persistence.ProdutoDAO;
 import state.Pedido;
 import state.PedidoEstadoEmProdução;
+import strategy.Combo;
 import strategy.Item;
 import strategy.Produto;
 
@@ -33,15 +34,13 @@ import strategy.Produto;
  *
  * @author claudio
  */
-public class ClientePedidoConcluido implements Action {
+public class EmpresComboConcluido implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
-        int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         String[] items = request.getParameterValues("item");
-        float total = Float.parseFloat(request.getParameter("total"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
-        request.setAttribute("id_cliente", id_cliente);
+        String nome = request.getParameter("nome");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaProdutos.jsp");
         request.setAttribute("id_empresa", id_empresa);
         try {
             List<Produto> itens = new ArrayList<Produto>();
@@ -50,21 +49,11 @@ public class ClientePedidoConcluido implements Action {
                 Produto p = ProdutoDAO.getInstance().find(id_produto);
                 itens.add(p);
             }
-            Pedido pedido = new Pedido();
-            pedido.setProduto(itens);
-            pedido.setPedidoEstado(new PedidoEstadoEmProdução());
-            request.setAttribute("itens", itens);
-            //dispatcher.forward(request, response);
-            List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
-            dispatcher = request.getRequestDispatcher("ClienteProdutosEmpresa.jsp");
-            FormaPagamento dinheiro = new Dinheiro();
-            FormaPagamento cartao = new Cartao();
-            request.setAttribute("dinheiro", dinheiro);
-            request.setAttribute("cartao", cartao);
-            request.setAttribute("produtos", produtos);
+            Combo combo = new Combo(itens, nome);
+            ProdutoDAO.getInstance().novoCombo(combo, id_empresa);
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmpresComboConcluido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

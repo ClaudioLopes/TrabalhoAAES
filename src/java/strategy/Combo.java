@@ -6,6 +6,7 @@
 package strategy;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,11 +17,18 @@ public class Combo { // Padrão composite
     private float valor;
     private ArrayList produtos = new ArrayList();
     
-    public Combo(Produto produto1, Produto produto2, String nome){
-        produtos.add(produto1);
-        produtos.add(produto2);
+    public Combo(List<Produto> produtos, String nome){
+        this.valor = 0;
+        this.produtos = this.produtos;
         this.nome = nome;
-        this.valor = (produto1.getValor() + produto2.getValor())/2;
+        for (Produto produto : produtos) {
+            this.valor = this.valor + produto.getValor();
+        }
+        this.valor = (float) (this.valor - (this.valor * 0.1));
+    }
+    
+    public Combo() {
+        
     }
 
     public String getNome() {
@@ -47,5 +55,7 @@ public class Combo { // Padrão composite
         this.produtos.add(produto);
     }
     
-    
+    public List<Produto> getProdutos() {
+        return this.produtos;
+    }
 }

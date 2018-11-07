@@ -14,10 +14,36 @@
             <button type="submit" class="btn btn-secondary">Voltar</button>
         </form>
     </div>
+    <div class="d-inline p-2">
+        <form method="post" action="FrontController?action=EmpresaNovoCombo">
+            <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+            <button type="submit" class="btn btn-secondary">Novo combo</button>
+        </form>
+    </div>
     <form method="post" action="FrontController?action=ProdutoUpdateForm">
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
         <input type="hidden" name="id_produto" value="${produto.getId()}"/>
     </form>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Valor</th>
+                <th scope="col">Promoção</th>
+            </tr>
+        </thead>
+        <tbody>
+            <c:forEach var="produto" items="${produtos}">
+                <tr>
+                    <th scope="row">${produto.getId()}</th>
+                    <td>${produto.getNome()}</td>
+                    <td>${produto.getValor()}</td>
+                    <td></td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
     <table class="table table-striped">
         <thead class="thead-dark">
             <tr>

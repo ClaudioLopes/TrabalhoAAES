@@ -23,16 +23,16 @@
         </thead>
         <tbody>
             <tr> <!-- APAGAR ISTO DEPOIS -->
-                <th scope="row">EXEMPLO ID FUNCIONARIO</th>
-                <td>EXEMPLO NOME</td>
-                <td>EXEMPLO FUNÇÃO</td>
-                <td>EXEMPLO EMAIL</td>
+                <th scope="row">1</th>
+                <td>João</td>
+                <td>Cozinheiro</td>
+                <td>j@o.com</td>
             </tr>
             <tr> <!-- APAGAR ISTO DEPOIS -->
-                <th scope="row">EXEMPLO 2 ID FUNCIONARIO</th>
-                <td>EXEMPLO 2 NOME</td>
-                <td>EXEMPLO 2 FUNÇÃO</td>
-                <td>EXEMPLO 2 EMAIL</td>
+                <th scope="row">2</th>
+                <td>José</td>
+                <td>Administrador</td>
+                <td>j@se.com    </td>
             </tr>
             <c:forEach var="funcionario" items="${funcionarios}">
                 <tr>

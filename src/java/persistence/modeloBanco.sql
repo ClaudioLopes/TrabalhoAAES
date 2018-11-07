@@ -84,6 +84,21 @@ CREATE TABLE produto_pedido (
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE
 );
 
+drop table combo;
+
+create table combo (
+    id_combo INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id_empresa integer not null,
+    id_produto integer not null,
+    foreign key (id_empresa) references empresa(id_empresa) on delete cascade,
+    foreign key (id_produto) references produto(id_produto) on delete cascade
+);
+
+create table funcionario_empresa (
+    id_empresa integer not null,
+    id_funcionario integer not null
+);
+
 INSERT INTO cliente (nome, telefone, email, senha) VALUES ('ramon', '123123', 'ramon@gmail.com', '123');
 INSERT INTO cliente (nome, telefone, email, senha) VALUES ('claudio', '123123', 'claudio@gmail.com', '123');
 

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Empresa;
+import strategy.Combo;
 import strategy.Item;
 import strategy.Produto;
 
@@ -87,7 +88,7 @@ public class ProdutoDAO {// Classe do Padrão DAO
         }
         return produto;
     }
-    
+
     public Produto find(String nome) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
@@ -193,5 +194,37 @@ public class ProdutoDAO {// Classe do Padrão DAO
             closeResources(conn, st, rs);
             return produtos;
         }
+    }
+
+    public void novoCombo(Combo combo, int id_empresa) {
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            for (Produto produto : combo.getProdutos()) {
+                st.execute("insert into combo (id_empresa, id_produto) values ("+id_empresa+", "+produto.getId()+")");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }finally {
+            closeResources(conn, st);
+        }
+    }
+    
+    public Combo getCombo(int id_empresa) throws ClassNotFoundException {
+        Combo combo = new Combo();
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select * from combo where id_empresa = "+id_empresa+")");
+            while(rs.next()) {
+                
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return combo;
     }
 }
