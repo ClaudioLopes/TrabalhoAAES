@@ -51,6 +51,29 @@ public class PedidoDAO {// Classe do Padrão DAO
             closeResources(conn, st);
         }
     }
+    
+    public void save(int id_empresa, int id_cliente, Pedido pedido) throws SQLException, ClassNotFoundException {
+        Connection conn = null;
+        Statement st = null;
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            st.execute("insert into pedido (estado, id_cliente, id_empresa, total) values ('" + pedido.getPedidoEstado().getEstado() + "', " + id_cliente + ", " + id_empresa + ", " + pedido.getValor() + ")");
+            rs = st.executeQuery("select max(id_pedido) as id_pedido from pedido");
+            Integer id_pedido = null;
+            while(rs.next()) {
+                id_pedido = rs.getInt("id_pedido");
+            }
+            for (Produto produto : pedido.getProduto()) {
+                st.execute("insert into produto_pedido (id_produto, id_pedido) values (" + produto.getId() + ", " + id_pedido + ")");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL");
+            throw e;
+        } finally {
+            closeResources(conn, st);
+        }
+    }
 
     public void delete(String nome) throws SQLException, ClassNotFoundException {
         Connection conn = null;
@@ -80,7 +103,7 @@ public class PedidoDAO {// Classe do Padrão DAO
                 pedido
                         .setId(rs.getInt("id_produto"))
                         .setNome(rs.getString("nome"))
-                        .setValor(rs.getInt("valor"));
+                        .setValor(rs.getDouble("valor"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
@@ -104,7 +127,7 @@ public class PedidoDAO {// Classe do Padrão DAO
                 pedido
                         .setId(rs.getInt("id_pedido"))
                         .setNome(rs.getString("nome"))
-                        .setValor(rs.getInt("valor"));
+                        .setValor(rs.getDouble("valor"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");

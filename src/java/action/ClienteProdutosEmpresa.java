@@ -46,16 +46,16 @@ public class ClienteProdutosEmpresa implements Action {
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
         dispatcher.forward(request, response);
-        Pedido pedido = new Pedido();
-        try{
-            pedido.setProduto(produtos);
-            PedidoDAO.getInstance().save(id_empresa, id_cliente,produtos);
-            response.sendRedirect("CadastrarSucesso.jsp");
-        }catch(ClassNotFoundException ex){
-            ex.printStackTrace();
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteProdutosEmpresa.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        Pedido pedido = new Pedido();
+//        try{
+//            pedido.setProduto(produtos);
+//            PedidoDAO.getInstance().save(id_empresa, id_cliente,produtos);
+//            response.sendRedirect("CadastrarSucesso.jsp");
+//        }catch(ClassNotFoundException ex){
+//            ex.printStackTrace();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(ClienteProdutosEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }
 }

@@ -20,13 +20,26 @@ public class Pedido  extends Observable{
     private Funcionario funcionarioResponsavel;
     private int id;
     private String nome;
-    private int valor;
+    private Double valor;
+    private ArrayList<Memento> estadoSalvo = new ArrayList();
+    private int formaPagamento;
 
-    public int getValor() {
+    public Pedido(List<Produto> produto, String nome, Double valor, int formaPagamento) {
+        this.produto = produto;
+        this.nome = nome;
+        this.valor = valor;
+        this.formaPagamento = formaPagamento;
+    }
+    
+    public Pedido() {
+        funcionarioResponsavel = new Administrador("Cozinheiro");
+    }
+
+    public Double getValor() {
         return valor;
     }
 
-    public Pedido setValor(int valor) {
+    public Pedido setValor(Double valor) {
         this.valor = valor;
         return this;
     }
@@ -48,7 +61,6 @@ public class Pedido  extends Observable{
         this.id = id;
         return this;
     }
-    private int formaPagamento;
 
     public List<Produto> getProduto() {
         return produto;
@@ -67,11 +79,7 @@ public class Pedido  extends Observable{
     public void setFormaPagamento(int formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
-    private ArrayList<Memento> estadoSalvo = new ArrayList();
 
-    public Pedido() {
-        funcionarioResponsavel = new Administrador("Cozinheiro");
-    }
 
     public PedidoEstado getPedidoEstado() {
         return estado;

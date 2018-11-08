@@ -72,6 +72,7 @@ CREATE TABLE pedido (
     id_funcionario_responsavel INTEGER,
     id_cliente INTEGER NOT NULL,
     id_empresa INTEGER NOT NULL,
+    total DOUBLE NOT NULL,
     FOREIGN KEY (id_funcionario_responsavel) REFERENCES funcionario(id_funcionario) ON DELETE CASCADE,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
     FOREIGN KEY (id_empresa) REFERENCES empresa(id_empresa) ON DELETE CASCADE

@@ -23,6 +23,7 @@ import pagamento.Cartao;
 import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
 import persistence.EmpresaDAO;
+import persistence.PedidoDAO;
 import persistence.ProdutoDAO;
 import state.Pedido;
 import state.PedidoEstadoEmProdução;
@@ -39,7 +40,7 @@ public class ClientePedidoConcluido implements Action {
         int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         String[] items = request.getParameterValues("item");
-        float total = Float.parseFloat(request.getParameter("total"));
+        double total = Float.parseFloat(request.getParameter("total"));
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
@@ -51,12 +52,13 @@ public class ClientePedidoConcluido implements Action {
                 itens.add(p);
             }
             Pedido pedido = new Pedido();
-            pedido.setProduto(itens);
-            pedido.setPedidoEstado(new PedidoEstadoEmProdução());
+            pedido
+                    .setProduto(itens)
+                    .setPedidoEstado(new PedidoEstadoEmProdução())
+                    .setValor(total);
+            PedidoDAO.getInstance().save(id_empresa, id_cliente, pedido);
             request.setAttribute("itens", itens);
-            //dispatcher.forward(request, response);
             List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
-            dispatcher = request.getRequestDispatcher("ClienteProdutosEmpresa.jsp");
             FormaPagamento dinheiro = new Dinheiro();
             FormaPagamento cartao = new Cartao();
             request.setAttribute("dinheiro", dinheiro);

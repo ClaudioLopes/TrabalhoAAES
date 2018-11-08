@@ -2,7 +2,7 @@
 <div class="container">
 <h1>Atualizar dados</h1>
     <form method="POST" action="FrontController?action=UpdateCliente">
-        <input type="hidden" name="id_empresa" value="${cliente.getId()}"
+        <input type="hidden" name="id_empresa" value="${cliente.getId()}"/>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="nomeCompleto">Nome completo<small class="text-danger"><strong>*</strong></small></label>
@@ -28,7 +28,10 @@
         </div>
         <button type="submit" class="btn btn-success">Cadastrar</button>
         <button type="reset" class="btn btn-secondary">Limpar Campos</button>
-        <a class="btn btn-danger" href="index.jsp">Voltar</a>
     </form>
+            <form method="post" action="FrontController?action=ClienteIndex">
+                <input type="hidden" name="id_cliente" value="${cliente.getId()}"/>
+                <button class="btn btn-primary" type="submit" style="margin-top: 1em;">Voltar</button>
+            </form>
 </div>
 <%@include file="jspf/footer.jspf" %>

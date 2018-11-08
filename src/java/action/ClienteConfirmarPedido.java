@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Cliente;
 import persistence.ClienteDAO;
 import controller.Action;
+import controller.Factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,13 +38,12 @@ public class ClienteConfirmarPedido implements Action {
         int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         String[] items = request.getParameterValues("item");
+        String formaPagamento = request.getParameter("pagamento");
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteConfirmarPedido.jsp");
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
         try {
-            Class classe = Class.forName("pagamento." + request.getParameter("pagamento"));
-            Object objeto = classe.newInstance();
-            FormaPagamento fp = (FormaPagamento) objeto;
+            FormaPagamento fp = Factory.createFormaPagamento(formaPagamento);
             List<Produto> itens = new ArrayList<Produto>();
             float total = 0;
             if (items != null) {
@@ -69,10 +69,6 @@ public class ClienteConfirmarPedido implements Action {
                 dispatcher.forward(request, response);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ClienteConfirmarPedido.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(ClienteConfirmarPedido.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
             Logger.getLogger(ClienteConfirmarPedido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
