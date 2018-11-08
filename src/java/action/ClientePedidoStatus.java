@@ -6,25 +6,20 @@
 package action;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cliente;
-import persistence.ClienteDAO;
 import controller.Action;
-import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import model.Empresa;
 import pagamento.Cartao;
 import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
-import persistence.EmpresaDAO;
-import persistence.ProdutoDAO;
-import strategy.Item;
+import persistence.PedidoDAO;
+import state.Pedido;
 import strategy.Produto;
 
 /**
@@ -34,18 +29,18 @@ import strategy.Produto;
 public class ClientePedidoStatus implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
         int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
-        int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
-        String[] produtos = request.getParameterValues("item");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteFormaPagamento.jsp");
-        FormaPagamento dinheiro = new Dinheiro();
-        FormaPagamento cartao = new Cartao();
-        request.setAttribute("dinheiro", dinheiro);
-        request.setAttribute("cartao", cartao);
-        request.setAttribute("produtos", produtos);
-        request.setAttribute("id_cliente", id_cliente);
-        request.setAttribute("id_empresa", id_empresa);
-        dispatcher.forward(request, response);
-
+        int id_pedido = Integer.parseInt(request.getParameter("id_pedido"));
+        try {
+            Pedido pedido = PedidoDAO.getInstance().find(id_pedido);
+            List<Produto> itens = PedidoDAO.getInstance().listProdutosPedido(id_pedido);
+            request.setAttribute("itens", itens);
+            request.setAttribute("pedido", pedido);
+            request.setAttribute("id_cliente", id_cliente);
+            dispatcher.forward(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(ClientePedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

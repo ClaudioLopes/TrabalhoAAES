@@ -18,23 +18,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr> <!--APAGAR ISTO DEPOIS -->
-                <th scope="row">EXEMPLO ID</th>
-                <td>EXEMPLO ESTADO</td>
-                <td>EXEMPLO VALOR</td>
-                <td>
-                    <form method="post" action="FrontController?action=ClientePedidoStatus">
-                        <input type="hidden" name="id_cliente" value="${id_cliente}"/>
-                        <input type="hidden" name="id_pedido" value="${pedido.getId()}"/>
-                        <button type="submit" class="btn btn-link">Visualizar pedido</button>
-                    </form>
-                </td>
-            </tr>
             <c:forEach var="pedido" items="${pedidos}">
                 <tr>
                     <th scope="row">${pedido.getId()}</th>
-                    <td>${produto.getPedidoEstado()}/td>
-                    <td>${produto.getValor()}</td>
+                    <td>${pedido.getNomeEstado()}</td>
+                    <td>${pedido.getValor()}</td>
                     <td>
                         <form method="post" action="FrontController?action=ClientePedidoStatus">
                             <input type="hidden" name="id_cliente" value="${id_cliente}"/>

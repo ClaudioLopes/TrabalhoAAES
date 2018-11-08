@@ -1,6 +1,4 @@
-DROP TABLE endereco_cliente;
 DROP TABLE cliente;
-DROP TABLE endereco;
 DROP TABLE produto_empresa;
 DROP TABLE empresa;
 DROP TABLE produto;
@@ -14,20 +12,6 @@ CREATE TABLE cliente (
     email VARCHAR(50) NOT NULL UNIQUE,
     senha VARCHAR(20) NOT NULL,
     telefone VARCHAR(15)
-);
-
-CREATE TABLE endereco (
-    id_endereco INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    numero VARCHAR(10) NOT NULL,
-    rua VARCHAR(200) NOT NULL,
-    bairro VARCHAR(200) NOT NULL
-);
-
-CREATE TABLE endereco_cliente (
-    id_cliente INTEGER,
-    id_endereco INTEGER,
-    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
-    FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco) ON DELETE CASCADE
 );
 
 CREATE TABLE empresa (
@@ -52,11 +36,13 @@ CREATE TABLE produto_empresa (
 
 CREATE TABLE funcionario (
     id_funcionario INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    id_empresa integer,
     nome VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL UNIQUE,
     funcao VARCHAR(100) NOT NULL,
     senha VARCHAR(20) NOT NULL,
-    responsavel VARCHAR(200)
+    responsavel VARCHAR(200),
+    foreign key (id_empresa) references empresa(id_empresa) on delete cascade
 );
 
 CREATE TABLE superior (
@@ -73,6 +59,7 @@ CREATE TABLE pedido (
     id_cliente INTEGER NOT NULL,
     id_empresa INTEGER NOT NULL,
     total DOUBLE NOT NULL,
+    forma_pagamento VARCHAR(100) NOT NULL,
     FOREIGN KEY (id_funcionario_responsavel) REFERENCES funcionario(id_funcionario) ON DELETE CASCADE,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
     FOREIGN KEY (id_empresa) REFERENCES empresa(id_empresa) ON DELETE CASCADE
@@ -90,9 +77,16 @@ drop table combo;
 create table combo (
     id_combo INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     id_empresa integer not null,
-    id_produto integer not null,
-    foreign key (id_empresa) references empresa(id_empresa) on delete cascade,
-    foreign key (id_produto) references produto(id_produto) on delete cascade
+    nome varchar(200) not null,
+    total double not null,
+    foreign key (id_empresa) references empresa(id_empresa) on delete cascade
+);
+
+create table produto_combo (
+    id_produto integer,
+    id_combo integer,
+    foreign key (id_produto) references produto(id_produto) on delete cascade,
+    foreign key (id_combo) references combo(id_combo) on delete cascade
 );
 
 create table funcionario_empresa (

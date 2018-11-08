@@ -10,7 +10,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Funcionario;
+import state.Pedido;
 
 /**
  *
@@ -23,6 +28,10 @@ public class FuncionarioDAO {// Classe do Padrão DAO
     public static FuncionarioDAO getInstance(){
         return instance;
     }
+    
+    Connection conn = null;
+    Statement st = null;
+    ResultSet rs = null;
     
     public void save(Funcionario funcionario) throws SQLException, ClassNotFoundException{
         Connection conn = null;
@@ -127,4 +136,38 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         }
     }
     
+    public List<Funcionario> listFuncionariosEmpresa(int id_empresa) {
+        List<Funcionario> funcionarios = new ArrayList<>();
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select * from funcionario where id_empresa = " + id_empresa + "");
+            while(rs.next()) {
+                Funcionario f = Factory.createFuncionario(rs.getString("funcao"));
+                f
+                        .setId(rs.getInt("id_funcionario"))
+                        .setEmail(rs.getString("email"))
+                        .setFuncao(rs.getString("funcao"))
+                        .setNome(rs.getString("nome"));
+                funcionarios.add(f);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return funcionarios;
+    }
+    
+    public Funcionario getFuncionarioSuperior(int id_funcionario) {
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select * funcionario as f join superior as s on s.id_funcionario = " + id_funcionario + "");
+        } catch (SQLException ex) {
+            Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

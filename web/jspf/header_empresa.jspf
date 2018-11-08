@@ -31,9 +31,15 @@
                         </form>
                     </li>
                     <li class="nav-item">
-                        <form method="post" action="FrontController?action=EmpresaPedidos">
+                        <form method="post" action="FrontController?action=EmpresaProdutos">
                             <input type="hidden" name="id_empresa" value="${id_empresa}"/>
                             <button type="submit" class="btn btn-link nav-link">Seus produtos<span class="sr-only">(current)</span></button>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <form method="post" action="FrontController?action=EmpresaFuncionarios">
+                            <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+                            <button type="submit" class="btn btn-link nav-link">Seus funcionarios<span class="sr-only">(current)</span></button>
                         </form>
                     </li>
                     <li class="nav-item">

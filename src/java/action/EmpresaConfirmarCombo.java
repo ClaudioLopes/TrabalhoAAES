@@ -35,11 +35,10 @@ import strategy.Produto;
 public class EmpresaConfirmarCombo implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaConfirmarCombo.jsp");
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         String[] items = request.getParameterValues("item");
         String nome = request.getParameter("nome");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaConfirmarCombo.jsp");
-        request.setAttribute("id_empresa", id_empresa);
         try {
             List<Produto> itens = new ArrayList<Produto>();
             if (items != null) {
@@ -50,6 +49,7 @@ public class EmpresaConfirmarCombo implements Action {
                 }
                 Combo combo = new Combo(itens, nome);
                 request.setAttribute("itens", itens);
+                request.setAttribute("id_empresa", id_empresa);
                 request.setAttribute("combo", combo);
                 dispatcher.forward(request, response);
             }

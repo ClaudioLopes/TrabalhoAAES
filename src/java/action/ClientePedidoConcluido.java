@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import model.Cliente;
 import persistence.ClienteDAO;
 import controller.Action;
+import controller.Factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -41,6 +42,7 @@ public class ClientePedidoConcluido implements Action {
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         String[] items = request.getParameterValues("item");
         double total = Float.parseFloat(request.getParameter("total"));
+        String pagamento = request.getParameter("pagamento");
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
@@ -51,19 +53,19 @@ public class ClientePedidoConcluido implements Action {
                 Produto p = ProdutoDAO.getInstance().find(id_produto);
                 itens.add(p);
             }
+            FormaPagamento pg = Factory.createFormaPagamento(pagamento);
             Pedido pedido = new Pedido();
             pedido
                     .setProduto(itens)
                     .setPedidoEstado(new PedidoEstadoEmProdução())
-                    .setValor(total);
+                    .setNomeEstado(pedido.getPedidoEstado().getEstado())
+                    .setValor(total)
+                    .setFormaPagamento(pg);
             PedidoDAO.getInstance().save(id_empresa, id_cliente, pedido);
             request.setAttribute("itens", itens);
             List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
-            FormaPagamento dinheiro = new Dinheiro();
-            FormaPagamento cartao = new Cartao();
-            request.setAttribute("dinheiro", dinheiro);
-            request.setAttribute("cartao", cartao);
             request.setAttribute("produtos", produtos);
+            request.setAttribute("pedido", pedido);
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);

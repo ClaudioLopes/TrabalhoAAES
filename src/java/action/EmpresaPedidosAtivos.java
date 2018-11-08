@@ -6,34 +6,27 @@
 package action;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import controller.Action;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import model.Empresa;
-import persistence.ComboDAO;
-import persistence.EmpresaDAO;
-import strategy.Combo;
-import strategy.Produto;
+import persistence.PedidoDAO;
+import state.Pedido;
 
 /**
  *
  * @author claudio
  */
-public class EmpresaProdutos implements Action {
+public class EmpresaPedidosAtivos implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaProdutos.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaPedidos.jsp");
         int id = Integer.parseInt(request.getParameter("id_empresa"));
-        List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id);
-        List<Combo> combos = ComboDAO.getInstance().listCombos(id);
-        request.setAttribute("combos", combos);
-        request.setAttribute("produtos", produtos);
+        List<Pedido> pedidos = PedidoDAO.getInstance().listPedidosCliente(id);
+        request.setAttribute("pedidos", pedidos);
         request.setAttribute("id_empresa", id);
         dispatcher.forward(request, response);
-
     }
 }

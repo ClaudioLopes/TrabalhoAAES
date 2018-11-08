@@ -15,18 +15,18 @@ import strategy.Produto;
  * @author claudio
  */
 public class Pedido  extends Observable{
+    private int id;
     private PedidoEstado estado;
     private List<Produto> produto;
     private Funcionario funcionarioResponsavel;
-    private int id;
-    private String nome;
+    private String nomeEstado;
     private Double valor;
     private ArrayList<Memento> estadoSalvo = new ArrayList();
-    private int formaPagamento;
+    private FormaPagamento formaPagamento;
 
-    public Pedido(List<Produto> produto, String nome, Double valor, int formaPagamento) {
+    public Pedido(List<Produto> produto, String nome, Double valor, FormaPagamento formaPagamento) {
         this.produto = produto;
-        this.nome = nome;
+        this.nomeEstado = nome;
         this.valor = valor;
         this.formaPagamento = formaPagamento;
     }
@@ -44,12 +44,12 @@ public class Pedido  extends Observable{
         return this;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeEstado() {
+        return nomeEstado;
     }
 
-    public Pedido setNome(String nome) {
-        this.nome = nome;
+    public Pedido setNomeEstado(String nome) {
+        this.nomeEstado = nome;
         return this;
     }
 
@@ -72,12 +72,13 @@ public class Pedido  extends Observable{
     }
     
 
-    public int getFormaPagamento() {
+    public FormaPagamento getFormaPagamento() {
         return formaPagamento;
     }
 
-    public void setFormaPagamento(int formaPagamento) {
+    public Pedido setFormaPagamento(FormaPagamento formaPagamento) {
         this.formaPagamento = formaPagamento;
+        return this;
     }
 
 

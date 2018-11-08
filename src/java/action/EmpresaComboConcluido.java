@@ -22,6 +22,7 @@ import model.Empresa;
 import pagamento.Cartao;
 import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
+import persistence.ComboDAO;
 import persistence.EmpresaDAO;
 import persistence.ProdutoDAO;
 import state.Pedido;
@@ -34,14 +35,14 @@ import strategy.Produto;
  *
  * @author claudio
  */
-public class EmpresComboConcluido implements Action {
+public class EmpresaComboConcluido implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
+        String nomeCombo = request.getParameter("nomeCombo");
+        Double total = Double.parseDouble(request.getParameter("total"));
         String[] items = request.getParameterValues("item");
-        String nome = request.getParameter("nome");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaProdutos.jsp");
-        request.setAttribute("id_empresa", id_empresa);
         try {
             List<Produto> itens = new ArrayList<Produto>();
             for (String item : items) {
@@ -49,11 +50,12 @@ public class EmpresComboConcluido implements Action {
                 Produto p = ProdutoDAO.getInstance().find(id_produto);
                 itens.add(p);
             }
-            Combo combo = new Combo(itens, nome);
-            ProdutoDAO.getInstance().novoCombo(combo, id_empresa);
+            Combo combo = new Combo(itens, nomeCombo);
+            ComboDAO.getInstance().save(id_empresa, combo);
+            request.setAttribute("id_empresa", id_empresa);
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(EmpresComboConcluido.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmpresaComboConcluido.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

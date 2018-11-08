@@ -23,7 +23,7 @@ import strategy.Produto;
  *
  * @author claudio
  */
-public class EmpresaProdutos implements Action {
+public class EmpresaFuncionarios implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaProdutos.jsp");

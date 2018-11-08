@@ -22,7 +22,7 @@
         <li>
             <form method="post" action="FrontController?action=EmpresaFuncionarios">
                 <input type="hidden" name="id_empresa" value="${id_empresa}"/>
-                <button type="submit" class="btn btn-link">Seus funcionário</button>
+                <button type="submit" class="btn btn-link">Seus funcionários</button>
             </form>
         </li>
         <li><a href="index.jsp">Logout</a></li>

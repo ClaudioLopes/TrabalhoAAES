@@ -10,7 +10,7 @@
     </div>
     <form method="post" action="FrontController?action=EmpresaComboConcluido">
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
-        <input type="hidden" name="nome" value="${combo.getNome()}"/>
+        <input type="hidden" name="nomeCombo" value="${combo.getNome()}"/>
         <table class="table table-striped justify-content-center text-center">
             <thead class="thead-dark">
                 <tr>
@@ -31,7 +31,7 @@
                 <tr>
             <input type="hidden" name="total" value="${combo.getValor()}"/>
             <td>Total:</td>
-            <td>R$ ${combo.getValor()}</td>
+            <td>R$ ${combo.getValor()} (10% de desconto)</td>
             </tr>
             </tfoot>
         </table>

@@ -1,5 +1,6 @@
 package persistence;
 
+import controller.Factory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -58,7 +59,7 @@ public class PedidoDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into pedido (estado, id_cliente, id_empresa, total) values ('" + pedido.getPedidoEstado().getEstado() + "', " + id_cliente + ", " + id_empresa + ", " + pedido.getValor() + ")");
+            st.execute("insert into pedido (estado, id_cliente, id_empresa, total, forma_pagamento) values ('" + pedido.getPedidoEstado().getEstado() + "', " + id_cliente + ", " + id_empresa + ", " + pedido.getValor() + ", '" + pedido.getFormaPagamento().getNome() + "')");
             rs = st.executeQuery("select max(id_pedido) as id_pedido from pedido");
             Integer id_pedido = null;
             while(rs.next()) {
@@ -90,7 +91,7 @@ public class PedidoDAO {// Classe do Padrão DAO
         }
     }
 
-    public Pedido find(int id) throws SQLException, ClassNotFoundException {
+    public Pedido find(int id_pedido) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
@@ -98,12 +99,13 @@ public class PedidoDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select * from pedido where id_pedido = " + id + "");
+            rs = st.executeQuery("select * from pedido where id_pedido = " + id_pedido + "");
             while (rs.next()) {
                 pedido
-                        .setId(rs.getInt("id_produto"))
-                        .setNome(rs.getString("nome"))
-                        .setValor(rs.getDouble("valor"));
+                        .setId(rs.getInt("id_pedido"))
+                        .setNomeEstado(rs.getString("estado"))
+                        .setValor(rs.getDouble("total"))
+                        .setFormaPagamento(Factory.createFormaPagamento(rs.getString("forma_pagamento")));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
@@ -126,7 +128,7 @@ public class PedidoDAO {// Classe do Padrão DAO
             while (rs.next()) {
                 pedido
                         .setId(rs.getInt("id_pedido"))
-                        .setNome(rs.getString("nome"))
+                        .setNomeEstado(rs.getString("nome"))
                         .setValor(rs.getDouble("valor"));
             }
         } catch (SQLException e) {
@@ -196,28 +198,70 @@ public class PedidoDAO {// Classe do Padrão DAO
             System.out.println("Erro no SQL");
         }
     }
-
-    public List<Produto> listAll() {
-        List<Produto> produtos = new ArrayList<Produto>();
+    
+    public List<Pedido> listPedidosCliente(int id_cliente) {
+        List<Pedido> pedidos = new ArrayList<>();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select id_empresa, nome from empresa");
-            while (rs.next()) {
-                Produto produto = new Item();
-                produto
-                        .setId(rs.getInt("id_produto"))
-                        .setNome(rs.getString("nome"))
-                        .setValor(rs.getInt("valor"));
-                produtos.add(produto);
+            rs = st.executeQuery("select id_pedido, total, estado from pedido where id_cliente = " + id_cliente + "");
+            while(rs.next()) {
+                Pedido p = new Pedido();
+                p
+                        .setId(rs.getInt("id_pedido"))
+                        .setValor(rs.getDouble("total"))
+                        .setNomeEstado(rs.getString("estado"));
+                pedidos.add(p);
             }
         } catch (SQLException ex) {
             Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeResources(conn, st, rs);
-            return produtos;
         }
+        return pedidos;
+    }
+    
+    public List<Pedido> listPedidosEmpresa(int id_empresa) {
+        List<Pedido> pedidos = new ArrayList<>();
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select id_pedido, total, estado from pedido where id_empresa = " + id_empresa + "");
+            while(rs.next()) {
+                Pedido p = new Pedido();
+                p
+                        .setId(rs.getInt("id_pedido"))
+                        .setValor(rs.getDouble("total"))
+                        .setNomeEstado(rs.getString("estado"));
+                pedidos.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return pedidos;
+    }
+
+    public List<Produto> listProdutosPedido(int id_pedido) {
+        List<Produto> produtos = new ArrayList<Produto>();
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select p.* from produto as p join produto_pedido pp pe on pp.id_produto = p.id_produto where pp.id_pedido = " + id_pedido  + "");
+            while(rs.next()) {
+                Produto produto = new Item();
+                produto
+                        .setNome(rs.getString("nome"))
+                        .setValor(rs.getInt("valor"))
+                        .setId(rs.getInt("id_produto"));
+                produtos.add(produto);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return produtos;
     }
 }
