@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Lista de pedidos</h1>
     <div class="d-inline p-2">
-        <form method="post" action="FrontController?action=EmpresaIndex">
+        <form method="post" action="FrontController?action=FuncionarioIndex">
             <input type="hidden" name="id_funcionario" value="${id_funcionario}"/>
             <button type="submit" class="btn btn-primary">Voltar</button>
         </form>
@@ -18,23 +18,11 @@
             </tr>
         </thead>
         <tbody>
-            <tr> <!--APAGAR ISTO DEPOIS -->
-                <th scope="row">EXEMPLO ID</th>
-                <td>EXEMPLO ESTADO</td>
-                <td>EXEMPLO VALOR</td>
-                <td>
-                    <form method="post" action="FrontController?action=EmpresaPedidoStatus">
-                        <input type="hidden" name="id_funcionario" value="${id_funcionario}"/>
-                        <input type="hidden" name="id_pedido" value="${pedido.getId()}"/>
-                        <button type="submit" class="btn btn-link">Visualizar pedido</button>
-                    </form>
-                </td>
-            </tr> <!-- APAGAR ATÉ AQUI -->
             <c:forEach var="pedido" items="${pedidos}">
                 <tr>
                     <th scope="row">${pedido.getId()}</th>
-                    <td>${produto.getPedidoEstado()}/td>
-                    <td>${produto.getValor()}</td>
+                    <td>${pedido.getNomeEstado()}</td>
+                    <td>${pedido.getValor()}</td>
                     <td>
                         <form method="post" action="FrontController?action=FuncionarioPedidoStatus">
                             <input type="hidden" name="id_funcionario" value="${id_funcionario}"/>

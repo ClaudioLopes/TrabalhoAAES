@@ -27,12 +27,17 @@ public class AtualizarPedido implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         int id = Integer.parseInt(request.getParameter("id_funcionario"));
         int id_pedido = Integer.parseInt(request.getParameter("id_pedido"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("FuncionarioPedidoStatus.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("FuncionarioPedidos.jsp");
         try {
             Funcionario funcionario = Factory.createFuncionario(FuncionarioDAO.getInstance().find(id));
             Pedido pedido = PedidoDAO.getInstance().find(id_pedido);
-            funcionario.atualizarPedido(PedidoDAO.getInstance().find(id_pedido));
-            response.sendRedirect("contatoSucesso.jsp");
+            funcionario.atualizarPedido(pedido);
+            if (FuncionarioDAO.getInstance().getFuncionarioSuperior(id) != null) {
+                int id_novo_responsavel = FuncionarioDAO.getInstance().getFuncionarioSuperior(id).getId();
+                PedidoDAO.getInstance().atualizaStatus(id_pedido, id_novo_responsavel, pedido.getNomeEstado());
+            } else 
+                PedidoDAO.getInstance().atualizaStatus(id_pedido, null, pedido.getNomeEstado());
+            request.setAttribute("id_funcionario", id);
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
             response.sendRedirect("contatoErro.jsp");

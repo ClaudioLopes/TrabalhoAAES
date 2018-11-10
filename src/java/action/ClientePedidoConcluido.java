@@ -27,6 +27,7 @@ import persistence.EmpresaDAO;
 import persistence.PedidoDAO;
 import persistence.ProdutoDAO;
 import state.Pedido;
+import state.PedidoEstadoConfirmado;
 import state.PedidoEstadoEmProdução;
 import strategy.Item;
 import strategy.Produto;
@@ -57,7 +58,7 @@ public class ClientePedidoConcluido implements Action {
             Pedido pedido = new Pedido();
             pedido
                     .setProduto(itens)
-                    .setPedidoEstado(new PedidoEstadoEmProdução())
+                    .setPedidoEstado(new PedidoEstadoConfirmado())
                     .setNomeEstado(pedido.getPedidoEstado().getEstado())
                     .setValor(total)
                     .setFormaPagamento(pg);

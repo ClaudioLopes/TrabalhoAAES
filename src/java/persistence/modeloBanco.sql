@@ -5,6 +5,7 @@ DROP TABLE produto;
 DROP TABLE superior;
 DROP TABLE funcionario;
 DROP TABLE pedido;
+drop table combo;
 
 CREATE TABLE cliente (
     id_cliente INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -72,7 +73,6 @@ CREATE TABLE produto_pedido (
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE
 );
 
-drop table combo;
 
 create table combo (
     id_combo INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
@@ -119,3 +119,24 @@ INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (2, 4);
 INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (2, 6);
 INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (3, 7);
 INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (3, 8);
+
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (1, 'Fulano', 'f@f.com', 'Administrador', '123');
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (1, 'Ciclano', 'c@c.com', 'Cozinheiro', '123');
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (1, 'Beltrano', 'b@b.com', 'Entregador', '123');
+
+insert into superior (id_funcionario, id_superior) values (1, 2);
+insert into superior (id_funcionario, id_superior) values (2, 3);
+
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (2, 'João', 'j@j.com', 'Administrador', '123');
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (2, 'Maria', 'm@m.com', 'Cozinheiro', '123');
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (2, 'José', 'z@z.com', 'Entregador', '123');
+
+insert into superior (id_funcionario, id_superior) values (4, 5);
+insert into superior (id_funcionario, id_superior) values (5, 6);
+
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (3, 'Ana', 'a@a.com', 'Administrador', '123');
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (3, 'Antônio', 'antonio@antonio.com', 'Cozinheiro', '123');
+insert into funcionario (id_empresa, nome, email, funcao, senha) values (3, 'Enzo', 'enzo@enzo.com', 'Entregador', '123');
+
+insert into superior (id_funcionario, id_superior) values (7, 8);
+insert into superior (id_funcionario, id_superior) values (8, 9);

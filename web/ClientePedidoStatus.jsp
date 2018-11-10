@@ -27,7 +27,6 @@
             <tr>
                 <td>${item.getNome()}</td>
                 <td>R$ ${item.getValor()}</td>
-                <td></td>
             </tr>
         </c:forEach>
         </tbody>

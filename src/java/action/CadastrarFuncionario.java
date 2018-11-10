@@ -27,7 +27,7 @@ public class CadastrarFuncionario implements Action{
         String funcao = request.getParameter("funcao");
         String senha = request.getParameter("senha");
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaFuncionarios.jsp");
         request.setAttribute("id_empresa", id_empresa);
         if(nome.equals("") || email.equals("") || senha.equals("")) {
            dispatcher = request.getRequestDispatcher("CadastrarFuncionario.jsp");
@@ -39,7 +39,7 @@ public class CadastrarFuncionario implements Action{
                     .setNome(nome)
                     .setSenha(senha);
             try{
-                FuncionarioDAO.getInstance().save(funcionario);
+                FuncionarioDAO.getInstance().save(funcionario, id_empresa);
                 dispatcher.forward(request, response);
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");

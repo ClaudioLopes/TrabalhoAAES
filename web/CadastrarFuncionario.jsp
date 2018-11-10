@@ -32,7 +32,10 @@
         </div>
         <button type="submit" class="btn btn-success">Cadastrar</button>
         <button type="reset" class="btn btn-secondary">Limpar Campos</button>
-        <a class="btn btn-danger" href="index.jsp">Voltar</a>
+    </form>
+    <form method="post" action="FrontController?action=EmpresaFuncionarios" style="margin-bottom: 1em;">
+        <input type="hidden" name="id_empresa" value="${id_empresa}"/>
+        <button type="submit" class="btn btn-primary" style="margin-top: 1em;">Voltar</button>
     </form>
 </div>
 <%@include file="jspf/footer.jspf" %>

@@ -20,10 +20,15 @@ public class Entregador extends Funcionario{
     public String responsavel(){
         return "Entregador";
     }
+    
+    public Entregador() {
+        setResponsavel(new PedidoEstadoEmEntrega());
+        setFuncao(responsavel());
+    }
 
     public Entregador(String superior) {
         setResponsavel(new PedidoEstadoEmEntrega());
-        setFuncaoSuperior(superior);
+        setFuncionarioSuperior(superior);
     }
     
     public void atualizarPedido(Pedido pedido){

@@ -18,7 +18,6 @@
                 <tr>
                     <th scope="col">Nome</th>
                     <th scope="col">Valor</th>
-                    <th scope="col">Promoção</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,7 +26,6 @@
                 <tr>
                     <td>${item.getNome()}</td>
                     <td>R$ ${item.getValor()}</td>
-                    <td></td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -81,7 +81,7 @@ public abstract class Funcionario {
         return funcionarioSuperior;
     }
 
-    public Funcionario setFuncaoSuperior(String funcionarioSuperior) {
+    public Funcionario setFuncionarioSuperior(String funcionarioSuperior) {
         this.funcionarioSuperior = Factory.createFuncionario(funcionarioSuperior);
         return this;
     }

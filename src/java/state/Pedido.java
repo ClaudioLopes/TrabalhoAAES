@@ -16,6 +16,9 @@ import strategy.Produto;
  */
 public class Pedido  extends Observable{
     private int id;
+    private int id_empresa;
+    private int id_funcionario;
+    private int id_cliente;
     private PedidoEstado estado;
     private List<Produto> produto;
     private Funcionario funcionarioResponsavel;
@@ -33,6 +36,33 @@ public class Pedido  extends Observable{
     
     public Pedido() {
         funcionarioResponsavel = new Administrador("Cozinheiro");
+    }
+
+    public int getId_empresa() {
+        return id_empresa;
+    }
+
+    public Pedido setId_empresa(int id_empresa) {
+        this.id_empresa = id_empresa;
+        return this;
+    }
+
+    public int getId_funcionario() {
+        return id_funcionario;
+    }
+
+    public Pedido setId_funcionario(int id_funcionario) {
+        this.id_funcionario = id_funcionario;
+        return this;
+    }
+
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public Pedido setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+        return this;
     }
 
     public Double getValor() {
@@ -88,6 +118,7 @@ public class Pedido  extends Observable{
 
     public Pedido setPedidoEstado(PedidoEstado estado) {
         this.estado = estado;
+        this.nomeEstado = estado.getEstado();
         funcionarioResponsavel.responsavelPedido(estado);
         estadoSalvo.add(saveToMemento(estado));
         setChanged();

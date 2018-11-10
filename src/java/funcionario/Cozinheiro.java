@@ -20,10 +20,15 @@ public class Cozinheiro extends Funcionario{
     public String responsavel(){
         return "Cozinheiro";
     }
+    
+    public Cozinheiro() {
+        setResponsavel(new PedidoEstadoEmProdução());
+        setFuncao(responsavel());
+    }
 
     public Cozinheiro (String superior) {
         setResponsavel(new PedidoEstadoEmProdução());
-        setFuncaoSuperior(superior);
+        setFuncionarioSuperior(superior);
     }
     
     public void atualizarPedido(Pedido pedido){

@@ -16,10 +16,15 @@ public class Administrador extends Funcionario{
     public String responsavel(){
         return "Administrador";
     }
+    
+    public Administrador() {
+        setResponsavel(new PedidoEstadoConfirmado());
+        setFuncao(responsavel());
+    }
 
     public Administrador(String superior) {
         setResponsavel(new PedidoEstadoConfirmado());
-        setFuncaoSuperior(superior);
+        setFuncionarioSuperior(superior);
     }
     
     public void atualizarPedido(Pedido pedido){

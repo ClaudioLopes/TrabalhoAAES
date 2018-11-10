@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Status do pedido</h1>
     <div class="d-inline p-2">
-        <form method="post" action="FrontController?action=ClientePedidos">
+        <form method="post" action="FrontController?action=FuncionarioPedidosAtivos">
             <input type="hidden" name="id_funcionario" value="${id_funcionario}"/>
             <button type="submit" class="btn btn-primary">Voltar</button>
         </form>
@@ -19,38 +19,25 @@
         <tbody>
             <tr>
                 <td>Status do pedido:</td>
-                <td>${pedido.getPedidoEstado()}</td>
+                <td>${pedido.getNomeEstado()}</td>
                 <td>
                     <form method="post" action="FrontController?action=AtualizarPedido">
                         <input  type="hidden" name="id_pedido" value="${pedido.getId()}"/>
+                        <input  type="hidden" name="id_funcionario" value="${id_funcionario}"/>
                         <button class="btn btn-link" type="submit">Atualizar estado do pedido</button>
                     </form>
                 </td>
             </tr>
+            <tr class="bg-info">
+                <td rowspan="${itens.size()+1}">Itens</td>
+            </tr>
             <c:forEach var="item" items="${itens}">
             <input type="hidden" name="item" value="${item.getId()}"/>
             <tr>
-                <td>${item.getNome()}</td>
-                <td>R$ ${item.getValor()}</td>
-                <td></td>
+                <td colspan="3">${item.getNome()}</td>
             </tr>
         </c:forEach>
         </tbody>
-        <tfoot>
-            <tr>
-                <td>Forma de pagamento:</td>
-                <td>${pagamento.getNome()}</td>
-            </tr>
-            <tr>
-                <td>Desconto:</td>
-                <td>${pagamento.getDesconto()}%</td>
-            </tr>
-            <tr>
-        <input type="hidden" name="total" value="${total}"/>
-        <td>Total:</td>
-        <td>R$ ${total}</td>
-        </tr>
-        </tfoot>
     </table>
 </div>
 <%@include file="jspf/footer.jspf" %>

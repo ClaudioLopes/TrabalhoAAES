@@ -33,13 +33,13 @@ public class FuncionarioDAO {// Classe do Padrão DAO
     Statement st = null;
     ResultSet rs = null;
     
-    public void save(Funcionario funcionario) throws SQLException, ClassNotFoundException{
+    public void save(Funcionario funcionario, int id_empresa) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into funcionario (nome, email, funcao, senha) values ( '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "', '" + funcionario.getFuncao() + "', '" + funcionario.getSenha() + "')");
+            st.execute("insert into funcionario (id_empresa, nome, email, funcao, senha) values (" + id_empresa + ", '" + funcionario.getNome() + "', '" + funcionario.getEmail() + "', '" + funcionario.getFuncao() + "', '" + funcionario.getSenha() + "')");
         }catch(SQLException e){
             System.out.println("Erro no SQL");
             throw e;
@@ -93,11 +93,9 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select nome, email from funcionario where id = '" + id + "'");
+            rs = st.executeQuery("select * from funcionario where id_funcionario = " + id + "");
             while(rs.next()){
                 funcionario = Factory.createFuncionario(rs.getString("funcao"));
-                funcionario.setEmail(rs.getString("emial"));
-                funcionario.setNome(rs.getString("nome"));
             }
         }catch(SQLException e){
             System.out.println("Erro no SQL");
@@ -136,6 +134,22 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         }
     }
     
+    public void closeResources(Connection conn, Statement st, ResultSet rs) {
+        try {
+            if (st != null) {
+                st.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+            if (rs != null) {
+                rs.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL");
+        }
+    }
+    
     public List<Funcionario> listFuncionariosEmpresa(int id_empresa) {
         List<Funcionario> funcionarios = new ArrayList<>();
         try {
@@ -155,19 +169,68 @@ public class FuncionarioDAO {// Classe do Padrão DAO
             Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources(conn, st, rs);
         }
         return funcionarios;
     }
     
     public Funcionario getFuncionarioSuperior(int id_funcionario) {
+        Funcionario funcionario = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select * funcionario as f join superior as s on s.id_funcionario = " + id_funcionario + "");
+            rs = st.executeQuery("select * from funcionario as f join superior as s on s.id_funcionario = " + id_funcionario + " where s.id_superior = f.id_funcionario");
+            while(rs.next()) {
+                funcionario = Factory.createFuncionario(rs.getString("funcao"));
+                funcionario
+                        .setEmail(rs.getString("email"))
+                        .setId(rs.getInt("id_funcionario"))
+                        .setNome(rs.getString("nome"))
+                        .setSenha(rs.getString("senha"));
+            }
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FuncionarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources(conn, st, rs);
+        }
+        return funcionario;
+    }
+    
+    public int login(String email, String senha) throws SQLException, ClassNotFoundException {
+        Integer id_funcionario = null;
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select id_funcionario from funcionario where email = '" + email + "' and senha = '" + senha + "'");
+            while (rs.next()) {
+                id_funcionario = rs.getInt("id_funcionario");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources(conn, st, rs);
+            return id_funcionario;
+        }
+
+    }
+    
+    public int getAdministrador(int id_empresa) {
+        Integer id_funcionario = null;
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select id_funcionario from funcionario where id_empresa = " + id_empresa + " and funcao = 'Administrador'");
+            while (rs.next()) {
+                id_funcionario = rs.getInt("id_funcionario");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources(conn, st, rs);
+            return id_funcionario;
         }
     }
 }
