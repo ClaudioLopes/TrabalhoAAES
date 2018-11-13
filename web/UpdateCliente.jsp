@@ -2,7 +2,7 @@
 <div class="container">
 <h1>Atualizar dados</h1>
     <form method="POST" action="FrontController?action=UpdateCliente">
-        <input type="hidden" name="id_empresa" value="${cliente.getId()}"/>
+        <input type="hidden" name="id_cliente" value="${id_cliente}"/>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="nomeCompleto">Nome completo<small class="text-danger"><strong>*</strong></small></label>
@@ -20,7 +20,7 @@
             </div>
             <div class="form-group col-md-6">
                 <label for="senha">Senha</label>
-                <input type="password" class="form-control" id="senha" name="textSenha" required>
+                <input type="password" class="form-control" id="senha" name="textSenha">
             </div>
         </div>
         <div class="form-group row">

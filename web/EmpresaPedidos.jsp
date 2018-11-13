@@ -24,8 +24,8 @@
                     <td>${pedido.getNomeEstado()}</td>
                     <td>${pedido.getValor()}</td>
                     <td>
-                        <form method="post" action="FrontController?action=ClientePedidoStatus">
-                            <input type="hidden" name="id_cliente" value="${id_cliente}"/>
+                        <form method="post" action="FrontController?action=EmpresaPedidoStatus">
+                            <input type="hidden" name="id_empresa" value="${id_empresa}"/>
                             <input type="hidden" name="id_pedido" value="${pedido.getId()}"/>
                             <button type="submit" class="btn btn-primary">Visualizar pedido</button>
                         </form>

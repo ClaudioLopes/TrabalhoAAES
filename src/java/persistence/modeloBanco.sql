@@ -12,7 +12,8 @@ CREATE TABLE cliente (
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     senha VARCHAR(20) NOT NULL,
-    telefone VARCHAR(15)
+    telefone VARCHAR(15),
+    notify int default 0
 );
 
 CREATE TABLE empresa (
@@ -92,6 +93,15 @@ create table produto_combo (
 create table funcionario_empresa (
     id_empresa integer not null,
     id_funcionario integer not null
+);
+
+create table memento (
+    id_memento integer primary key generated always as identity,
+    id_pedido integer not null,
+    id_funcionario integer,
+    nome_estado varchar(200) not null,
+    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE,
+    foreign key (id_funcionario) references pedido(id_funcionario) on delete cascade
 );
 
 INSERT INTO cliente (nome, telefone, email, senha) VALUES ('ramon', '123123', 'ramon@gmail.com', '123');

@@ -18,7 +18,6 @@ import javax.servlet.ServletException;
 import pagamento.Cartao;
 import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
-import persistence.ClienteDAO;
 import persistence.PedidoDAO;
 import state.Pedido;
 import strategy.Produto;
@@ -27,23 +26,21 @@ import strategy.Produto;
  *
  * @author claudio
  */
-public class ClientePedidoStatus implements Action {
+public class EmpresaPedidoStatus implements Action {
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
-        int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaPedidoStatus.jsp");
+        int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
         int id_pedido = Integer.parseInt(request.getParameter("id_pedido"));
         try {
             Pedido pedido = PedidoDAO.getInstance().find(id_pedido);
             List<Produto> itens = PedidoDAO.getInstance().listProdutosPedido(id_pedido);
             request.setAttribute("itens", itens);
             request.setAttribute("pedido", pedido);
-            request.setAttribute("id_cliente", id_cliente);
-            Integer notificacao = ClienteDAO.getInstance().getNotificacao(id_cliente);
-            request.setAttribute("ntf", notificacao);
+            request.setAttribute("id_empresa", id_empresa);
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ClientePedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EmpresaPedidoStatus.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

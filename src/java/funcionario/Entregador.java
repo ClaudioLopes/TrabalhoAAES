@@ -15,12 +15,12 @@ import state.PedidoEstadoEntrege;
  *
  * @author claudio
  */
-public class Entregador extends Funcionario{
-    
-    public String responsavel(){
+public class Entregador extends Funcionario {
+
+    public String responsavel() {
         return "Entregador";
     }
-    
+
     public Entregador() {
         setResponsavel(new PedidoEstadoEmEntrega());
         setFuncao(responsavel());
@@ -30,8 +30,8 @@ public class Entregador extends Funcionario{
         setResponsavel(new PedidoEstadoEmEntrega());
         setFuncionarioSuperior(superior);
     }
-    
-    public void atualizarPedido(Pedido pedido){
+
+    public void atualizarPedido(Pedido pedido) {
         pedido.setPedidoEstado(new PedidoEstadoEntrege());
     }
 }

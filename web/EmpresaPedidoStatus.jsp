@@ -3,7 +3,7 @@
 <div class="container">
     <h1>Status do pedido</h1>
     <div class="d-inline p-2">
-        <form method="post" action="FrontController?action=ClientePedidos">
+        <form method="post" action="FrontController?action=EmpresaPedidosAtivos">
             <input type="hidden" name="id_empresa" value="${id_empresa}"/>
             <button type="submit" class="btn btn-primary">Voltar</button>
         </form>
@@ -19,7 +19,7 @@
         <tbody>
             <tr>
                 <td>Status do pedido:</td>
-                <td>${pedido.getPedidoEstado()}</td>
+                <td>${pedido.getNomeEstado()}</td>
                 <td>
                     <form method="post" action="FrontController?action=MementoVoltarEstado">
                         <input  type="hidden" name="id_pedido" value="${pedido.getId()}"/>
@@ -39,16 +39,15 @@
         <tfoot>
             <tr>
                 <td>Forma de pagamento:</td>
-                <td>${pagamento.getNome()}</td>
+                <td>${pedido.getFormaPagamento().getNome()}</td>
             </tr>
             <tr>
                 <td>Desconto:</td>
-                <td>${pagamento.getDesconto()}%</td>
+                <td>${pedido.getFormaPagamento().getDesconto()}%</td>
             </tr>
             <tr>
-        <input type="hidden" name="total" value="${total}"/>
         <td>Total:</td>
-        <td>R$ ${total}</td>
+        <td>R$ ${pedido.getValor()}</td>
         </tr>
         </tfoot>
     </table>

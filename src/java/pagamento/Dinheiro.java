@@ -14,5 +14,8 @@ public class Dinheiro extends FormaPagamento{
     public String getNome() {
         return "Dinheiro";
     }
+
+    public Dinheiro() {
+    }
     
 }

@@ -3,6 +3,7 @@ package model;
 import state.Pedido;
 import java.util.Observable;
 import java.util.Observer;
+import persistence.ClienteDAO;
 
 /**
  *
@@ -90,7 +91,7 @@ public class Cliente implements Observer{
     public void update(Observable pedido, Object arg) {
         if(pedido instanceof Pedido){
             Pedido p = (Pedido) pedido;
-            System.out.println("Atenção " + nome + "o pedido ja está em" + p.getPedidoEstado().getEstado());
+            ClienteDAO.getInstance().notifica(((Pedido) pedido).getId_cliente());
         }else{
             System.out.println("Deu algum erro");
         }

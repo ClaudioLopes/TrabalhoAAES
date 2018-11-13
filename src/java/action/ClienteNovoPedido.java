@@ -30,6 +30,8 @@ public class ClienteNovoPedido implements Action {
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteNovoPedido.jsp");
         request.setAttribute("empresas", empresas);
         request.setAttribute("id_cliente", id);
+        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
+        request.setAttribute("ntf", notificacao);
         dispatcher.forward(request, response);
 
     }

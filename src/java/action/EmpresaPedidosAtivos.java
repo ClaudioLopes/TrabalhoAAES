@@ -24,7 +24,7 @@ public class EmpresaPedidosAtivos implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaPedidos.jsp");
         int id = Integer.parseInt(request.getParameter("id_empresa"));
-        List<Pedido> pedidos = PedidoDAO.getInstance().listPedidosCliente(id);
+        List<Pedido> pedidos = PedidoDAO.getInstance().listPedidosEmpresa(id);
         request.setAttribute("pedidos", pedidos);
         request.setAttribute("id_empresa", id);
         dispatcher.forward(request, response);

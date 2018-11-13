@@ -27,6 +27,9 @@ public class UpdateClienteForm implements Action {
             Cliente cliente = ClienteDAO.getInstance().find(id);
             RequestDispatcher dispatcher = request.getRequestDispatcher("UpdateCliente.jsp");
             request.setAttribute("cliente", cliente);
+            request.setAttribute("id_cliente", id);
+            Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
+            request.setAttribute("ntf", notificacao);
             dispatcher.forward(request, response);
         } catch (SQLException ex) {
             ex.printStackTrace();

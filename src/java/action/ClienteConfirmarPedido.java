@@ -42,6 +42,8 @@ public class ClienteConfirmarPedido implements Action {
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteConfirmarPedido.jsp");
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
+        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id_cliente);
+        request.setAttribute("ntf", notificacao);
         try {
             FormaPagamento fp = Factory.createFormaPagamento(formaPagamento);
             List<Produto> itens = new ArrayList<Produto>();

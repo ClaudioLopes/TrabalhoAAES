@@ -12,6 +12,7 @@ import controller.Action;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import persistence.ClienteDAO;
 import persistence.PedidoDAO;
 import state.Pedido;
 
@@ -27,6 +28,9 @@ public class ClientePedidos implements Action {
         List<Pedido> pedidos = PedidoDAO.getInstance().listPedidosCliente(id);
         request.setAttribute("pedidos", pedidos);
         request.setAttribute("id_cliente", id);
+        ClienteDAO.getInstance().zerarNotify(id);
+        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
+        request.setAttribute("ntf", notificacao);
         dispatcher.forward(request, response);
     }
 }

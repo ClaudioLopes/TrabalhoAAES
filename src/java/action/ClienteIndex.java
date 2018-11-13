@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import controller.Action;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import persistence.ClienteDAO;
 
 /**
  *
@@ -22,7 +23,8 @@ public class ClienteIndex implements Action {
         int id = Integer.parseInt(request.getParameter("id_cliente"));
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteIndex.jsp");
         request.setAttribute("id_cliente", id);
+        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
+        request.setAttribute("ntf", notificacao);
         dispatcher.forward(request, response);
-
     }
 }

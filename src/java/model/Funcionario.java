@@ -30,6 +30,7 @@ public abstract class Funcionario {
     }
 
     public Funcionario() {
+        this.funcionarioSuperior = null;
     }
 
     public String getSenha() {

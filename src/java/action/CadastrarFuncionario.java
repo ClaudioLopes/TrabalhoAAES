@@ -20,31 +20,33 @@ import javax.servlet.ServletException;
  *
  * @author claudio
  */
-public class CadastrarFuncionario implements Action{
+public class CadastrarFuncionario implements Action {
+
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
         String nome = request.getParameter("nome");
         String email = request.getParameter("email");
         String funcao = request.getParameter("funcao");
         String senha = request.getParameter("senha");
         int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaFuncionarios.jsp");
         request.setAttribute("id_empresa", id_empresa);
-        if(nome.equals("") || email.equals("") || senha.equals("")) {
-           dispatcher = request.getRequestDispatcher("CadastrarFuncionario.jsp");
-           dispatcher.forward(request, response);
+        if (nome.equals("") || email.equals("") || senha.equals("")) {
+            dispatcher = request.getRequestDispatcher("CadastrarFuncionario.jsp");
+            dispatcher.forward(request, response);
         } else {
-            Funcionario funcionario = Factory.createFuncionario(funcao);
-            funcionario
-                    .setEmail(email)
-                    .setNome(nome)
-                    .setSenha(senha);
-            try{
-                FuncionarioDAO.getInstance().save(funcionario, id_empresa);
+            try {
+                Funcionario funcionario = Factory.createFuncionario(funcao);
+                Integer id_func_superior = FuncionarioDAO.getInstance().findSuperiorId(funcionario.getFuncionarioSuperior().getFuncao(), id_empresa);
+                funcionario
+                        .setEmail(email)
+                        .setNome(nome)
+                        .setSenha(senha);
+                FuncionarioDAO.getInstance().save(funcionario, id_empresa, id_func_superior);
                 dispatcher.forward(request, response);
-            }catch(SQLException ex){
+            } catch (SQLException ex) {
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();
-            }catch(ClassNotFoundException ex){
+            } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             }
         }

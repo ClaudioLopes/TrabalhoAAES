@@ -14,4 +14,7 @@ public class Cartao extends FormaPagamento{
     public String getNome() {
         return "Cartão";
     }
+
+    public Cartao() {
+    }
 }

@@ -47,6 +47,8 @@ public class ClientePedidoConcluido implements Action {
         RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
         request.setAttribute("id_cliente", id_cliente);
         request.setAttribute("id_empresa", id_empresa);
+        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id_cliente);
+        request.setAttribute("ntf", notificacao);
         try {
             List<Produto> itens = new ArrayList<Produto>();
             for (String item : items) {

@@ -13,6 +13,7 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Cliente;
 import model.Funcionario;
 import persistence.FuncionarioDAO;
 import persistence.PedidoDAO;
@@ -32,6 +33,8 @@ public class AtualizarPedido implements Action {
             Funcionario funcionario = Factory.createFuncionario(FuncionarioDAO.getInstance().find(id));
             Pedido pedido = PedidoDAO.getInstance().find(id_pedido);
             funcionario.atualizarPedido(pedido);
+            Cliente c = new Cliente(pedido);
+            pedido.setPedidoEstado(pedido.getPedidoEstado());
             if (FuncionarioDAO.getInstance().getFuncionarioSuperior(id) != null) {
                 int id_novo_responsavel = FuncionarioDAO.getInstance().getFuncionarioSuperior(id).getId();
                 PedidoDAO.getInstance().atualizaStatus(id_pedido, id_novo_responsavel, pedido.getNomeEstado());
