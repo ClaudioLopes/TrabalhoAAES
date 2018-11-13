@@ -15,6 +15,11 @@ public class Cartao extends FormaPagamento{
         return "Cartão";
     }
 
+    @Override
+    public String getNomeSA() {
+        return "Cartao";
+    }
+
     public Cartao() {
     }
 }

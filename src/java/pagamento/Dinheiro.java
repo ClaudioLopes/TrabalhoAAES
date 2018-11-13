@@ -15,6 +15,11 @@ public class Dinheiro extends FormaPagamento{
         return "Dinheiro";
     }
 
+    @Override
+    public String getNomeSA() {
+        return "Dinheiro";
+    }
+
     public Dinheiro() {
     }
     

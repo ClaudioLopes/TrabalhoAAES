@@ -15,9 +15,9 @@ import strategy.Produto;
  * @author claudio
  */
 public class Pedido  extends Observable{
-    private int id;
+    private Integer id;
     private int id_empresa;
-    private int id_funcionario;
+    private Integer id_funcionario;
     private int id_cliente;
     private PedidoEstado estado;
     private List<Produto> produto;
@@ -47,11 +47,11 @@ public class Pedido  extends Observable{
         return this;
     }
 
-    public int getId_funcionario() {
+    public Integer getId_funcionario() {
         return id_funcionario;
     }
 
-    public Pedido setId_funcionario(int id_funcionario) {
+    public Pedido setId_funcionario(Integer id_funcionario) {
         this.id_funcionario = id_funcionario;
         return this;
     }
@@ -83,11 +83,11 @@ public class Pedido  extends Observable{
         return this;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public Pedido setId(int id) {
+    public Pedido setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -120,7 +120,7 @@ public class Pedido  extends Observable{
         this.estado = estado;
         this.nomeEstado = estado.getEstado();
         funcionarioResponsavel.responsavelPedido(estado);
-        estadoSalvo.add(saveToMemento(estado));
+        estadoSalvo.add(saveToMemento(this));
         setChanged();
         notifyObservers();
         return this;
@@ -148,6 +148,10 @@ public class Pedido  extends Observable{
     
     public Memento saveToMemento(PedidoEstado estado){
         return new Memento(estado);
+    }
+    
+    public Memento saveToMemento(Pedido pedido){
+        return new Memento(pedido);
     }
     
     public void restoreFromMemento(Memento memento){

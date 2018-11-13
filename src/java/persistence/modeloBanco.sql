@@ -101,7 +101,7 @@ create table memento (
     id_funcionario integer,
     nome_estado varchar(200) not null,
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE,
-    foreign key (id_funcionario) references pedido(id_funcionario) on delete cascade
+    foreign key (id_funcionario) references funcionario(id_funcionario) on delete cascade
 );
 
 INSERT INTO cliente (nome, telefone, email, senha) VALUES ('ramon', '123123', 'ramon@gmail.com', '123');

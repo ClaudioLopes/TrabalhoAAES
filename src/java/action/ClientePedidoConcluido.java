@@ -60,11 +60,12 @@ public class ClientePedidoConcluido implements Action {
             Pedido pedido = new Pedido();
             pedido
                     .setProduto(itens)
-                    .setPedidoEstado(new PedidoEstadoConfirmado())
-                    .setNomeEstado(pedido.getPedidoEstado().getEstado())
+                    .setNomeEstado(new PedidoEstadoConfirmado().getEstado())
                     .setValor(total)
                     .setFormaPagamento(pg);
             PedidoDAO.getInstance().save(id_empresa, id_cliente, pedido);
+            pedido = PedidoDAO.getInstance().findLast(id_empresa, id_cliente);
+            pedido.setPedidoEstado(new PedidoEstadoConfirmado());
             request.setAttribute("itens", itens);
             List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
             request.setAttribute("produtos", produtos);

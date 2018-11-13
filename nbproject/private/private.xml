@@ -12,6 +12,7 @@
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/EmpresaPedidos.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/ClienteConfirmarPedido.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/ClienteNovoPedido.java</file>
+            <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/UpdateCliente.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/ClientePedidoStatus.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/ClientePedidos.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/persistence/ProdutoDAO.java</file>
@@ -46,7 +47,9 @@
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/CadastrarFuncionario.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/funcionario/Entregador.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/EmpresaProdutos.java</file>
+            <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/LoginCliente.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/state/PedidoEstadoEntrege.java</file>
+            <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/jspf/header_empresa.jspf</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/CadastrarFuncionario.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/ClienteConfirmarPedido.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/FuncionarioCadastrarForm.java</file>
@@ -55,6 +58,7 @@
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/UpdateFuncionario.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/state/Pedido.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/EmpresaPedidoStatus.jsp</file>
+            <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/LoginCliente.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/persistence/PedidoDAO.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/controller/Factory.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/EmpresaConfirmarCombo.jsp</file>
@@ -64,6 +68,7 @@
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/ClientePedidoStatus.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/EmpresaIndex.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/FuncionarioPedidosAtivos.java</file>
+            <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/CadastrarCliente.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/EmpresaFuncionarios.jsp</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/controller/FrontController.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/model/Cliente.java</file>
@@ -71,6 +76,7 @@
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/EmpresaFuncionarios.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/AtualizarPedido.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/web/FuncionarioPedidos.jsp</file>
+            <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/UpdateClienteForm.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/controller/Action.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/DeletarFuncionario.java</file>
             <file>file:/home/ramonlarivoir/Área%20de%20Trabalho/Ramon/Materiais%20UFJF/Aspectos%20Avançados%20em%20Engenharia%20de%20Software/Trabalhos/Trabalho%201/TrabalhoAAES/src/java/action/EmpresaPedidosAtivos.java</file>

@@ -12,7 +12,7 @@
     <form method="post" action="FrontController?action=ClientePedidoConcluido">
         <input type="hidden" name="id_cliente" value="${id_cliente}"/>
         <input type="hidden" name="id_empresa" value="${id_empresa}"/>
-        <input type="hidden" name="pagamento" value="${pagamento.getNome()}"/>
+        <input type="hidden" name="pagamento" value="${pagamento.getNomeSA()}"/>
         <table class="table table-striped justify-content-center text-center">
             <thead class="thead-dark">
                 <tr>

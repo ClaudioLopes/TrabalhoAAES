@@ -60,7 +60,7 @@ public class PedidoDAO {// Classe do Padrão DAO
             int id_funcionario_responsavel = FuncionarioDAO.getInstance().getAdministrador(id_empresa);
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into pedido (estado, id_cliente, id_empresa, id_funcionario_responsavel, total, forma_pagamento) values ('" + pedido.getPedidoEstado().getEstado() + "', " + id_cliente + ", " + id_empresa + ", " + id_funcionario_responsavel + ", " + pedido.getValor() + ", '" + pedido.getFormaPagamento().getNome() + "')");
+            st.execute("insert into pedido (estado, id_cliente, id_empresa, id_funcionario_responsavel, total, forma_pagamento) values ('" + pedido.getNomeEstado() + "', " + id_cliente + ", " + id_empresa + ", " + id_funcionario_responsavel + ", " + pedido.getValor() + ", '" + pedido.getFormaPagamento().getNomeSA() + "')");
             rs = st.executeQuery("select max(id_pedido) as id_pedido from pedido");
             Integer id_pedido = null;
             while(rs.next()) {
@@ -134,6 +134,36 @@ public class PedidoDAO {// Classe do Padrão DAO
                         .setId(rs.getInt("id_pedido"))
                         .setNomeEstado(rs.getString("nome"))
                         .setValor(rs.getDouble("valor"));
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro no SQL");
+            throw e;
+        } finally {
+            closeResources(conn, st);
+        }
+        return pedido;
+    }
+    
+    public Pedido findLast(int id_empresa, int id_cliente) throws SQLException, ClassNotFoundException {
+        Pedido pedido = new Pedido();
+        Integer id_pedido = null;
+        try {
+            conn = DatabaseLocator.getInstance().getConnection();
+            st = conn.createStatement();
+            rs = st.executeQuery("select max(id_pedido) as id_pedido from pedido where id_empresa = " + id_empresa + " and id_cliente = " + id_cliente + "");
+            while(rs.next()) {
+                id_pedido = rs.getInt("id_pedido");
+            }
+            rs = st.executeQuery("select * from pedido where id_pedido = " + id_pedido + "");
+            while (rs.next()) {
+                pedido
+                        .setId(rs.getInt("id_pedido"))
+                        .setNomeEstado(rs.getString("estado"))
+                        .setValor(rs.getDouble("total"))
+                        .setFormaPagamento(Factory.createFormaPagamento(rs.getString("forma_pagamento")))
+                        .setId_cliente(rs.getInt("id_cliente"))
+                        .setId_empresa(rs.getInt("id_empresa"))
+                        .setId_funcionario(rs.getInt("id_funcionario_responsavel"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
