@@ -18,13 +18,12 @@ import controller.Action;
  */
 public class DeletarEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        
+
         if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                EmpresaDAO.getInstance().delete(nome);
+                EmpresaDAO.getInstance().delete(request.getParameter("textNome"));
                 response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");

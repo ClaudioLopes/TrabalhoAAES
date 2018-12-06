@@ -15,82 +15,40 @@ import strategy.Produto;
  * @author claudio
  */
 public class Pedido  extends Observable{
-    private Integer id;
-    private int id_empresa;
-    private Integer id_funcionario;
-    private int id_cliente;
     private PedidoEstado estado;
     private List<Produto> produto;
     private Funcionario funcionarioResponsavel;
-    private String nomeEstado;
-    private Double valor;
-    private ArrayList<Memento> estadoSalvo = new ArrayList();
-    private FormaPagamento formaPagamento;
+    private int id;
+    private String nome;
+    private int valor;
 
-    public Pedido(List<Produto> produto, String nome, Double valor, FormaPagamento formaPagamento) {
-        this.produto = produto;
-        this.nomeEstado = nome;
-        this.valor = valor;
-        this.formaPagamento = formaPagamento;
-    }
-    
-    public Pedido() {
-        funcionarioResponsavel = new Administrador("Cozinheiro");
-    }
-
-    public int getId_empresa() {
-        return id_empresa;
-    }
-
-    public Pedido setId_empresa(int id_empresa) {
-        this.id_empresa = id_empresa;
-        return this;
-    }
-
-    public Integer getId_funcionario() {
-        return id_funcionario;
-    }
-
-    public Pedido setId_funcionario(Integer id_funcionario) {
-        this.id_funcionario = id_funcionario;
-        return this;
-    }
-
-    public int getId_cliente() {
-        return id_cliente;
-    }
-
-    public Pedido setId_cliente(int id_cliente) {
-        this.id_cliente = id_cliente;
-        return this;
-    }
-
-    public Double getValor() {
+    public int getValor() {
         return valor;
     }
 
-    public Pedido setValor(Double valor) {
+    public Pedido setValor(int valor) {
         this.valor = valor;
         return this;
     }
 
-    public String getNomeEstado() {
-        return nomeEstado;
+    public String getNome() {
+        return nome;
     }
 
-    public Pedido setNomeEstado(String nome) {
-        this.nomeEstado = nome;
+    public Pedido setNome(String nome) {
+        this.nome = nome;
         return this;
     }
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public Pedido setId(Integer id) {
+    public Pedido setId(int id) {
         this.id = id;
         return this;
     }
+    private int formaPagamento;
 
     public List<Produto> getProduto() {
         return produto;
@@ -102,15 +60,18 @@ public class Pedido  extends Observable{
     }
     
 
-    public FormaPagamento getFormaPagamento() {
+    public int getFormaPagamento() {
         return formaPagamento;
     }
 
-    public Pedido setFormaPagamento(FormaPagamento formaPagamento) {
+    public void setFormaPagamento(int formaPagamento) {
         this.formaPagamento = formaPagamento;
-        return this;
     }
+    private ArrayList<Memento> estadoSalvo = new ArrayList();
 
+    public Pedido() {
+        funcionarioResponsavel = new Administrador("Cozinheiro");
+    }
 
     public PedidoEstado getPedidoEstado() {
         return estado;
@@ -118,9 +79,8 @@ public class Pedido  extends Observable{
 
     public Pedido setPedidoEstado(PedidoEstado estado) {
         this.estado = estado;
-        this.nomeEstado = estado.getEstado();
         funcionarioResponsavel.responsavelPedido(estado);
-        estadoSalvo.add(saveToMemento(this));
+        estadoSalvo.add(saveToMemento(estado));
         setChanged();
         notifyObservers();
         return this;
@@ -148,10 +108,6 @@ public class Pedido  extends Observable{
     
     public Memento saveToMemento(PedidoEstado estado){
         return new Memento(estado);
-    }
-    
-    public Memento saveToMemento(Pedido pedido){
-        return new Memento(pedido);
     }
     
     public void restoreFromMemento(Memento memento){

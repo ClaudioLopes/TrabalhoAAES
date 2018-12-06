@@ -1,6 +1,5 @@
 package persistence;
 
-import controller.Factory;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,14 +33,15 @@ public class PedidoDAO {// Classe do Padrão DAO
     Statement st = null;
     ResultSet rs = null;
 
-    public void save(int id_empresa, int id_cliente, List<Produto> produto) throws SQLException, ClassNotFoundException {
+    public void save(int id_empresa, int id_cliente, List<Produto> produto) throws SQLException, ClassNotFoundException{
         Connection conn = null;
         Statement st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
             for(int i = 0; i < produto.size(); i++){
-                st.execute("insert into pedido (nome, valor) values ( '" + produto.get(i).getNome() + "', " + produto.get(i).getValor() + ")");
+                st.execute("insert into pedido (nome, valor) values ( '" + produto.get(i).getNome() +
+                "', " + produto.get(i).getValor() + ")");
                 Pedido p = find(produto.get(i).getNome());
                 ProdutoEmpresaDAO.getInstance().save(p.getId(), id_empresa);
             }
@@ -52,47 +52,12 @@ public class PedidoDAO {// Classe do Padrão DAO
             closeResources(conn, st);
         }
     }
-    
-    public void save(int id_empresa, int id_cliente, Pedido pedido) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            int id_funcionario_responsavel = FuncionarioDAO.getInstance().getAdministrador(id_empresa);
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.execute("insert into pedido (estado, id_cliente, id_empresa, id_funcionario_responsavel, total, forma_pagamento) values ('" + pedido.getNomeEstado() + "', " + id_cliente + ", " + id_empresa + ", " + id_funcionario_responsavel + ", " + pedido.getValor() + ", '" + pedido.getFormaPagamento().getNomeSA() + "')");
-            rs = st.executeQuery("select max(id_pedido) as id_pedido from pedido");
-            Integer id_pedido = null;
-            while(rs.next()) {
-                id_pedido = rs.getInt("id_pedido");
-            }
-            for (Produto produto : pedido.getProduto()) {
-                st.execute("insert into produto_pedido (id_produto, id_pedido) values (" + produto.getId() + ", " + id_pedido + ")");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
+
+    public String getSQLDelete(){
+      return ("delete from empresa where nome = '");
     }
 
-    public void delete(String nome) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.execute("delete from empresa where nome = '" + nome + "'");
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
-    }
-
-    public Pedido find(int id_pedido) throws SQLException, ClassNotFoundException {
+    public Pedido find(int id) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         ResultSet rs = null;
@@ -100,16 +65,12 @@ public class PedidoDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select * from pedido where id_pedido = " + id_pedido + "");
+            rs = st.executeQuery("select * from pedido where id_pedido = " + id + "");
             while (rs.next()) {
                 pedido
-                        .setId(rs.getInt("id_pedido"))
-                        .setNomeEstado(rs.getString("estado"))
-                        .setValor(rs.getDouble("total"))
-                        .setFormaPagamento(Factory.createFormaPagamento(rs.getString("forma_pagamento")))
-                        .setId_cliente(rs.getInt("id_cliente"))
-                        .setId_empresa(rs.getInt("id_empresa"))
-                        .setId_funcionario(rs.getInt("id_funcionario_responsavel"));
+                        .setId(rs.getInt("id_produto"))
+                        .setNome(rs.getString("nome"))
+                        .setValor(rs.getInt("valor"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
@@ -119,7 +80,7 @@ public class PedidoDAO {// Classe do Padrão DAO
         }
         return pedido;
     }
-    
+
     public Pedido find(String nome) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
@@ -132,38 +93,8 @@ public class PedidoDAO {// Classe do Padrão DAO
             while (rs.next()) {
                 pedido
                         .setId(rs.getInt("id_pedido"))
-                        .setNomeEstado(rs.getString("nome"))
-                        .setValor(rs.getDouble("valor"));
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
-        return pedido;
-    }
-    
-    public Pedido findLast(int id_empresa, int id_cliente) throws SQLException, ClassNotFoundException {
-        Pedido pedido = new Pedido();
-        Integer id_pedido = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select max(id_pedido) as id_pedido from pedido where id_empresa = " + id_empresa + " and id_cliente = " + id_cliente + "");
-            while(rs.next()) {
-                id_pedido = rs.getInt("id_pedido");
-            }
-            rs = st.executeQuery("select * from pedido where id_pedido = " + id_pedido + "");
-            while (rs.next()) {
-                pedido
-                        .setId(rs.getInt("id_pedido"))
-                        .setNomeEstado(rs.getString("estado"))
-                        .setValor(rs.getDouble("total"))
-                        .setFormaPagamento(Factory.createFormaPagamento(rs.getString("forma_pagamento")))
-                        .setId_cliente(rs.getInt("id_cliente"))
-                        .setId_empresa(rs.getInt("id_empresa"))
-                        .setId_funcionario(rs.getInt("id_funcionario_responsavel"));
+                        .setNome(rs.getString("nome"))
+                        .setValor(rs.getInt("valor"));
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
@@ -180,7 +111,8 @@ public class PedidoDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update produto set email = '" + email + "', nome = '" + nome + "' where id_produto = " + id + "");
+            st.execute("update produto set email = '" + email + "', nome = '" + nome + "'
+             where id_produto = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -232,104 +164,28 @@ public class PedidoDAO {// Classe do Padrão DAO
             System.out.println("Erro no SQL");
         }
     }
-    
-    public List<Pedido> listPedidosCliente(int id_cliente) {
-        List<Pedido> pedidos = new ArrayList<>();
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select id_pedido, total, estado from pedido where id_cliente = " + id_cliente + "");
-            while(rs.next()) {
-                Pedido p = new Pedido();
-                p
-                        .setId(rs.getInt("id_pedido"))
-                        .setValor(rs.getDouble("total"))
-                        .setNomeEstado(rs.getString("estado"));
-                pedidos.add(p);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pedidos;
-    }
-    
-    public List<Pedido> listPedidosEmpresa(int id_empresa) {
-        List<Pedido> pedidos = new ArrayList<>();
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select id_pedido, total, estado from pedido where id_empresa = " + id_empresa + "");
-            while(rs.next()) {
-                Pedido p = new Pedido();
-                p
-                        .setId(rs.getInt("id_pedido"))
-                        .setValor(rs.getDouble("total"))
-                        .setNomeEstado(rs.getString("estado"));
-                pedidos.add(p);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pedidos;
-    }
-    
-    public List<Pedido> listPedidosFuncionario(int id_funcionario) {
-        List<Pedido> pedidos = new ArrayList<>();
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select id_pedido, total, estado from pedido where id_funcionario_responsavel = " + id_funcionario + "");
-            while(rs.next()) {
-                Pedido p = new Pedido();
-                p
-                        .setId(rs.getInt("id_pedido"))
-                        .setValor(rs.getDouble("total"))
-                        .setNomeEstado(rs.getString("estado"));
-                pedidos.add(p);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return pedidos;
-    }
 
-    public List<Produto> listProdutosPedido(int id_pedido) {
+    public List<Produto> listAll() {
         List<Produto> produtos = new ArrayList<Produto>();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select p.* from produto as p join produto_pedido pp on pp.id_produto = p.id_produto where pp.id_pedido = " + id_pedido  + "");
-            while(rs.next()) {
+            rs = st.executeQuery("select id_empresa, nome from empresa");
+            while (rs.next()) {
                 Produto produto = new Item();
                 produto
+                        .setId(rs.getInt("id_produto"))
                         .setNome(rs.getString("nome"))
-                        .setValor(rs.getInt("valor"))
-                        .setId(rs.getInt("id_produto"));
+                        .setValor(rs.getInt("valor"));
                 produtos.add(produto);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return produtos;
-    }
-
-    public void atualizaStatus(int id_pedido, Integer id_novo_funcionario, String estado) {
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.executeUpdate("update pedido set id_funcionario_responsavel = " + id_novo_funcionario + ", estado = '" + estado + "' where id_pedido = " + id_pedido + "");
-        } catch (SQLException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpresaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PedidoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            closeResources(conn, st, rs);
+            return produtos;
         }
     }
 }

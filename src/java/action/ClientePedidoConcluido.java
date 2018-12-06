@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import model.Cliente;
 import persistence.ClienteDAO;
 import controller.Action;
-import controller.Factory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -24,10 +23,8 @@ import pagamento.Cartao;
 import pagamento.Dinheiro;
 import pagamento.FormaPagamento;
 import persistence.EmpresaDAO;
-import persistence.PedidoDAO;
 import persistence.ProdutoDAO;
 import state.Pedido;
-import state.PedidoEstadoConfirmado;
 import state.PedidoEstadoEmProdução;
 import strategy.Item;
 import strategy.Produto;
@@ -38,39 +35,30 @@ import strategy.Produto;
  */
 public class ClientePedidoConcluido implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException, ClassNotFoundException {
-        int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
-        int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+    ServletException, ClassNotFoundException {
         String[] items = request.getParameterValues("item");
-        double total = Float.parseFloat(request.getParameter("total"));
-        String pagamento = request.getParameter("pagamento");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClientePedidoStatus.jsp");
-        request.setAttribute("id_cliente", id_cliente);
-        request.setAttribute("id_empresa", id_empresa);
-        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id_cliente);
-        request.setAttribute("ntf", notificacao);
+        request.setAttribute("id_cliente", Integer.parseInt(request.getParameter("id_cliente")));
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
         try {
             List<Produto> itens = new ArrayList<Produto>();
             for (String item : items) {
-                int id_produto = Integer.parseInt(item);
-                Produto p = ProdutoDAO.getInstance().find(id_produto);
+                Produto p = ProdutoDAO.getInstance().find(Integer.parseInt(item));
                 itens.add(p);
             }
-            FormaPagamento pg = Factory.createFormaPagamento(pagamento);
             Pedido pedido = new Pedido();
-            pedido
-                    .setProduto(itens)
-                    .setNomeEstado(new PedidoEstadoConfirmado().getEstado())
-                    .setValor(total)
-                    .setFormaPagamento(pg);
-            PedidoDAO.getInstance().save(id_empresa, id_cliente, pedido);
-            pedido = PedidoDAO.getInstance().findLast(id_empresa, id_cliente);
-            pedido.setPedidoEstado(new PedidoEstadoConfirmado());
+            pedido.setProduto(itens);
+            pedido.setPedidoEstado(new PedidoEstadoEmProdução());
             request.setAttribute("itens", itens);
-            List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
+            request.getRequestDispatcher("ClientePedidoStatus.jsp").forward(request, response);
+            List<Produto> produtos = EmpresaDAO.getInstance().listProdutos
+            (Integer.parseInt(request.getParameter("id_empresa")));
+            FormaPagamento dinheiro = new Dinheiro();
+            FormaPagamento cartao = new Cartao();
+            request.setAttribute("dinheiro", dinheiro);
+            request.setAttribute("cartao", cartao);
             request.setAttribute("produtos", produtos);
-            request.setAttribute("pedido", pedido);
-            dispatcher.forward(request, response);
+            request.getRequestDispatcher("ClienteProdutosEmpresa.jsp").forward(request, response);
         } catch (SQLException ex) {
             Logger.getLogger(ClientePedidoConcluido.class.getName()).log(Level.SEVERE, null, ex);
         }

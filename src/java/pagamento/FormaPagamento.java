@@ -11,7 +11,6 @@ public abstract class FormaPagamento {
     
     public abstract int getDesconto();
     public abstract String getNome();
-    public abstract String getNomeSA();
     
     public void gerarBoleto(Pedido pedido){
         float valorPedido = 0;

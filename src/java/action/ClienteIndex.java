@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import controller.Action;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import persistence.ClienteDAO;
 
 /**
  *
@@ -19,12 +18,10 @@ import persistence.ClienteDAO;
  */
 public class ClienteIndex implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id_cliente"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteIndex.jsp");
-        request.setAttribute("id_cliente", id);
-        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
-        request.setAttribute("ntf", notificacao);
-        dispatcher.forward(request, response);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+        request.setAttribute("id_cliente", Integer.parseInt(request.getParameter("id_cliente")));
+        request.getRequestDispatcher("ClienteIndex.jsp").forward(request, response);
+
     }
 }

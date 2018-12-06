@@ -20,19 +20,18 @@ import model.Empresa;
  * @author claudio
  */
 public class LoginEmpresa implements Action{
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+
         if(email.equals("") || senha.equals("")) {
            response.sendRedirect("LoginEmpresa.jsp");
         } else {
             try{
-                Empresa empresa = EmpresaDAO.getInstance().login(email, senha);
+                Empresa empresa = EmpresaDAO.getInstance().login(request.getParameter("email"),
+                 request.getParameter("senha"));
                 if(empresa.getNome() != null) {
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
                     request.setAttribute("id_empresa", empresa.getId());
-                    dispatcher.forward(request, response);
+                    request.getRequestDispatcher("EmpresaIndex.jsp").forward(request, response);
                 } else {
                     response.sendRedirect("LoginEmpresa.jsp");
                 }

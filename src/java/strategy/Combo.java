@@ -6,74 +6,46 @@
 package strategy;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author claudio
  */
 public class Combo { // Padrão composite
-    private int id_combo;
     private String nome;
-    private Double valor;
-    private List<Produto> produtos = new ArrayList();
+    private float valor;
+    private ArrayList produtos = new ArrayList();
     
-    public Combo(List<Produto> produtos, String nome){
-        this.valor = 0.0;
-        this.produtos = this.produtos;
+    public Combo(Produto produto1, Produto produto2, String nome){
+        produtos.add(produto1);
+        produtos.add(produto2);
         this.nome = nome;
-        for (Produto produto : produtos) {
-            this.valor = this.valor + produto.getValor();
-        }
-        this.valor = (Double) (this.valor - (this.valor * 0.1));
-    }
-    
-    public Combo() {
-        
-    }
-
-    public int getId_combo() {
-        return id_combo;
-    }
-
-    public Combo setId_combo(int id_combo) {
-        this.id_combo = id_combo;
-        return this;
+        this.valor = (produto1.getValor() + produto2.getValor())/2;
     }
 
     public String getNome() {
         return nome;
     }
 
-    public Combo setNome(String nome) {
+    public void setNome(String nome) {
         this.nome = nome;
-        return this;
     }
 
-    public Double getValor() {
+    public float getValor() {
         return valor;
     }
 
-    public Combo setValor(Double valor) {
+    public void setValor(int valor) {
         this.valor = valor;
-        return this;
     }
 
-    public Produto getProduto(int id) {
+    public Produto getProdutos(int id) {
         return (Produto) produtos.get(id);
     }
 
-    public Combo setProduto(Produto produto) {
+    public void setProdutos(Produto produto) {
         this.produtos.add(produto);
-        return this;
     }
     
-    public List<Produto> getProdutos() {
-        return this.produtos;
-    }
-
-    public Combo setProdutos(List<Produto> produtos) {
-        this.produtos = produtos;
-        return this;
-    }
+    
 }

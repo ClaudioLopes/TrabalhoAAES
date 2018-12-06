@@ -1,19 +1,33 @@
+DROP TABLE endereco_cliente;
 DROP TABLE cliente;
+DROP TABLE endereco;
 DROP TABLE produto_empresa;
 DROP TABLE empresa;
 DROP TABLE produto;
 DROP TABLE superior;
 DROP TABLE funcionario;
 DROP TABLE pedido;
-drop table combo;
 
 CREATE TABLE cliente (
     id_cliente INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     nome VARCHAR(100) NOT NULL,
     email VARCHAR(50) NOT NULL UNIQUE,
     senha VARCHAR(20) NOT NULL,
-    telefone VARCHAR(15),
-    notify int default 0
+    telefone VARCHAR(15)
+);
+
+CREATE TABLE endereco (
+    id_endereco INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    numero VARCHAR(10) NOT NULL,
+    rua VARCHAR(200) NOT NULL,
+    bairro VARCHAR(200) NOT NULL
+);
+
+CREATE TABLE endereco_cliente (
+    id_cliente INTEGER,
+    id_endereco INTEGER,
+    FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
+    FOREIGN KEY (id_endereco) REFERENCES endereco(id_endereco) ON DELETE CASCADE
 );
 
 CREATE TABLE empresa (
@@ -38,13 +52,11 @@ CREATE TABLE produto_empresa (
 
 CREATE TABLE funcionario (
     id_funcionario INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    id_empresa integer,
     nome VARCHAR(200) NOT NULL,
     email VARCHAR(200) NOT NULL UNIQUE,
     funcao VARCHAR(100) NOT NULL,
     senha VARCHAR(20) NOT NULL,
-    responsavel VARCHAR(200),
-    foreign key (id_empresa) references empresa(id_empresa) on delete cascade
+    responsavel VARCHAR(200)
 );
 
 CREATE TABLE superior (
@@ -60,8 +72,6 @@ CREATE TABLE pedido (
     id_funcionario_responsavel INTEGER,
     id_cliente INTEGER NOT NULL,
     id_empresa INTEGER NOT NULL,
-    total DOUBLE NOT NULL,
-    forma_pagamento VARCHAR(100) NOT NULL,
     FOREIGN KEY (id_funcionario_responsavel) REFERENCES funcionario(id_funcionario) ON DELETE CASCADE,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente) ON DELETE CASCADE,
     FOREIGN KEY (id_empresa) REFERENCES empresa(id_empresa) ON DELETE CASCADE
@@ -72,36 +82,6 @@ CREATE TABLE produto_pedido (
     id_pedido INTEGER,
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto) ON DELETE CASCADE,
     FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE
-);
-
-
-create table combo (
-    id_combo INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    id_empresa integer not null,
-    nome varchar(200) not null,
-    total double not null,
-    foreign key (id_empresa) references empresa(id_empresa) on delete cascade
-);
-
-create table produto_combo (
-    id_produto integer,
-    id_combo integer,
-    foreign key (id_produto) references produto(id_produto) on delete cascade,
-    foreign key (id_combo) references combo(id_combo) on delete cascade
-);
-
-create table funcionario_empresa (
-    id_empresa integer not null,
-    id_funcionario integer not null
-);
-
-create table memento (
-    id_memento integer primary key generated always as identity,
-    id_pedido integer not null,
-    id_funcionario integer,
-    nome_estado varchar(200) not null,
-    FOREIGN KEY (id_pedido) REFERENCES pedido(id_pedido) ON DELETE CASCADE,
-    foreign key (id_funcionario) references funcionario(id_funcionario) on delete cascade
 );
 
 INSERT INTO cliente (nome, telefone, email, senha) VALUES ('ramon', '123123', 'ramon@gmail.com', '123');
@@ -129,24 +109,3 @@ INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (2, 4);
 INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (2, 6);
 INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (3, 7);
 INSERT INTO produto_empresa(id_empresa, id_produto) VALUES (3, 8);
-
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (1, 'Fulano', 'f@f.com', 'Administrador', '123');
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (1, 'Ciclano', 'c@c.com', 'Cozinheiro', '123');
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (1, 'Beltrano', 'b@b.com', 'Entregador', '123');
-
-insert into superior (id_funcionario, id_superior) values (1, 2);
-insert into superior (id_funcionario, id_superior) values (2, 3);
-
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (2, 'João', 'j@j.com', 'Administrador', '123');
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (2, 'Maria', 'm@m.com', 'Cozinheiro', '123');
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (2, 'José', 'z@z.com', 'Entregador', '123');
-
-insert into superior (id_funcionario, id_superior) values (4, 5);
-insert into superior (id_funcionario, id_superior) values (5, 6);
-
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (3, 'Ana', 'a@a.com', 'Administrador', '123');
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (3, 'Antônio', 'antonio@antonio.com', 'Cozinheiro', '123');
-insert into funcionario (id_empresa, nome, email, funcao, senha) values (3, 'Enzo', 'enzo@enzo.com', 'Entregador', '123');
-
-insert into superior (id_funcionario, id_superior) values (7, 8);
-insert into superior (id_funcionario, id_superior) values (8, 9);

@@ -21,10 +21,9 @@ import javax.servlet.ServletException;
  */
 public class FuncionarioCadastrarForm implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id_empresa"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("CadastrarFuncionario.jsp");
-        request.setAttribute("id_empresa", id);
-        dispatcher.forward(request, response);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
+        request.getRequestDispatcher("CadastrarFuncionario.jsp").forward(request, response);
     }
 }

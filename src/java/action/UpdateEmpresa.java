@@ -20,25 +20,23 @@ import javax.servlet.ServletException;
  */
 public class UpdateEmpresa implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String nome = request.getParameter("textNome");
-        String email = request.getParameter("textEmail");
-        String senha = request.getParameter("textSenha");
-        int id = Integer.parseInt(request.getParameter("id_empresa"));
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaIndex.jsp");
-        request.setAttribute("id_empresa", id);
-
-        if (nome.equals("") || email.equals("")) {
-            dispatcher.forward(request, response);
+        if (request.getParameter("textNome").equals("") || request.getParameter("textEmail").equals("")) {
+            request.getRequestDispatcher("EmpresaIndex.jsp").forward(request, response);
         } else {
             try {
-                if (senha.equals("")) {
-                    EmpresaDAO.getInstance().update(id, nome, email);
+                if (request.getParameter("textSenha").equals("")) {
+                    EmpresaDAO.getInstance().update(Integer.parseInt(request.getParameter("id_empresa")),
+                     request.getParameter("textNome"), request.getParameter("textEmail"));
                 } else {
-                    EmpresaDAO.getInstance().update(id, nome, email, senha);
+                    EmpresaDAO.getInstance().update(Integer.parseInt(request.getParameter("id_empresa")),
+                     request.getParameter("textNome"), request.getParameter("textEmail"),
+                    request.getParameter("textSenha"));
                 }
-                dispatcher.forward(request, response);
+                request.getRequestDispatcher("EmpresaIndex.jsp").forward(request, response);
             } catch (SQLException ex) {
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

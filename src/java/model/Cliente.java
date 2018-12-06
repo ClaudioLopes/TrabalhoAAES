@@ -3,7 +3,6 @@ package model;
 import state.Pedido;
 import java.util.Observable;
 import java.util.Observer;
-import persistence.ClienteDAO;
 
 /**
  *
@@ -16,23 +15,15 @@ public class Cliente implements Observer{
     private String senha;
     private int id;
     private String endereco;
-    
+
     private static int cont = -1;
 
-    public Cliente(String nome, String email, String telefone, String senha) {
-        this.nome = nome;
-        this.email = email;
-        this.telefone = telefone;
-        this.senha = senha;
+    public Cliente() {
         this.id = ++cont;
     }
-    
+
     public Cliente(Observable pedido) {
         pedido.addObserver(this);
-    }
-    
-    public Cliente(){
-        
     }
 
     public String getNome() {
@@ -86,16 +77,16 @@ public class Cliente implements Observer{
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-    
+
 
     public void update(Observable pedido, Object arg) {
         if(pedido instanceof Pedido){
             Pedido p = (Pedido) pedido;
-            ClienteDAO.getInstance().notifica(((Pedido) pedido).getId_cliente());
+            System.out.println("Atenção " + nome + "o pedido ja está em" + p.getPedidoEstado().getEstado());
         }else{
             System.out.println("Deu algum erro");
         }
     }
-    
-    
+
+
 }

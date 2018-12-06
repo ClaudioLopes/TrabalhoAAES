@@ -21,16 +21,12 @@ import javax.servlet.ServletException;
  */
 public class UpdateClienteForm implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id_cliente"));
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
         try {
-            Cliente cliente = ClienteDAO.getInstance().find(id);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("UpdateCliente.jsp");
-            request.setAttribute("cliente", cliente);
-            request.setAttribute("id_cliente", id);
-            Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
-            request.setAttribute("ntf", notificacao);
-            dispatcher.forward(request, response);
+            request.setAttribute("cliente", ClienteDAO.getInstance().find(Integer.parseInt
+            (request.getParameter("id_cliente"))));
+            request.getRequestDispatcher("UpdateCliente.jsp").forward(request, response);
         } catch (SQLException ex) {
             ex.printStackTrace();
         } catch (ClassNotFoundException ex) {

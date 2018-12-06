@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Empresa;
-import strategy.Combo;
 import strategy.Item;
 import strategy.Produto;
 
@@ -39,7 +38,8 @@ public class ProdutoDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into produto (nome, valor) values ( '" + produto.getNome() + "', " + produto.getValor() + ")");
+            st.execute("insert into produto (nome, valor) values ( '" + produto.getNome() +
+            "', " + produto.getValor() + ")");
             Produto p = find(produto.getNome());
             ProdutoEmpresaDAO.getInstance().save(p.getId(), id_empresa);
         } catch (SQLException e) {
@@ -50,19 +50,8 @@ public class ProdutoDAO {// Classe do Padrão DAO
         }
     }
 
-    public void delete(String nome) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.execute("delete from empresa where nome = '" + nome + "'");
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
+    public String getSQLDelete(){
+      return ("delete from empresa where nome = '");
     }
 
     public Produto find(int id) throws SQLException, ClassNotFoundException {
@@ -119,7 +108,8 @@ public class ProdutoDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update produto set email = '" + email + "', nome = '" + nome + "' where id_produto = " + id + "");
+            st.execute("update produto set email = '" + email + "', nome = '" + nome + "'
+             where id_produto = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -194,37 +184,5 @@ public class ProdutoDAO {// Classe do Padrão DAO
             closeResources(conn, st, rs);
             return produtos;
         }
-    }
-
-    public void novoCombo(Combo combo, int id_empresa) {
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            for (Produto produto : combo.getProdutos()) {
-                st.execute("insert into combo (id_empresa, id_produto) values ("+id_empresa+", "+produto.getId()+")");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
-            closeResources(conn, st);
-        }
-    }
-    
-    public Combo getCombo(int id_empresa) throws ClassNotFoundException {
-        Combo combo = new Combo();
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select * from combo where id_empresa = "+id_empresa+")");
-            while(rs.next()) {
-                
-            }
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ProdutoDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return combo;
     }
 }

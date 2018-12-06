@@ -1,6 +1,5 @@
 package funcionario;
 
-import controller.Factory;
 import state.PedidoEstadoConfirmado;
 import state.PedidoEstadoEmEntrega;
 import model.Funcionario;
@@ -17,16 +16,10 @@ public class Administrador extends Funcionario{
     public String responsavel(){
         return "Administrador";
     }
-    
-    public Administrador() {
-        setResponsavel(new PedidoEstadoConfirmado());
-        setFuncao(responsavel());
-        setFuncionarioSuperior("Cozinheiro");
-    }
 
     public Administrador(String superior) {
         setResponsavel(new PedidoEstadoConfirmado());
-        setFuncionarioSuperior(superior);
+        setFuncaoSuperior(superior);
     }
     
     public void atualizarPedido(Pedido pedido){
