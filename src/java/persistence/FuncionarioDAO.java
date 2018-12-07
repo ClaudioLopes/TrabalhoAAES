@@ -16,7 +16,7 @@ import model.Funcionario;
  *
  * @author claudio
  */
-public class FuncionarioDAO {// Classe do Padrão DAO
+public class FuncionarioDAO extends DAO{// Classe do Padrão DAO
     //Padrão Singleton
     private static FuncionarioDAO instance = new FuncionarioDAO();
     private FuncionarioDAO(){}
@@ -25,8 +25,6 @@ public class FuncionarioDAO {// Classe do Padrão DAO
     }
 
     public void save(Funcionario funcionario) throws SQLException, ClassNotFoundException{
-        Connection conn = null;
-        Statement st = null;
         try{
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
@@ -40,8 +38,8 @@ public class FuncionarioDAO {// Classe do Padrão DAO
         }
     }
 
-    public String getSQLDelete(){
-      return ("delete from funcionario where nome = '");
+    public String getSQLDeleteByName(String nome){
+      return ("delete from funcionario where nome = '" + nome + "'");
     }
 
     public Funcionario find (String nome) throws SQLException, ClassNotFoundException{
@@ -102,19 +100,6 @@ public class FuncionarioDAO {// Classe do Padrão DAO
             throw e;
         }finally{
             closeResources(conn, st);
-        }
-    }
-
-    public void closeResources(Connection conn, Statement st){
-        try{
-            if(st != null){
-                st.close();
-            }
-            if(conn != null){
-                conn.close();
-            }
-        }catch(SQLException e){
-            System.out.println("Erro no SQL");
         }
     }
 

@@ -19,7 +19,7 @@ import controller.Action;
 public class DeletarEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        if(nome.equals("")) {
+        if(request.getParameter("textNome").equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{

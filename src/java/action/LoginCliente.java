@@ -23,12 +23,11 @@ public class LoginCliente implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
      ServletException {
 
-        if(email.equals("") || senha.equals("")) {
+        if(request.getParameter("email").equals("") || request.getParameter("senha").equals("")) {
            response.sendRedirect("LoginCliente.jsp");
         } else {
             try{
-                Cliente cliente = ClienteDAO.getInstance().login(request.getParameter("email"),
-                 request.getParameter("senha"));
+                Cliente cliente = ClienteDAO.getInstance().login(request.getParameter("email"), request.getParameter("senha"));
                 if(cliente.getNome() != null) {
                     request.setAttribute("id_cliente", cliente.getId());
                     request.getRequestDispatcher("ClienteIndex.jsp").forward(request, response);

@@ -20,7 +20,7 @@ import controller.Action;
 public class CadastrarEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        if(nome.equals("") || senha.equals("")) {
+        if(request.getParameter("textNome").equals("") || request.getParameter("textSenha").equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             Empresa empresa = new Empresa();

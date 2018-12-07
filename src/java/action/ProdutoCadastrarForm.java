@@ -21,9 +21,8 @@ import strategy.Produto;
  */
 public class ProdutoCadastrarForm implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
-     ServletException {
-        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa"));
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
         request.getRequestDispatcher("ProdutoCadastrar.jsp").forward(request, response);
     }
 }

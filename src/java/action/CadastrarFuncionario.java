@@ -23,7 +23,7 @@ import javax.servlet.ServletException;
 public class CadastrarFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
-        if(nome.equals("") || email.equals("") || senha.equals("")) {
+        if(request.getParameter("nome").equals("") || request.getParameter("email").equals("") || request.getParameter("senha").equals("")) {
            request.getRequestDispatcher("CadastrarFuncionario.jsp").forward(request, response);
         } else {
             Funcionario funcionario = Factory.createFuncionario(request.getParameter("funcao"));

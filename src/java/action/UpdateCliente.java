@@ -20,13 +20,11 @@ import controller.Action;
 public class UpdateCliente implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        if(nome.equals("") || telefone.equals("")) {
+        if(request.getParameter("textNome").equals("") || request.getParameter("textTelefone").equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                ClienteDAO.getInstance().update(request.getParameter("textNome"),
-                 request.getParameter("textTelefone"), request.getParameter("textEmail"),
-                request.getParameter("textSenha"));
+                ClienteDAO.getInstance().update(request.getParameter("textNome"), request.getParameter("textTelefone"), request.getParameter("textEmail"),request.getParameter("textSenha"));
                 response.sendRedirect("contatoSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("contatoErro.jsp");

@@ -23,12 +23,11 @@ public class LoginEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
      ServletException {
 
-        if(email.equals("") || senha.equals("")) {
+        if(request.getParameter("email").equals("") || request.getParameter("senha").equals("")) {
            response.sendRedirect("LoginEmpresa.jsp");
         } else {
             try{
-                Empresa empresa = EmpresaDAO.getInstance().login(request.getParameter("email"),
-                 request.getParameter("senha"));
+                Empresa empresa = EmpresaDAO.getInstance().login(request.getParameter("email"), request.getParameter("senha"));
                 if(empresa.getNome() != null) {
                     request.setAttribute("id_empresa", empresa.getId());
                     request.getRequestDispatcher("EmpresaIndex.jsp").forward(request, response);

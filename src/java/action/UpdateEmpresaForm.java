@@ -21,12 +21,10 @@ import persistence.EmpresaDAO;
  */
 public class UpdateEmpresaForm implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
-     ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         try {
             request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
-            request.setAttribute("empresa", EmpresaDAO.getInstance().find(Integer.parseInt
-            (request.getParameter("id_empresa")));
+            request.setAttribute("empresa", EmpresaDAO.getInstance().find(Integer.parseInt(request.getParameter("id_empresa"))));
             request.getRequestDispatcher("UpdateEmpresa.jsp").forward(request, response);
         } catch (SQLException ex) {
             ex.printStackTrace();

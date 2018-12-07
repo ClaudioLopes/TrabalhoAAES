@@ -33,15 +33,17 @@ import strategy.Produto;
  */
 public class ClienteProdutosEmpresa implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
-     ServletException {
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
+        int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
+        List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
         FormaPagamento dinheiro = new Dinheiro();
         FormaPagamento cartao = new Cartao();
         request.setAttribute("dinheiro", dinheiro);
         request.setAttribute("cartao", cartao);
-        request.setAttribute("produtos", EmpresaDAO.getInstance().listProdutos(id_empresa));
-        request.setAttribute("id_cliente", Integer.parseInt(request.getParameter("id_cliente")));
-        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
+        request.setAttribute("produtos", produtos);
+        request.setAttribute("id_cliente", id_cliente);
+        request.setAttribute("id_empresa", id_empresa);
         request.getRequestDispatcher("ClienteProdutosEmpresa.jsp").forward(request, response);
         Pedido pedido = new Pedido();
         try{

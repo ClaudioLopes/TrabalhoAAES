@@ -20,7 +20,7 @@ import controller.Action;
 public class CadastrarCliente implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        if(nome.equals("") || email.equals("")) {
+        if(request.getParameter("textNome").equals("") || request.getParameter("textEmail").equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             Cliente cliente = new Cliente();

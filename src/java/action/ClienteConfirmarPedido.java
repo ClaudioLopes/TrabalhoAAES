@@ -41,6 +41,7 @@ public class ClienteConfirmarPedido implements Action {
         try {
             Class classe = Class.forName("pagamento." + request.getParameter("pagamento"));
             Object objeto = classe.newInstance();
+            FormaPagamento fp = (FormaPagamento) objeto;
             List<Produto> itens = new ArrayList<Produto>();
             float total = 0;
             if (items != null) {
@@ -50,7 +51,7 @@ public class ClienteConfirmarPedido implements Action {
                     itens.add(p);
                 }
                 total = total - (total * fp.getDesconto() / 100);
-                request.setAttribute("pagamento", (FormaPagamento) objeto);
+                request.setAttribute("pagamento", fp);
                 request.setAttribute("total", total);
                 request.setAttribute("itens", itens);
                 request.getRequestDispatcher("ClienteConfirmarPedido.jsp").forward(request, response);
