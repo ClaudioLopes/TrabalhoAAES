@@ -27,7 +27,7 @@ public class PedidoEstadoEntrege implements PedidoEstado{
     }
 
     public String getEstado() {
-        return "Entregue";
+        return "Entrge";
     }
     
 }

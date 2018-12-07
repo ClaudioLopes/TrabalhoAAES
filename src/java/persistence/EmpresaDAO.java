@@ -38,7 +38,8 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into empresa (nome, senha, email) values ( '" + empresa.getNome() + "', '" + empresa.getSenha() + "', '" + empresa.getEmail() + "')");
+            st.execute("insert into empresa (nome, senha, email) values ( '" + empresa.getNome() +
+            "', '" + empresa.getSenha() + "', '" + empresa.getEmail() + "')");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -47,19 +48,8 @@ public class EmpresaDAO {// Classe do Padrão DAO
         }
     }
 
-    public void delete(String nome) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.execute("delete from empresa where nome = '" + nome + "'");
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
+    public String getSQLDelete(){
+      return ("delete from empresa where nome = '");
     }
 
     public Empresa find(int id) throws SQLException, ClassNotFoundException {
@@ -93,7 +83,8 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update empresa set email = '" + email + "', nome = '" + nome + "' where id_empresa = " + id + "");
+            st.execute("update empresa set email = '" + email + "', nome = '" + nome +
+            "' where id_empresa = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -196,7 +187,8 @@ public class EmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            rs = st.executeQuery("select p.* from produto as p join produto_empresa as pe on pe.id_produto = p.id_produto where pe.id_empresa = " + id_empresa + "");
+            rs = st.executeQuery("select p.* from produto as p join produto_empresa as pe on pe.id_produto
+            = p.id_produto where pe.id_empresa = " + id_empresa + "");
             while(rs.next()) {
                 Produto produto = new Item();
                 produto

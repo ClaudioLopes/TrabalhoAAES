@@ -23,25 +23,20 @@ import strategy.Produto;
  * @author claudio
  */
 public class ProdutoCadastrar implements Action{
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String nome = request.getParameter("nome");
-        String valor = request.getParameter("valor");
-        int id = Integer.parseInt(request.getParameter("id_empresa"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ProdutoCadastrar.jsp");
-        request.setAttribute("id_empresa", id);
-        
-        if(nome.equals("") || valor.equals("")) {
-           dispatcher = request.getRequestDispatcher("ProdutoCadastrar.jsp");
-           dispatcher.forward(request, response);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
+
+        if(request.getParameter("nome").equals("") || request.getParameter("valor").equals("")) {
+           request.getRequestDispatcher("ProdutoCadastrar.jsp").forward(request, response);
         } else {
-            int val = Integer.parseInt(valor);
             Produto produto = new Item();
             produto
-                    .setNome(nome)
-                    .setValor(val);
+                    .setNome(request.getParameter("nome"))
+                    .setValor(Integer.parseInt(request.getParameter("valor")));
             try{
-                ProdutoDAO.getInstance().save(id, produto);
-                dispatcher.forward(request, response);
+                ProdutoDAO.getInstance().save(Integer.parseInt(request.getParameter("id_empresa")), produto);
+                request.getRequestDispatcher("ProdutoCadastrar.jsp").forward(request, response);
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

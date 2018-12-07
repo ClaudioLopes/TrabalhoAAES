@@ -13,12 +13,12 @@ public class Empresa {
     private String senha;
     private String email;
     private int id;
-    private Produto produto; //Vai ser do tipo Produto
+    private Produto produto;
 
     public Empresa(String nome, String produto) {
         this.nome = nome;
         this.produto = Factory.createProduto(produto);
-        
+
     }
 
     public Empresa() {
@@ -56,7 +56,7 @@ public class Empresa {
     public String getNome() {
         return nome;
     }
-    
+
     public int getId() {
         return id;
     }
@@ -77,7 +77,7 @@ public class Empresa {
         this.senha = senha;
         return this;
     }
-    
-    
-    
+
+
+
 }

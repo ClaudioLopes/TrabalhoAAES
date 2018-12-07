@@ -13,13 +13,12 @@ import controller.Action;
  */
 public class DeletarCliente implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        
+
         if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                ClienteDAO.getInstance().delete(nome);
+                ClienteDAO.getInstance().delete(request.getParameter("textNome"));
                 response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");

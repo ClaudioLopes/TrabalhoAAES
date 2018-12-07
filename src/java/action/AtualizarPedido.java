@@ -13,7 +13,6 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Cliente;
 import model.Funcionario;
 import persistence.FuncionarioDAO;
 import persistence.PedidoDAO;
@@ -25,28 +24,22 @@ import state.Pedido;
  */
 public class AtualizarPedido implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id_funcionario"));
-        int id_pedido = Integer.parseInt(request.getParameter("id_pedido"));
-        RequestDispatcher dispatcher = request.getRequestDispatcher("FuncionarioPedidos.jsp");
-        try {
-            Funcionario funcionario = Factory.createFuncionario(FuncionarioDAO.getInstance().find(id));
-            Pedido pedido = PedidoDAO.getInstance().find(id_pedido);
-            funcionario.atualizarPedido(pedido);
-            Cliente c = new Cliente(pedido);
-            pedido.setPedidoEstado(pedido.getPedidoEstado());
-            if (FuncionarioDAO.getInstance().getFuncionarioSuperior(id) != null) {
-                int id_novo_responsavel = FuncionarioDAO.getInstance().getFuncionarioSuperior(id).getId();
-                PedidoDAO.getInstance().atualizaStatus(id_pedido, id_novo_responsavel, pedido.getNomeEstado());
-            } else 
-                PedidoDAO.getInstance().atualizaStatus(id_pedido, null, pedido.getNomeEstado());
-            request.setAttribute("id_funcionario", id);
-            dispatcher.forward(request, response);
-        } catch (SQLException ex) {
-            response.sendRedirect("contatoErro.jsp");
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
-        }
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+    ServletException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("FuncionarioPedidoStatus.jsp");
+        dispatcher.forward(request, response);
+        try{
+            Funcionario funcionario = Factory.createFuncionario(FuncionarioDAO.getInstance().find(Integer.parseInt
+            (request.getParameter("id_funcionario"))));
+            Pedido pedido = PedidoDAO.getInstance().find(Integer.parseInt(request.getParameter("id_pedido")));
+            funcionario.atualizarPedido(PedidoDAO.getInstance().find(Integer.parseInt(request.getParameter
+            ("id_pedido"))));
+            response.sendRedirect("contatoSucesso.jsp");
+        }catch(SQLException ex){
+                response.sendRedirect("contatoErro.jsp");
+                ex.printStackTrace();
+            }catch(ClassNotFoundException ex){
+                ex.printStackTrace();
+            }
     }
 }

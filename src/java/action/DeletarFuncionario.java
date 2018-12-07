@@ -18,14 +18,12 @@ import controller.Action;
  */
 public class DeletarFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        
+
         if(nome.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
-            //Contato contato = new Contato(nome, null);
             try{
-                FuncionarioDAO.getInstance().delete(nome);
+                FuncionarioDAO.getInstance().delete(request.getParameter("textNome"));
                 response.sendRedirect("apagarSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");

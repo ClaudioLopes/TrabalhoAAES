@@ -24,15 +24,11 @@ import persistence.EmpresaDAO;
  */
 public class ClienteNovoPedido implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id = Integer.parseInt(request.getParameter("id_cliente"));
-        List<Empresa> empresas = EmpresaDAO.getInstance().listAll();
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteNovoPedido.jsp");
-        request.setAttribute("empresas", empresas);
-        request.setAttribute("id_cliente", id);
-        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id);
-        request.setAttribute("ntf", notificacao);
-        dispatcher.forward(request, response);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+        request.setAttribute("empresas", EmpresaDAO.getInstance().listAll());
+        request.setAttribute("id_cliente", Integer.parseInt(request.getParameter("id_cliente")));
+        request.getRequestDispatcher("ClienteNovoPedido.jsp").forward(request, response);
 
     }
 }

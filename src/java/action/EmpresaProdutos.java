@@ -14,9 +14,7 @@ import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import model.Empresa;
-import persistence.ComboDAO;
 import persistence.EmpresaDAO;
-import strategy.Combo;
 import strategy.Produto;
 
 /**
@@ -25,15 +23,12 @@ import strategy.Produto;
  */
 public class EmpresaProdutos implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("EmpresaProdutos.jsp");
-        int id = Integer.parseInt(request.getParameter("id_empresa"));
-        List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id);
-        List<Combo> combos = ComboDAO.getInstance().listCombos(id);
-        request.setAttribute("combos", combos);
-        request.setAttribute("produtos", produtos);
-        request.setAttribute("id_empresa", id);
-        dispatcher.forward(request, response);
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
+        request.setAttribute("produtos", EmpresaDAO.getInstance().listProdutos(Integer.parseInt
+        (request.getParameter("id_empresa"))));
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
+        request.getRequestDispatcher("EmpresaProdutos.jsp").forward(request, response);
 
     }
 }

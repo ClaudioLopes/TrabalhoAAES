@@ -14,12 +14,4 @@ public class Cartao extends FormaPagamento{
     public String getNome() {
         return "Cartão";
     }
-
-    @Override
-    public String getNomeSA() {
-        return "Cartao";
-    }
-
-    public Cartao() {
-    }
 }

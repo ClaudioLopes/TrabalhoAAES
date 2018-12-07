@@ -33,12 +33,13 @@ public class ProdutoEmpresaDAO {// Classe do Padrão DAO
     ResultSet rs = null;
 
     public void save(int id_produto, int id_empresa) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
+        conn = null;
+        st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into produto_empresa (id_produto, id_empresa) values ( " + id_produto + ", " + id_empresa + ")");
+            st.execute("insert into produto_empresa (id_produto, id_empresa) values ( " + id_produto +
+             ", " + id_empresa + ")");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -47,19 +48,8 @@ public class ProdutoEmpresaDAO {// Classe do Padrão DAO
         }
     }
 
-    public void delete(String nome) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.execute("delete from empresa where nome = '" + nome + "'");
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
+    public String getSQLDelete(){
+      return ("delete from empresa where nome = '");
     }
 
     public Produto find(int id) throws SQLException, ClassNotFoundException {
@@ -91,7 +81,8 @@ public class ProdutoEmpresaDAO {// Classe do Padrão DAO
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("update produto set email = '" + email + "', nome = '" + nome + "' where id_produto = " + id + "");
+            st.execute("update produto set email = '" + email + "', nome = '" + nome + "'
+             where id_produto = " + id + "");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;

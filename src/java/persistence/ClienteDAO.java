@@ -13,7 +13,7 @@ import model.Cliente;
  *
  * @author claudio
  */
-public class ClienteDAO { // Classe do Padrão DAO
+public class ClienteDAO extends DAO { // Classe do Padrão DAO
     //Padrão Singleton
 
     private static ClienteDAO instance = new ClienteDAO();
@@ -41,7 +41,7 @@ public class ClienteDAO { // Classe do Padrão DAO
             System.out.println("Erro no SQL");
         }
     }
-    
+
     public void closeResources(Connection conn, Statement st, ResultSet rs) {
         try {
             if (st != null) {
@@ -59,12 +59,13 @@ public class ClienteDAO { // Classe do Padrão DAO
     }
 
     public void save(Cliente cliente) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
+        conn = null;
+        st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.execute("insert into cliente (nome, email, telefone, senha) values ( '" + cliente.getNome() + "', '" + cliente.getEmail() + "', '" + cliente.getTelefone() + "', '" + cliente.getSenha() + "')");
+            st.execute("insert into cliente (nome, email, telefone, senha) values ( '" + cliente.getNome() +
+             "', '" + cliente.getEmail() + "', '" + cliente.getTelefone() + "', '" + cliente.getSenha() + "')");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -73,24 +74,14 @@ public class ClienteDAO { // Classe do Padrão DAO
         }
     }
 
-    public void delete(String nome) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.execute("delete from cliente where nome = '" + nome + "'");
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-        } finally {
-            closeResources(conn, st);
-        }
+    public String getSQLDelete(){
+      return ("delete from cliente where nome = '");
     }
 
     public Cliente find(int id) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        ResultSet rs = null;
+        conn = null;
+        st = null;
+        rs = null;
         Cliente cliente = new Cliente();
         try {
             conn = DatabaseLocator.getInstance().getConnection();
@@ -103,7 +94,7 @@ public class ClienteDAO { // Classe do Padrão DAO
                         .setSenha(rs.getString("senha"))
                         .setTelefone(rs.getString("telefone"))
                         .setId(id);
-                
+
             }
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
@@ -113,7 +104,7 @@ public class ClienteDAO { // Classe do Padrão DAO
         }
         return cliente;
     }
-    
+
     public Cliente find(String nome) throws SQLException, ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
@@ -136,28 +127,14 @@ public class ClienteDAO { // Classe do Padrão DAO
         return cliente;
     }
 
-    public void update(int id_cliente, String nome, String telefone, String email, String senha) throws SQLException, ClassNotFoundException {
+    public void update(String nome, String telefone, String email, String senha) throws SQLException,
+     ClassNotFoundException {
         Connection conn = null;
         Statement st = null;
         try {
             conn = DatabaseLocator.getInstance().getConnection();
             st = conn.createStatement();
-            st.executeUpdate("update cliente set telefone = '" + telefone + "', nome = '" + nome + "', email = '" + email + "', senha = '" + senha + "' where id_cliente = '" + id_cliente + "'");
-        } catch (SQLException e) {
-            System.out.println("Erro no SQL");
-            throw e;
-        } finally {
-            closeResources(conn, st);
-        }
-    }
-
-    public void update(int id_cliente, String nome, String telefone, String email) throws SQLException, ClassNotFoundException {
-        Connection conn = null;
-        Statement st = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.executeUpdate("update cliente set telefone = '" + telefone + "', nome = '" + nome + "', email = '" + email + "' where id_cliente = " + id_cliente + "");
+            st.execute("update cliente set telefone = '" + telefone + "' where nome = '" + nome + "'");
         } catch (SQLException e) {
             System.out.println("Erro no SQL");
             throw e;
@@ -184,56 +161,6 @@ public class ClienteDAO { // Classe do Padrão DAO
         } finally {
             closeResources(conn, st, rs);
             return cliente;
-        }
-    }
-    
-    public Integer getNotificacao(int id_usuario) {
-        Integer contador = null;
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            rs = st.executeQuery("select notify from cliente where id_cliente = " + id_usuario + "");
-            while(rs.next()) {
-                contador = rs.getInt("notify");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeResources(conn, st, rs);
-        }
-        return contador;
-    }
-    
-    public void notifica(int id_cliente) {
-        try {
-            Integer contador = getNotificacao(id_cliente);
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            contador++;
-            st.executeUpdate("update cliente set notify = " + contador + " where id_cliente = " + id_cliente + "");
-            
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeResources(conn, st);
-        }
-    }
-    
-    public void zerarNotify(int id_cliente) {
-        try {
-            conn = DatabaseLocator.getInstance().getConnection();
-            st = conn.createStatement();
-            st.executeUpdate("update cliente set notify = 0 where id_cliente = " + id_cliente + "");
-        } catch (SQLException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            closeResources(conn, st);
         }
     }
 }

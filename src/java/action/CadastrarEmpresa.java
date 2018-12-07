@@ -19,18 +19,15 @@ import controller.Action;
  */
 public class CadastrarEmpresa implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        String senha = request.getParameter("textSenha");
-        String email = request.getParameter("textEmail");
-        
+
         if(nome.equals("") || senha.equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             Empresa empresa = new Empresa();
             empresa
-                    .setNome(nome)
-                    .setSenha(senha)
-                    .setEmail(email);
+                    .setNome(request.getParameter("textNome"))
+                    .setSenha(request.getParameter("textSenha"))
+                    .setEmail(request.getParameter("textEmail"));
             try{
                 EmpresaDAO.getInstance().save(empresa);
                 response.sendRedirect("CadastrarSucesso.jsp");

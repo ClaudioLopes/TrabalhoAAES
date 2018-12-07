@@ -17,14 +17,13 @@ import controller.Action;
  */
 public class UpdateFuncionario implements Action{
     public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String nome = request.getParameter("textNome");
-        String telefone = request.getParameter("textTelefone");
-        
-        if(nome.equals("") || telefone.equals("")) {
+
+        if(request.getParameter("textNome").equals("") || request.getParameter("textTelefone").equals("")) {
            response.sendRedirect("index.jsp");
         } else {
             try{
-                FuncionarioDAO.getInstance().update(nome, telefone);
+                FuncionarioDAO.getInstance().update(request.getParameter("textNome"),
+                 request.getParameter("textTelefone"));
                 response.sendRedirect("contatoSucesso.jsp");
             }catch(SQLException ex){
                 response.sendRedirect("contatoErro.jsp");

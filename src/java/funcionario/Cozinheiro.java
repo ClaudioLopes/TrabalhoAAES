@@ -15,24 +15,18 @@ import state.PedidoEstadoConfirmado;
  *
  * @author claudio
  */
-public class Cozinheiro extends Funcionario {
-
-    public String responsavel() {
+public class Cozinheiro extends Funcionario{
+    
+    public String responsavel(){
         return "Cozinheiro";
     }
 
-    public Cozinheiro() {
+    public Cozinheiro (String superior) {
         setResponsavel(new PedidoEstadoEmProdução());
-        setFuncao(responsavel());
-        setFuncionarioSuperior("Entregador");
+        setFuncaoSuperior(superior);
     }
-
-    public Cozinheiro(String superior) {
-        setResponsavel(new PedidoEstadoEmProdução());
-        setFuncionarioSuperior(superior);
-    }
-
-    public void atualizarPedido(Pedido pedido) {
+    
+    public void atualizarPedido(Pedido pedido){
         pedido.setPedidoEstado(new PedidoEstadoEmEntrega());
     }
 }

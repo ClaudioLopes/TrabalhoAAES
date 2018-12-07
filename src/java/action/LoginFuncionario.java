@@ -11,24 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import persistence.FuncionarioDAO;
 import controller.Action;
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 /**
  *
  * @author claudio
  */
 public class LoginFuncionario implements Action{
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        String email = request.getParameter("email");
-        String senha = request.getParameter("senha");
-        RequestDispatcher dispatcher = request.getRequestDispatcher("FuncionarioIndex.jsp");
-        if(email.equals("") || senha.equals("")) {
-           response.sendRedirect("LoginFuncionario.jsp");
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        if(nome.equals("")) {
+           response.sendRedirect("index.jsp");
         } else {
             try{
-                int id_funcionario = FuncionarioDAO.getInstance().login(email, senha);
-                request.setAttribute("id_funcionario", id_funcionario);
-                dispatcher.forward(request, response);
+                String fundionario = null;
+                request.setAttribute(fundionario, FuncionarioDAO.getInstance().find(request.getParameter("textNome")));
             }catch(SQLException ex){
                 response.sendRedirect("Erro.jsp");
                 ex.printStackTrace();

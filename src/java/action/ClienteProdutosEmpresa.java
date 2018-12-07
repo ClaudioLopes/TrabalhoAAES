@@ -33,20 +33,26 @@ import strategy.Produto;
  */
 public class ClienteProdutosEmpresa implements Action {
 
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        int id_cliente = Integer.parseInt(request.getParameter("id_cliente"));
-        int id_empresa = Integer.parseInt(request.getParameter("id_empresa"));
-        List<Produto> produtos = EmpresaDAO.getInstance().listProdutos(id_empresa);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("ClienteProdutosEmpresa.jsp");
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException,
+     ServletException {
         FormaPagamento dinheiro = new Dinheiro();
         FormaPagamento cartao = new Cartao();
         request.setAttribute("dinheiro", dinheiro);
         request.setAttribute("cartao", cartao);
-        request.setAttribute("produtos", produtos);
-        request.setAttribute("id_cliente", id_cliente);
-        request.setAttribute("id_empresa", id_empresa);
-        Integer notificacao = ClienteDAO.getInstance().getNotificacao(id_cliente);
-        request.setAttribute("ntf", notificacao);
-        dispatcher.forward(request, response);
+        request.setAttribute("produtos", EmpresaDAO.getInstance().listProdutos(id_empresa));
+        request.setAttribute("id_cliente", Integer.parseInt(request.getParameter("id_cliente")));
+        request.setAttribute("id_empresa", Integer.parseInt(request.getParameter("id_empresa")));
+        request.getRequestDispatcher("ClienteProdutosEmpresa.jsp").forward(request, response);
+        Pedido pedido = new Pedido();
+        try{
+            pedido.setProduto(produtos);
+            PedidoDAO.getInstance().save(id_empresa, id_cliente,produtos);
+            response.sendRedirect("CadastrarSucesso.jsp");
+        }catch(ClassNotFoundException ex){
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteProdutosEmpresa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
