@@ -19,7 +19,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <form method="post" action="FrontController?action=FuncionarioPedidos">
+                        <form method="post" action="FrontController?action=FuncionarioPedidosAtivos">
                             <input type="hidden" name="id_funcionario" value="${id_funcionario}"/>
                             <button type="submit" class="btn btn-link nav-link">Pedidos ativos<span class="sr-only">(current)</span></button>
                         </form>
